@@ -43,6 +43,8 @@
         </Site>
         <BuildingConstruction>
           <ResidentialFacilityType>apartment unit</ResidentialFacilityType>
+          <UnitHeightAboveGrade>10.0</UnitHeightAboveGrade>
+          <NumberofUnitsInBuilding>6</NumberofUnitsInBuilding>
           <NumberofConditionedFloors>1.0</NumberofConditionedFloors>
           <NumberofConditionedFloorsAboveGrade>1.0</NumberofConditionedFloorsAboveGrade>
           <AverageCeilingHeight>8.0</AverageCeilingHeight>
@@ -381,7 +383,6 @@
           <SystemIdentifier id='Refrigerator1'/>
           <Location>conditioned space</Location>
           <RatedAnnualkWh>650.0</RatedAnnualkWh>
-          <PrimaryIndicator>true</PrimaryIndicator>
         </Refrigerator>
         <CookingRange>
           <SystemIdentifier id='CookingRange1'/>

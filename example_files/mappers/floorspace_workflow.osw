@@ -5,7 +5,7 @@
   "file_paths": [],
   "run_directory": null,
   "steps": [
-    
+
     {
       "measure_dir_name": "set_run_period",
       "arguments": {
@@ -45,7 +45,7 @@
         "ns_to_ew_ratio": 0,
         "wwr": 0,
         "party_wall_fraction": 0,
-        "story_multiplier": "None",
+        "story_multiplier_method": "None",
         "bar_division_method": "Multiple Space Types - Individual Stories Sliced"
       }
     },{
@@ -69,7 +69,7 @@
         "__SKIP__": true,
         "add_hvac": false,
         "add_refrigeration": false
-      } 
+      }
     },{
       "measure_dir_name": "blended_space_type_from_model",
       "arguments": {
@@ -84,7 +84,7 @@
         "feature_id": "5",
         "surrounding_buildings": "None"
       }
-    },{      
+    },{
       "name": "create_typical_building_from_model 2",
       "measure_dir_name": "create_typical_building_from_model",
       "arguments": {
@@ -102,9 +102,9 @@
         "add_hvac": true,
         "use_upstream_args": false
       }
-    },{  
+    },{
       "measure_dir_name":"PredictedMeanVote",
-      "arguments":{  
+      "arguments":{
         "__SKIP__":false,
         "comfortWarnings":true,
         "workEfficiencySchedule":"Work Efficiency Schedule",
@@ -116,19 +116,19 @@
       "arguments": {
         "__SKIP__": true,
         "r_value": 10
-      } 
+      }
     },{
       "measure_dir_name": "ReduceElectricEquipmentLoadsByPercentage",
       "arguments": {
         "__SKIP__": true,
         "elecequip_power_reduction_percent": 20
-      } 
+      }
     },{
       "measure_dir_name": "ReduceLightingLoadsByPercentage",
       "arguments": {
         "__SKIP__": true,
         "lighting_power_reduction_percent": 30
-      } 
+      }
     },{
       "measure_dir_name": "default_feature_reports",
       "arguments": {

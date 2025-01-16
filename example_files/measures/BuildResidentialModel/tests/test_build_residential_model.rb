@@ -45,7 +45,7 @@ class BuildResidentialModelTest < Minitest::Test
     @run_period = 'Jan 1 - Dec 31'
     @calendar_year = 2007
     @weather_filename = 'USA_NY_Buffalo-Greater.Buffalo.Intl.AP.725280_TMY3.epw'
-    @year_built = nil
+    @year_built = 2000
     @building_type = 'Single-Family Detached'
     @floor_area = 3055
     @number_of_bedrooms = 3
@@ -288,7 +288,7 @@ class BuildResidentialModelTest < Minitest::Test
       feature_heating_system_fuel_types.each do |feature_heating_system_fuel_type|
         @hpxml_path = test_folder / "#{feature_system_type}_#{feature_heating_system_fuel_type}" / 'feature.xml'
         _initialize_arguments()
-        
+
         @system_type = feature_system_type
         @heating_system_fuel_type = feature_heating_system_fuel_type
 
@@ -345,15 +345,15 @@ class BuildResidentialModelTest < Minitest::Test
           @hpxml_path = test_folder / "#{feature_building_type}_#{feature_number_of_residential_units}_#{feature_floor_area}" / 'feature.xml'
           _initialize_arguments()
 
-          @building_type = feature_building_type          
+          @building_type = feature_building_type
           @args[:geometry_building_num_units] = feature_number_of_residential_units
           @floor_area = feature_floor_area
           @number_of_bedrooms = 3 * @args[:geometry_building_num_units]
-          @number_of_stories_above_ground = nil
+          @number_of_stories_above_ground = nil # not specified in geojson
 
           if @building_type == 'Multifamily'
             @number_of_bedrooms = 2 * @args[:geometry_building_num_units]
-            @foundation_type = 'slab' 
+            @foundation_type = 'slab'
             @attic_type = 'flat roof'
           end
 
@@ -366,6 +366,12 @@ class BuildResidentialModelTest < Minitest::Test
           end
 
           _apply_residential()
+
+          # Don't try to match these because the sample buildstock.csv is too small to be that precise
+          @year_built = nil
+          @system_type = nil
+          @heating_system_fuel_type = nil
+
           resstock_building_id = _apply_residential_samples()
           _test_measure(expected_errors: expected_errors)
 
@@ -394,8 +400,8 @@ class BuildResidentialModelTest < Minitest::Test
     @buildstock_csv_path = File.absolute_path(File.join(File.dirname(__FILE__), '../../../resources/residential-measures/test/base_results/baseline/annual/buildstock.csv'))
 
     feature_number_of_stories_above_grounds = [2]
-    feature_year_builts = [1953]
-    feature_number_of_bedroomss = [16]
+    feature_year_builts = [1963]
+    feature_number_of_bedroomss = [32]
 
     test_folder = @run_path / __method__.to_s
     feature_number_of_stories_above_grounds.each do |feature_number_of_stories_above_ground|
@@ -406,14 +412,18 @@ class BuildResidentialModelTest < Minitest::Test
 
           @building_type = 'Multifamily'
           @args[:geometry_building_num_units] = 16
-          @floor_area = 505 * @args[:geometry_building_num_units]
-          @number_of_stories_above_ground = feature_number_of_stories_above_ground          
+          @floor_area = 800 * @args[:geometry_building_num_units]
+          @number_of_stories_above_ground = feature_number_of_stories_above_ground
           @year_built = feature_year_built
           @number_of_bedrooms = feature_number_of_bedrooms
-          @foundation_type = 'slab' 
+          @foundation_type = 'slab'
           @attic_type = 'flat roof'
 
           _apply_residential()
+
+          @system_type = nil
+          @heating_system_fuel_type = nil
+
           resstock_building_id = _apply_residential_samples()
           _test_measure(expected_errors: [])
 
@@ -443,8 +453,13 @@ class BuildResidentialModelTest < Minitest::Test
 
       _apply_residential()
       resstock_building_id = find_building_for_uo_id(@uo_buildstock_mapping_csv_path, feature_id)
+
       residential_samples(@args, resstock_building_id, @uo_buildstock_mapping_csv_path)
+
       _test_measure(expected_errors: [])
+
+      @heating_system_fuel_type = nil
+      @year_built = nil
 
       urbanopt_path = @hpxml_path
       resstock_path = File.absolute_path(File.join(File.dirname(__FILE__), 'samples/precomputed/run1/run/home.xml'))
@@ -461,7 +476,7 @@ class BuildResidentialModelTest < Minitest::Test
       feature_number_of_residential_unitss.each do |feature_number_of_residential_units|
         @hpxml_path = test_folder / "#{feature_building_type}_#{feature_number_of_residential_units}" / 'feature.xml'
         _initialize_arguments()
-        
+
         @building_type = feature_building_type
         @args[:geometry_building_num_units] = feature_number_of_residential_units
         @args[:geometry_num_floors_above_grade] = feature_number_of_residential_units
@@ -553,7 +568,7 @@ class BuildResidentialModelTest < Minitest::Test
   end
 
   def _check_against_resstock(yml_file, resstock_building_id, number_of_residential_units, urbanopt_path, resstock_path)
-    # Check against ResStock for the Building ID that was selected
+    # Check URBANopt HPXML file against ResStock HPXML file for the Building ID that was selected
 
     cli_path = OpenStudio.getOpenStudioCLI
     run_analysis_path = File.absolute_path(File.join(File.dirname(__FILE__), '../../../resources/residential-measures/workflow/run_analysis.rb'))
@@ -580,7 +595,7 @@ class BuildResidentialModelTest < Minitest::Test
     assert(res_bldg.dst_begin_month == uo_bldg.dst_begin_month)
     assert(res_bldg.dst_begin_day == uo_bldg.dst_begin_day)
     assert(res_bldg.dst_end_month == uo_bldg.dst_end_month)
-    assert(res_bldg.dst_end_day == uo_bldg.dst_end_day)      
+    assert(res_bldg.dst_end_day == uo_bldg.dst_end_day)
     assert(res_bldg.site.to_s == uo_bldg.site.to_s)
     assert(res_bldg.neighbor_buildings.to_s == uo_bldg.neighbor_buildings.to_s)
     assert(res_bldg.building_occupancy.to_s == uo_bldg.building_occupancy.to_s)
@@ -588,7 +603,7 @@ class BuildResidentialModelTest < Minitest::Test
     uo_bldg.building_construction.conditioned_floor_area = nil
     res_bldg.building_construction.conditioned_building_volume = nil
     uo_bldg.building_construction.conditioned_building_volume = nil
-    assert(res_bldg.building_construction.to_s == res_bldg.building_construction.to_s)      
+    assert(res_bldg.building_construction.to_s == res_bldg.building_construction.to_s)
     assert(res_bldg.header.to_s != uo_bldg.header.to_s)
     assert(res_bldg.climate_and_risk_zones.to_s != uo_bldg.climate_and_risk_zones.to_s)
     res_bldg.climate_and_risk_zones.climate_zone_ieccs.zip(uo_bldg.climate_and_risk_zones.climate_zone_ieccs).each do |res, uo|
@@ -599,6 +614,8 @@ class BuildResidentialModelTest < Minitest::Test
     res_bldg.air_infiltration_measurements.zip(uo_bldg.air_infiltration_measurements).each do |res, uo|
       res.infiltration_volume = nil
       uo.infiltration_volume = nil
+      res.a_ext = nil
+      uo.a_ext = nil
       assert(res.to_s == uo.to_s)
     end
     assert(res_bldg.air_infiltration.to_s == uo_bldg.air_infiltration.to_s)
@@ -653,8 +670,8 @@ class BuildResidentialModelTest < Minitest::Test
       uo.overhangs_distance_to_top_of_window = nil
       res.overhangs_distance_to_bottom_of_window = nil
       uo.overhangs_distance_to_bottom_of_window = nil
-      res.wall_idref = nil
-      uo.wall_idref = nil
+      res.attached_to_wall_idref = nil
+      uo.attached_to_wall_idref = nil
       assert(res.to_s == uo.to_s)
     end
     res_bldg.doors.zip(uo_bldg.doors).each do |res, uo|
@@ -690,6 +707,19 @@ class BuildResidentialModelTest < Minitest::Test
       assert(res.to_s == uo.to_s)
     end
     res_bldg.hvac_controls.zip(uo_bldg.hvac_controls).each do |res, uo|
+      # Different weather files have different heat/cool seasons
+      res.seasons_heating_begin_month = nil
+      uo.seasons_heating_begin_month = nil
+      res.seasons_heating_end_month = nil
+      uo.seasons_heating_end_month = nil
+      res.seasons_heating_end_day = nil
+      uo.seasons_heating_end_day = nil
+      res.seasons_cooling_begin_month = nil
+      uo.seasons_cooling_begin_month = nil
+      res.seasons_cooling_end_month = nil
+      uo.seasons_cooling_end_month = nil
+      res.seasons_cooling_end_day = nil
+      uo.seasons_cooling_end_day = nil
       assert(res.to_s == uo.to_s)
     end
     res_bldg.hvac_distributions.zip(uo_bldg.hvac_distributions).each do |res, uo|

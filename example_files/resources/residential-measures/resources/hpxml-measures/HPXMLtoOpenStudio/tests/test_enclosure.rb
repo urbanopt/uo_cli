@@ -17,6 +17,8 @@ class HPXMLtoOpenStudioEnclosureTest < Minitest::Test
 
   def teardown
     File.delete(@tmp_hpxml_path) if File.exist? @tmp_hpxml_path
+    File.delete(File.join(File.dirname(__FILE__), 'results_annual.csv')) if File.exist? File.join(File.dirname(__FILE__), 'results_annual.csv')
+    File.delete(File.join(File.dirname(__FILE__), 'results_design_load_details.csv')) if File.exist? File.join(File.dirname(__FILE__), 'results_design_load_details.csv')
   end
 
   def test_roofs
@@ -104,25 +106,54 @@ class HPXMLtoOpenStudioEnclosureTest < Minitest::Test
         _check_surface(hpxml_bldg.roofs[i], os_surface, roof_values[:layer_names])
       end
     end
+  end
 
-    # Radiant Barrier
+  def test_radiant_barriers
+    # Attic roof and gable walls
     args_hash = {}
     args_hash['hpxml_path'] = File.absolute_path(@tmp_hpxml_path)
 
-    # Open cavity, asphalt shingles roof
     roofs_values = [{ assembly_r: 0.1, layer_names: ['asphalt or fiberglass shingles', 'radiant barrier'] },
                     { assembly_r: 5.0, layer_names: ['asphalt or fiberglass shingles', 'roof rigid ins', 'osb sheathing', 'radiant barrier'] },
                     { assembly_r: 20.0, layer_names: ['asphalt or fiberglass shingles', 'roof rigid ins', 'osb sheathing', 'radiant barrier'] }]
+    gablewalls_values = [{ assembly_r: 0.1, layer_names: ['wood siding', 'wall stud and cavity', 'radiant barrier'] },
+                         { assembly_r: 5.0, layer_names: ['wood siding', 'osb sheathing 0.5 in.', 'wall stud and cavity', 'radiant barrier'] },
+                         { assembly_r: 20.0, layer_names: ['wood siding', 'wall rigid ins', 'osb sheathing 0.5 in.', 'wall stud and cavity', 'radiant barrier'] }]
 
     hpxml, hpxml_bldg = _create_hpxml('base-atticroof-radiant-barrier.xml')
-    roofs_values.each do |roof_values|
+    roofs_values.each_with_index do |roof_values, idx|
+      gablewall_values = gablewalls_values[idx]
       hpxml_bldg.roofs[0].insulation_assembly_r_value = roof_values[:assembly_r]
+      hpxml_bldg.walls[1].insulation_assembly_r_value = gablewall_values[:assembly_r]
       XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
       model, hpxml, hpxml_bldg = _test_measure(args_hash)
 
-      # Check properties
+      # Check roof properties
       os_surface = model.getSurfaces.find { |s| s.name.to_s.start_with? "#{hpxml_bldg.roofs[0].id}:" }
-      _check_surface(hpxml_bldg.roofs[0], os_surface, roof_values[:layer_names])
+      _check_surface(hpxml_bldg.roofs[0], os_surface, roof_values[:layer_names], 0.05)
+
+      # Check gable wall properties
+      os_surface = model.getSurfaces.find { |s| s.name.to_s.start_with? "#{hpxml_bldg.walls[1].id}:" }
+      _check_surface(hpxml_bldg.walls[1], os_surface, gablewall_values[:layer_names], 0.05)
+    end
+
+    # Attic floor
+    args_hash = {}
+    args_hash['hpxml_path'] = File.absolute_path(@tmp_hpxml_path)
+
+    ceilings_values = [{ assembly_r: 0.1, layer_names: ['radiant barrier', 'ceiling stud and cavity', 'gypsum board'] },
+                       { assembly_r: 5.0, layer_names: ['radiant barrier', 'ceiling stud and cavity', 'gypsum board'] },
+                       { assembly_r: 20.0, layer_names: ['radiant barrier', 'ceiling loosefill ins', 'ceiling stud and cavity', 'gypsum board'] }]
+
+    hpxml, hpxml_bldg = _create_hpxml('base-atticroof-radiant-barrier-ceiling.xml')
+    ceilings_values.each do |ceiling_values|
+      hpxml_bldg.floors[0].insulation_assembly_r_value = ceiling_values[:assembly_r]
+      XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
+      model, hpxml, hpxml_bldg = _test_measure(args_hash)
+
+      # Check ceiling properties
+      os_surface = model.getSurfaces.find { |s| s.name.to_s == hpxml_bldg.floors[0].id }
+      _check_surface(hpxml_bldg.floors[0], os_surface, ceiling_values[:layer_names], 0.5)
     end
   end
 
@@ -463,21 +494,21 @@ class HPXMLtoOpenStudioEnclosureTest < Minitest::Test
     model, hpxml, hpxml_bldg = _test_measure(args_hash)
     hpxml_floor = hpxml_bldg.floors.find { |x| x.exterior_adjacent_to == HPXML::LocationManufacturedHomeUnderBelly }
     os_surface = model.getSurfaces.find { |s| s.name.to_s.start_with? "#{hpxml_floor.id}" }
-    assert_equal('NoWind', os_surface.windExposure)
+    assert_equal(EPlus::SurfaceWindExposureNo, os_surface.windExposure)
 
     hpxml_bldg.foundations.clear
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     model, _hpxml, hpxml_bldg = _test_measure(args_hash)
     hpxml_floor = hpxml_bldg.floors.find { |x| x.exterior_adjacent_to == HPXML::LocationManufacturedHomeUnderBelly }
     os_surface = model.getSurfaces.find { |s| s.name.to_s.start_with? "#{hpxml_floor.id}" }
-    assert_equal('NoWind', os_surface.windExposure)
+    assert_equal(EPlus::SurfaceWindExposureNo, os_surface.windExposure)
 
     hpxml, _hpxml_bldg = _create_hpxml('base-foundation-belly-wing-no-skirt.xml')
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     model, _hpxml, hpxml_bldg = _test_measure(args_hash)
     hpxml_floor = hpxml_bldg.floors.find { |x| x.exterior_adjacent_to == HPXML::LocationManufacturedHomeUnderBelly }
     os_surface = model.getSurfaces.find { |s| s.name.to_s.start_with? "#{hpxml_floor.id}" }
-    assert_equal('WindExposed', os_surface.windExposure)
+    assert_equal(EPlus::SurfaceWindExposureYes, os_surface.windExposure)
   end
 
   def test_slabs
@@ -485,20 +516,26 @@ class HPXMLtoOpenStudioEnclosureTest < Minitest::Test
     args_hash['hpxml_path'] = File.absolute_path(@tmp_hpxml_path)
 
     # Slab
-    slabs_values = [{ perimeter_r: 0.0, under_r: 0.0, under_span: false, layer_names: ['concrete', 'floor covering'] },
-                    { perimeter_r: 5.0, under_r: 0.0, under_span: false, layer_names: ['concrete', 'floor covering', 'exterior vertical ins'] },
-                    { perimeter_r: 20.0, under_r: 0.0, under_span: false, layer_names: ['concrete', 'floor covering', 'exterior vertical ins'] },
-                    { perimeter_r: 0.0, under_r: 5.0, under_span: false, layer_names: ['concrete', 'floor covering', 'interior horizontal ins', 'interior vertical ins'] },
-                    { perimeter_r: 0.0, under_r: 20.0, under_span: false, layer_names: ['concrete', 'floor covering', 'interior horizontal ins', 'interior vertical ins'] },
-                    { perimeter_r: 0.0, under_r: 5.0, under_span: true, layer_names: ['slab rigid ins', 'concrete', 'floor covering', 'interior vertical ins'] },
-                    { perimeter_r: 0.0, under_r: 20.0, under_span: true, layer_names: ['slab rigid ins', 'concrete', 'floor covering', 'interior vertical ins'] },
-                    { perimeter_r: 5.0, under_r: 5.0, under_span: false, layer_names: ['concrete', 'floor covering', 'interior horizontal ins', 'interior vertical ins', 'exterior vertical ins'] },
-                    { perimeter_r: 20.0, under_r: 20.0, under_span: false, layer_names: ['concrete', 'floor covering', 'interior horizontal ins', 'interior vertical ins', 'exterior vertical ins'] }]
+    slabs_values = [{ perimeter_r: 0.0, under_r: 0.0, gap_r: nil, under_span: false, ext_horiz_r: 0.0, layer_names: ['concrete', 'floor covering'] },
+                    { perimeter_r: 0.0, under_r: 0.0, gap_r: 5.0, under_span: false, ext_horiz_r: 0.0, layer_names: ['concrete', 'floor covering', 'interior vertical ins'] },
+                    { perimeter_r: 5.0, under_r: 0.0, gap_r: nil, under_span: false, ext_horiz_r: 0.0, layer_names: ['concrete', 'floor covering', 'exterior vertical ins'] },
+                    { perimeter_r: 5.0, under_r: 0.0, gap_r: nil, under_span: false, ext_horiz_r: 5.0, layer_names: ['concrete', 'floor covering', 'exterior horizontal ins', 'exterior vertical ins'] },
+                    { perimeter_r: 20.0, under_r: 0.0, gap_r: nil, under_span: false, ext_horiz_r: 0.0, layer_names: ['concrete', 'floor covering', 'exterior vertical ins'] },
+                    { perimeter_r: 20.0, under_r: 0.0, gap_r: nil, under_span: false, ext_horiz_r: 20.0, layer_names: ['concrete', 'floor covering', 'exterior horizontal ins', 'exterior vertical ins'] },
+                    { perimeter_r: 0.0, under_r: 5.0, gap_r: nil, under_span: false, ext_horiz_r: 0.0, layer_names: ['concrete', 'floor covering', 'interior horizontal ins', 'interior vertical ins'] },
+                    { perimeter_r: 0.0, under_r: 20.0, gap_r: nil, under_span: false, ext_horiz_r: 0.0, layer_names: ['concrete', 'floor covering', 'interior horizontal ins', 'interior vertical ins'] },
+                    { perimeter_r: 0.0, under_r: 5.0, gap_r: nil, under_span: true, ext_horiz_r: 0.0, layer_names: ['slab rigid ins', 'concrete', 'floor covering', 'interior vertical ins'] },
+                    { perimeter_r: 0.0, under_r: 20.0, gap_r: nil, under_span: true, ext_horiz_r: 0.0, layer_names: ['slab rigid ins', 'concrete', 'floor covering', 'interior vertical ins'] },
+                    { perimeter_r: 5.0, under_r: 5.0, gap_r: nil, under_span: false, ext_horiz_r: 0.0, layer_names: ['concrete', 'floor covering', 'interior horizontal ins', 'interior vertical ins', 'exterior vertical ins'] },
+                    { perimeter_r: 5.0, under_r: 5.0, gap_r: nil, under_span: false, ext_horiz_r: 5.0, layer_names: ['concrete', 'floor covering', 'interior horizontal ins', 'exterior horizontal ins', 'interior vertical ins', 'exterior vertical ins'] },
+                    { perimeter_r: 20.0, under_r: 20.0, gap_r: 20.0, under_span: false, ext_horiz_r: 0.0, layer_names: ['concrete', 'floor covering', 'interior horizontal ins', 'interior vertical ins', 'exterior vertical ins'] },
+                    { perimeter_r: 20.0, under_r: 20.0, gap_r: 20.0, under_span: false, ext_horiz_r: 20.0, layer_names: ['concrete', 'floor covering', 'interior horizontal ins', 'exterior horizontal ins', 'interior vertical ins', 'exterior vertical ins'] }]
 
     hpxml, hpxml_bldg = _create_hpxml('base-foundation-slab.xml')
     slabs_values.each do |slab_values|
       hpxml_bldg.slabs[0].perimeter_insulation_r_value = slab_values[:perimeter_r]
       hpxml_bldg.slabs[0].perimeter_insulation_depth = 2.0
+
       hpxml_bldg.slabs[0].under_slab_insulation_r_value = slab_values[:under_r]
       if slab_values[:under_span]
         hpxml_bldg.slabs[0].under_slab_insulation_spans_entire_slab = true
@@ -507,6 +544,12 @@ class HPXMLtoOpenStudioEnclosureTest < Minitest::Test
         hpxml_bldg.slabs[0].under_slab_insulation_width = 2.0
         hpxml_bldg.slabs[0].under_slab_insulation_spans_entire_slab = nil
       end
+
+      hpxml_bldg.slabs[0].gap_insulation_r_value = slab_values[:gap_r]
+
+      hpxml_bldg.slabs[0].exterior_horizontal_insulation_r_value = slab_values[:ext_horiz_r]
+      hpxml_bldg.slabs[0].exterior_horizontal_insulation_width = 2.0
+      hpxml_bldg.slabs[0].exterior_horizontal_insulation_depth_below_grade = 2.0
 
       XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
       model, hpxml, hpxml_bldg = _test_measure(args_hash)
@@ -556,7 +599,7 @@ class HPXMLtoOpenStudioEnclosureTest < Minitest::Test
      'ZAF_Cape.Town.688160_IWEC.epw'].each do |epw_path| # Test both northern & southern hemisphere
       args_hash = {}
       args_hash['hpxml_path'] = File.absolute_path(@tmp_hpxml_path)
-      hpxml, hpxml_bldg = _create_hpxml('base-enclosure-windows-shading.xml')
+      hpxml, hpxml_bldg = _create_hpxml('base-enclosure-windows-shading-factors.xml')
       hpxml_bldg.climate_and_risk_zones.weather_station_epw_filepath = epw_path
       XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
       model, hpxml, hpxml_bldg = _test_measure(args_hash)
@@ -782,21 +825,21 @@ class HPXMLtoOpenStudioEnclosureTest < Minitest::Test
       model.getFoundationKivas.each do |foundation|
         osm_exposed_perimeter = 0.0
         model.getSurfacePropertyExposedFoundationPerimeters.each do |osm_prop|
-          next unless osm_prop.surface.outsideBoundaryCondition == 'Foundation' && osm_prop.surface.adjacentFoundation.get == foundation
+          next unless osm_prop.surface.outsideBoundaryCondition == EPlus::BoundaryConditionFoundation && osm_prop.surface.adjacentFoundation.get == foundation
 
           osm_exposed_perimeter += UnitConversions.convert(osm_prop.totalExposedPerimeter.get, 'm', 'ft')
         end
 
-        osm_fwalls = model.getSurfaces.select { |s| s.outsideBoundaryCondition == 'Foundation' && s.adjacentFoundation.get == foundation && s.surfaceType == 'Wall' }
+        osm_fwalls = model.getSurfaces.select { |s| s.outsideBoundaryCondition == EPlus::BoundaryConditionFoundation && s.adjacentFoundation.get == foundation && s.surfaceType == EPlus::SurfaceTypeWall }
         if not osm_fwalls.empty?
-          osm_fwalls_length = osm_fwalls.map { |s| Geometry.get_surface_length(s) }.sum
+          osm_fwalls_length = osm_fwalls.map { |s| Geometry.get_surface_length(surface: s) }.sum
           assert_in_epsilon(osm_exposed_perimeter, osm_fwalls_length, 0.01)
         end
       end
 
       # Check slab areas
       slab_int_adj_tos.each do |int_adj_to, slabs|
-        osm_slabs = model.getSurfaces.select { |s| s.surfaceType == 'Floor' && s.outsideBoundaryCondition == 'Foundation' && s.space.get.name.to_s.start_with?(int_adj_to) }
+        osm_slabs = model.getSurfaces.select { |s| s.surfaceType == EPlus::SurfaceTypeFloor && s.outsideBoundaryCondition == EPlus::BoundaryConditionFoundation && s.space.get.name.to_s.start_with?(int_adj_to) }
 
         osm_area = osm_slabs.map { |s| s.grossArea }.sum
         hpxml_area = slabs.map { |s| s.area }.sum
@@ -805,7 +848,7 @@ class HPXMLtoOpenStudioEnclosureTest < Minitest::Test
 
       # Check exterior foundation wall exposed areas
       ext_fwall_int_adj_tos.each do |int_adj_to, fwalls|
-        osm_fwalls = model.getSurfaces.select { |s| s.surfaceType == 'Wall' && s.outsideBoundaryCondition == 'Foundation' && s.space.get.name.to_s.start_with?(int_adj_to) }
+        osm_fwalls = model.getSurfaces.select { |s| s.surfaceType == EPlus::SurfaceTypeWall && s.outsideBoundaryCondition == EPlus::BoundaryConditionFoundation && s.space.get.name.to_s.start_with?(int_adj_to) }
 
         osm_area = osm_fwalls.map { |s| s.grossArea }.sum
         hpxml_area = fwalls.map { |fw| fw.net_area * fw.exposed_fraction }.sum
@@ -814,13 +857,13 @@ class HPXMLtoOpenStudioEnclosureTest < Minitest::Test
 
       # Check exterior foundation wall heights & below-grade depths
       ext_fwall_int_adj_tos.each do |int_adj_to, fwalls|
-        osm_fwalls = model.getSurfaces.select { |s| s.surfaceType == 'Wall' && s.outsideBoundaryCondition == 'Foundation' && s.space.get.name.to_s.start_with?(int_adj_to) }
+        osm_fwalls = model.getSurfaces.select { |s| s.surfaceType == EPlus::SurfaceTypeWall && s.outsideBoundaryCondition == EPlus::BoundaryConditionFoundation && s.space.get.name.to_s.start_with?(int_adj_to) }
 
-        osm_heights = osm_fwalls.map { |s| Geometry.get_surface_height(s) }.uniq.sort
+        osm_heights = osm_fwalls.map { |s| Geometry.get_surface_height(surface: s) }.uniq.sort
         hpxml_heights = fwalls.map { |fw| fw.height }.uniq.sort
         assert_equal(hpxml_heights, osm_heights)
 
-        osm_bgdepths = osm_fwalls.map { |s| -1 * Geometry.get_surface_z_values([s]).min }.uniq.sort
+        osm_bgdepths = osm_fwalls.map { |s| -1 * Geometry.get_surface_z_values(surfaceArray: [s]).min }.uniq.sort
         if hpxml_name == 'base-foundation-walkout-basement.xml'
           # All foundation walls similar: single foundation wall w/ effective below-grade depth
           hpxml_bgdepths = [4.5]
@@ -835,13 +878,13 @@ class HPXMLtoOpenStudioEnclosureTest < Minitest::Test
 
       # Check interior foundation wall heights & below-grade depths
       int_fwall_int_adj_tos.each do |int_adj_to, fwalls|
-        osm_fwalls = model.getSurfaces.select { |s| s.surfaceType == 'Wall' && s.outsideBoundaryCondition != 'Foundation' && Geometry.get_surface_z_values([s]).min < 0 && s.space.get.name.to_s.start_with?(int_adj_to) }
+        osm_fwalls = model.getSurfaces.select { |s| s.surfaceType == EPlus::SurfaceTypeWall && s.outsideBoundaryCondition != EPlus::BoundaryConditionFoundation && Geometry.get_surface_z_values(surfaceArray: [s]).min < 0 && s.space.get.name.to_s.start_with?(int_adj_to) }
 
-        osm_heights = osm_fwalls.map { |s| Geometry.get_surface_z_values([s]).max - Geometry.get_surface_z_values([s]).min }.uniq.sort
+        osm_heights = osm_fwalls.map { |s| Geometry.get_surface_z_values(surfaceArray: [s]).max - Geometry.get_surface_z_values(surfaceArray: [s]).min }.uniq.sort
         hpxml_heights = fwalls.map { |fw| fw.height - fw.depth_below_grade }.uniq.sort
         assert_equal(hpxml_heights, osm_heights)
 
-        osm_bgdepths = osm_fwalls.map { |s| -1 * Geometry.get_surface_z_values([s]).min }.uniq.sort
+        osm_bgdepths = osm_fwalls.map { |s| -1 * Geometry.get_surface_z_values(surfaceArray: [s]).min }.uniq.sort
         hpxml_bgdepths = fwalls.map { |fw| fw.height - fw.depth_below_grade }.uniq.sort
         assert_equal(hpxml_bgdepths, osm_bgdepths)
       end
@@ -871,6 +914,18 @@ class HPXMLtoOpenStudioEnclosureTest < Minitest::Test
   def test_collapse_surfaces
     # Check that multiple similar surfaces are correctly collapsed
     # to reduce EnergyPlus runtime.
+
+    def add_zones_spaces(hpxml_bldg)
+      hpxml_bldg.zones.add(id: 'Zone1',
+                           zone_type: HPXML::ZoneTypeConditioned)
+      hpxml_bldg.zones[-1].spaces.add(id: 'Zone1Space1')
+      hpxml_bldg.zones[-1].spaces.add(id: 'Zone1Space2')
+      hpxml_bldg.zones.add(id: 'Zone2',
+                           zone_type: HPXML::ZoneTypeConditioned)
+      hpxml_bldg.zones[-1].spaces.add(id: 'Zone2Space1')
+      hpxml_bldg.zones[-1].spaces.add(id: 'Zone2Space2')
+    end
+
     def split_surfaces(surfaces, should_collapse_surfaces)
       surf_class = surfaces[0].class
       for n in 1..surfaces.size
@@ -888,10 +943,20 @@ class HPXMLtoOpenStudioEnclosureTest < Minitest::Test
           elsif [HPXML::FoundationWall].include? surf_class
             surfaces[-1].insulation_exterior_r_value += 0.01 * i
           elsif [HPXML::Slab].include? surf_class
-            if i < 4
+            if i < 2
               surfaces[-1].perimeter_insulation_depth += 0.01 * i
-            else
+            elsif i < 3
               surfaces[-1].perimeter_insulation_r_value += 0.01 * i
+            elsif i < 4
+              surfaces[-1].under_slab_insulation_r_value += 0.01 * i
+            elsif i < 5
+              surfaces[-1].under_slab_insulation_width += 0.01 * i
+            elsif i < 6
+              surfaces[-1].exterior_horizontal_insulation_r_value = surfaces[-1].exterior_horizontal_insulation_r_value.to_f + 0.01 * i
+            elsif i < 7
+              surfaces[-1].exterior_horizontal_insulation_width = surfaces[-1].exterior_horizontal_insulation_width.to_f + 0.01 * i
+            else
+              surfaces[-1].exterior_horizontal_insulation_depth_below_grade = surfaces[-1].exterior_horizontal_insulation_depth_below_grade.to_f + 0.01 * i
             end
           elsif [HPXML::Window, HPXML::Skylight].include? surf_class
             if i < 3
@@ -915,6 +980,20 @@ class HPXMLtoOpenStudioEnclosureTest < Minitest::Test
       surfaces[-1].id += '_tiny'
       surfaces[-1].area = 0.05
       surfaces[-1].exposed_perimeter = 0.05 if surf_class == HPXML::Slab
+
+      if surfaces[0].respond_to?(:attached_to_space_idref)
+        for n in 1..surfaces.size
+          if n % 4 == 1
+            surfaces[n - 1].attached_to_space_idref = 'Zone1Space1'
+          elsif n % 4 == 2
+            surfaces[n - 1].attached_to_space_idref = 'Zone1Space2'
+          elsif n % 4 == 3
+            surfaces[n - 1].attached_to_space_idref = 'Zone2Space1'
+          elsif n % 4 == 0
+            surfaces[n - 1].attached_to_space_idref = 'Zone2Space2'
+          end
+        end
+      end
     end
 
     def get_num_surfaces_by_type(hpxml_bldg)
@@ -931,6 +1010,9 @@ class HPXMLtoOpenStudioEnclosureTest < Minitest::Test
 
     [true, false].each do |should_collapse_surfaces|
       _hpxml, hpxml_bldg = _create_hpxml('base-enclosure-skylights.xml')
+
+      # Make sure that the presence of HPXML zones/spaces doesn't affect this
+      add_zones_spaces(hpxml_bldg)
 
       orig_num_surfaces_by_type = get_num_surfaces_by_type(hpxml_bldg)
 
@@ -973,6 +1055,7 @@ class HPXMLtoOpenStudioEnclosureTest < Minitest::Test
       hpxml_bldg.slabs[i].id = "Slab#{i + 1}"
       hpxml_bldg.slabs[i].perimeter_insulation_id = "Slab#{i + 1}PerimeterInsulation"
       hpxml_bldg.slabs[i].under_slab_insulation_id = "Slab#{i + 1}UnderSlabInsulation"
+      hpxml_bldg.slabs[i].exterior_horizontal_insulation_id = "Slab#{i + 1}ExteriorHorizontalInsulation"
       hpxml_bldg.slabs[i].depth_below_grade = hpxml_bldg.foundation_walls[i].depth_below_grade * i / 3.0
     end
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
@@ -1003,8 +1086,15 @@ class HPXMLtoOpenStudioEnclosureTest < Minitest::Test
     assert_in_delta(0.6667, front_back_wall_length / left_right_wall_length, 0.01)
   end
 
-  def _check_surface(hpxml_surface, os_surface, expected_layer_names)
+  def _check_surface(hpxml_surface, os_surface, expected_layer_names, radiant_barrier_emittance = nil)
     os_construction = os_surface.construction.get.to_LayeredConstruction.get
+
+    # Check layers have valid properties
+    for i in 0..os_construction.numLayers - 1
+      layer = os_construction.getLayer(i)
+      assert_operator(layer.thickness, :>, 0)
+      assert_operator(layer.to_OpaqueMaterial.get.thermalConductivity, :>, 0)
+    end
 
     # Check exterior solar absorptance and emittance
     exterior_layer = os_construction.getLayer(0).to_OpaqueMaterial.get
@@ -1015,12 +1105,21 @@ class HPXMLtoOpenStudioEnclosureTest < Minitest::Test
       assert_equal(hpxml_surface.emittance, exterior_layer.thermalAbsorptance)
     end
 
+    # Check radiant barrier properties
+    has_radiant_barrier = false
+    expected_layer_names.each_with_index do |expected_layer_name, idx|
+      next if expected_layer_name != 'radiant barrier'
+
+      has_radiant_barrier = true
+      layer = os_construction.getLayer(idx).to_OpaqueMaterial.get
+      assert(idx == 0 || idx == expected_layer_names.size - 1) # Must be the interior layer of the construction
+      assert_in_delta(radiant_barrier_emittance, layer.thermalAbsorptance, 0.1)
+      assert_equal(0.05, layer.solarAbsorptance)
+    end
+    assert(has_radiant_barrier) unless radiant_barrier_emittance.nil?
+
     # Check interior finish solar absorptance and emittance
-    if expected_layer_names[-1] == 'radiant barrier'
-      interior_layer = os_construction.getLayer(os_construction.numLayers - 1).to_OpaqueMaterial.get
-      assert_operator(interior_layer.solarAbsorptance, :<, 0.1)
-      assert_operator(interior_layer.thermalAbsorptance, :<, 0.1)
-    elsif hpxml_surface.respond_to?(:interior_finish_type) && hpxml_surface.interior_finish_type != HPXML::InteriorFinishNone
+    if hpxml_surface.respond_to?(:interior_finish_type) && hpxml_surface.interior_finish_type != HPXML::InteriorFinishNone && !has_radiant_barrier
       interior_layer = os_construction.getLayer(os_construction.numLayers - 1).to_OpaqueMaterial.get
       assert_equal(0.6, interior_layer.solarAbsorptance)
       assert_equal(0.9, interior_layer.thermalAbsorptance)

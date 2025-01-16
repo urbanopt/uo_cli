@@ -49,7 +49,7 @@
         "ns_to_ew_ratio": 0,
         "wwr": 0,
         "party_wall_fraction": 0,
-        "story_multiplier": "None",
+        "story_multiplier_method": "None",
         "bar_division_method": "Multiple Space Types - Individual Stories Sliced"
       }
     },{
@@ -147,8 +147,8 @@
       "arguments": {
         "__SKIP__": true,
         "epd_reduce_percent": 50,
-        "start_time": "17:00:00",
-        "end_time": "21:00:00",
+        "start_time1": "17:00:00",
+        "end_time1": "21:00:00",
         "start_date1": "07-01",
         "end_date1": "08-31"
       }
@@ -158,17 +158,17 @@
       "arguments": {
         "__SKIP__": true,
         "cooling_adjustment": 2,
-        "cooling_daily_starttime": "16:01:00",
-        "cooling_daily_endtime": "20:00:00",
-        "cooling_startdate": "06-01",
-        "cooling_enddate": "09-30",
+        "cooling_start_time1": "16:01:00",
+        "cooling_end_time1": "20:00:00",
+        "cooling_start_date1": "06-01",
+        "cooling_end_date1": "09-30",
         "heating_adjustment": 2,
-        "heating_daily_starttime": "16:01:00",
-        "heating_daily_endtime": "20:00:00",
-        "heating_startdate_1": "01-01",
-        "heating_enddate_1": "05-31",
-        "heating_startdate_2": "10-01",
-        "heating_enddate_2": "12-31"
+        "heating_start_time1": "16:01:00",
+        "heating_end_time1": "20:00:00",
+        "heating_start_date1": "01-01",
+        "heating_end_date1": "05-31",
+        "heating_start_date2": "10-01",
+        "heating_end_date2": "12-31"
       }
     },{
       "measure_dir_name": "IncreaseInsulationRValueForExteriorWalls",
@@ -232,10 +232,6 @@
       "measure_dir_name": "generic_qaqc",
       "arguments": {
         "template": "90.1-2004",
-        "check_eui_reasonableness": true,
-        "check_eui_reasonableness_tol": 0.25,
-        "check_eui_by_end_use": true,
-        "check_eui_by_end_use_tol": 0.25,
         "check_mech_sys_part_load_eff": true,
         "check_mech_sys_part_load_eff_tol": 0.25,
         "check_mech_sys_capacity": false,

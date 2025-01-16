@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-ruby '~> 2.7.0'
+ruby '3.2.2'
 
 # Local gems are useful when developing and integrating the various dependencies.
 # To favor the use of local gems, set the following environment variable:
@@ -16,83 +16,80 @@ allow_local = ENV['FAVOR_LOCAL_GEMS']
 # if allow_local && File.exist?('../OpenStudio-extension-gem')
 #   gem 'openstudio-extension', path: '../OpenStudio-extension-gem'
 # elsif allow_local
-#   gem 'openstudio-extension', github: 'NREL/openstudio-extension-gem', branch: 'develop'
+  # gem 'openstudio-extension', github: 'NREL/openstudio-extension-gem', branch: 'develop'
+# else
+gem 'openstudio-extension', '~> 0.8.3'
 # end
 
 # if allow_local && File.exist?('../urbanopt-core-gem')
 #  gem 'urbanopt-core', path: '../../urbanopt-core-gem'
 # elsif allow_local
-#  gem 'urbanopt-core', github: 'URBANopt/urbanopt-core-gem', branch: 'develop'
+ gem 'urbanopt-core', github: 'URBANopt/urbanopt-core-gem', branch: 'os39'
 # end
-
-# pin this dependency to avoid unicode_normalize error
-gem 'addressable', '2.8.1'
-# pin this dependency to avoid using racc dependency (which has native extensions)
-gem 'parser', '3.2.2.2'
 
 if allow_local && File.exist?('../openstudio-common-measures-gem')
   gem 'openstudio-common-measures', path: '../../openstudio-common-measures-gem'
 elsif allow_local
-  gem 'openstudio-common-measures', github: 'NREL/openstudio-common-measures-gem', branch: 'develop'
+  gem 'openstudio-common-measures', github: 'NREL/openstudio-common-measures-gem', branch: '0.11.0-prep'
 else
-  gem 'openstudio-common-measures', '~> 0.9.0'
+  gem 'openstudio-common-measures', '~> 0.11.1'
 end
 
 if allow_local && File.exist?('../openstudio-model-articulation-gem')
   gem 'openstudio-model-articulation', path: '../openstudio-model-articulation-gem'
 elsif allow_local
-  gem 'openstudio-model-articulation', github: 'NREL/openstudio-model-articulation-gem', branch: 'develop'
+  gem 'openstudio-model-articulation', github: 'NREL/openstudio-model-articulation-gem', branch: '0.11.0-prep'
 else
-  gem 'openstudio-model-articulation', '~> 0.9.0'
+  gem 'openstudio-model-articulation', '~> 0.11.1'
 end
 
 if allow_local && File.exist?('../openstudio-load-flexibility-measures-gem')
   gem 'openstudio-load-flexibility-measures', path: '../openstudio-load-flexibility-measures-gem'
 elsif allow_local
-  gem 'openstudio-load-flexibility-measures', github: 'NREL/openstudio-load-flexibility-measures-gem', branch: 'develop'
+  gem 'openstudio-load-flexibility-measures', github: 'NREL/openstudio-load-flexibility-measures-gem', branch: '0.10.0-prep'
 else
-  gem 'openstudio-load-flexibility-measures', '~> 0.8.0'
+  gem 'openstudio-load-flexibility-measures', '~> 0.10.1'
 end
 
 if allow_local && File.exist?('../openstudio-ee-gem')
   gem 'openstudio-ee', path: '../openstudio-ee-gem'
 elsif allow_local
-  gem 'openstudio-ee', github: 'NREL/openstudio-ee-gem', branch: 'develop'
+  gem 'openstudio-ee', github: 'NREL/openstudio-ee-gem', branch: '0.11.0-prep'
 else
-  gem 'openstudio-ee', '~> 0.9.0'
+  gem 'openstudio-ee', '~> 0.11.1'
 end
 
 if allow_local && File.exist?('../openstudio-calibration-gem')
   gem 'openstudio-calibration', path: '../openstudio-calibration-gem'
 elsif allow_local
-  gem 'openstudio-calibration', github: 'NREL/openstudio-calibration-gem', branch: 'develop'
+  gem 'openstudio-calibration', github: 'NREL/openstudio-calibration-gem', branch: '0.11.0-prep'
 else
-  gem 'openstudio-calibration', '~> 0.9.0'
+  gem 'openstudio-calibration', '~> 0.11.1'
 end
 
-if allow_local && File.exist?('../../openstudio-geb')
-  gem 'openstudio-geb', path: '../../../openstudio-geb-gem'
-elsif allow_local
-  gem 'openstudio-geb', github: 'LBNL-ETA/openstudio-geb-gem', branch: 'master'
-else
-  gem 'openstudio-geb', '~> 0.4.0'
-end
+# if allow_local && File.exist?('../../openstudio-geb')
+#   gem 'openstudio-geb', path: '../../../openstudio-geb-gem'
+# elsif allow_local
+  gem 'openstudio-geb', github: 'LBNL-ETA/openstudio-geb-gem', branch: 'ext-gem-patch'
+# else
+#   gem 'openstudio-geb', '~> 0.4.0'
+# end
 
-if allow_local && File.exist?('../urbanopt-geojson-gem')
-  gem 'urbanopt-geojson', path: '../../urbanopt-geojson-gem'
-elsif allow_local
-  gem 'urbanopt-geojson', github: 'URBANopt/urbanopt-geojson-gem', branch: 'develop'
-else
-  gem 'urbanopt-geojson', '~> 0.11.2'
-end
+# if allow_local && File.exist?('../urbanopt-geojson-gem')
+#   gem 'urbanopt-geojson', path: '../../urbanopt-geojson-gem'
+# elsif allow_local
+  gem 'urbanopt-geojson', github: 'URBANopt/urbanopt-geojson-gem', branch: 'os39'
+# else
+#   gem 'urbanopt-geojson', '~> 0.11.2'
+# end
 
 # NEVER put SCENARIO-GEM in this file...it will make all simulations fail due to the sqlite dependency
 # gem 'urbanopt-scenario', github: 'URBANopt/urbanopt-scenario-gem', branch: 'develop'
 
-if allow_local && File.exist?('../urbanopt-reporting-gem')
-  gem 'urbanopt-reporting', path: '../../urbanopt-reporting-gem'
-elsif allow_local
-  gem 'urbanopt-reporting', github: 'URBANopt/urbanopt-reporting-gem', branch: 'develop'
-else
-  gem 'urbanopt-reporting', '~> 0.10.1'
-end
+# if allow_local && File.exist?('../urbanopt-reporting-gem')
+#   gem 'urbanopt-reporting', path: '../../urbanopt-reporting-gem'
+# elsif allow_local
+  gem 'urbanopt-reporting', github: 'URBANopt/urbanopt-reporting-gem', branch: 'os39'
+# else
+#   gem 'urbanopt-reporting', '~> 0.10.1'
+# end

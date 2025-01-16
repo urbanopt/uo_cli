@@ -3,12 +3,14 @@
   <XMLTransactionHeaderInformation>
     <XMLType>HPXML</XMLType>
     <XMLGeneratedBy>BuildResidentialHPXML</XMLGeneratedBy>
-    <CreatedDateAndTime>2024-03-12T17:24:11-07:00</CreatedDateAndTime>
+    <CreatedDateAndTime>2024-07-26T09:34:04-06:00</CreatedDateAndTime>
     <Transaction>create</Transaction>
   </XMLTransactionHeaderInformation>
   <SoftwareInfo>
     <SoftwareProgramUsed>URBANopt</SoftwareProgramUsed>
+    <SoftwareProgramVersion>0.10.0</SoftwareProgramVersion>
     <extension>
+      <WholeSFAorMFBuildingSimulation>true</WholeSFAorMFBuildingSimulation>
       <SimulationControl>
         <Timestep>60</Timestep>
         <BeginMonth>1</BeginMonth>
@@ -16,7 +18,9 @@
         <EndMonth>12</EndMonth>
         <EndDayOfMonth>31</EndDayOfMonth>
         <CalendarYear>2017</CalendarYear>
-        <TemperatureCapacitanceMultiplier>1.0</TemperatureCapacitanceMultiplier>
+        <AdvancedResearchFeatures>
+          <TemperatureCapacitanceMultiplier>7.0</TemperatureCapacitanceMultiplier>
+        </AdvancedResearchFeatures>
       </SimulationControl>
     </extension>
   </SoftwareInfo>
@@ -25,8 +29,14 @@
     <Site>
       <SiteID id='SiteID'/>
       <Address>
+        <CityMunicipality>Buffalo Niagara Intl Ap</CityMunicipality>
         <StateCode>NY</StateCode>
       </Address>
+      <GeoLocation>
+        <Latitude>42.93</Latitude>
+        <Longitude>-78.73</Longitude>
+      </GeoLocation>
+      <Elevation>705.4</Elevation>
       <TimeZone>
         <UTCOffset>-5.0</UTCOffset>
         <DSTObserved>true</DSTObserved>
@@ -47,22 +57,32 @@
           <SiteType>suburban</SiteType>
           <Surroundings>attached on one side</Surroundings>
           <VerticalSurroundings>no units above or below</VerticalSurroundings>
-          <ShieldingofHome>normal</ShieldingofHome>
+          <ShieldingofHome>well-shielded</ShieldingofHome>
           <AzimuthOfFrontOfHome>180</AzimuthOfFrontOfHome>
-          <extension>
-            <GroundConductivity>1.0</GroundConductivity>
-          </extension>
+          <Soil>
+            <SoilType>unknown</SoilType>
+            <MoistureType>mixed</MoistureType>
+            <Conductivity>1.0</Conductivity>
+            <extension>
+              <Diffusivity>0.0208</Diffusivity>
+            </extension>
+          </Soil>
         </Site>
         <BuildingOccupancy>
           <extension>
-            <WeekdayScheduleFractions>0.061, 0.061, 0.061, 0.061, 0.061, 0.061, 0.061, 0.053, 0.025, 0.015, 0.015, 0.015, 0.015, 0.015, 0.015, 0.015, 0.018, 0.033, 0.054, 0.054, 0.054, 0.061, 0.061, 0.061</WeekdayScheduleFractions>
-            <WeekendScheduleFractions>0.061, 0.061, 0.061, 0.061, 0.061, 0.061, 0.061, 0.053, 0.025, 0.015, 0.015, 0.015, 0.015, 0.015, 0.015, 0.015, 0.018, 0.033, 0.054, 0.054, 0.054, 0.061, 0.061, 0.061</WeekendScheduleFractions>
+            <WeekdayScheduleFractions>0.035, 0.035, 0.035, 0.035, 0.035, 0.059, 0.082, 0.055, 0.027, 0.014, 0.014, 0.014, 0.014, 0.014, 0.019, 0.027, 0.041, 0.055, 0.068, 0.082, 0.082, 0.070, 0.053, 0.035</WeekdayScheduleFractions>
+            <WeekendScheduleFractions>0.035, 0.035, 0.035, 0.035, 0.035, 0.059, 0.082, 0.055, 0.027, 0.014, 0.014, 0.014, 0.014, 0.014, 0.019, 0.027, 0.041, 0.055, 0.068, 0.082, 0.082, 0.070, 0.053, 0.035</WeekendScheduleFractions>
             <MonthlyScheduleMultipliers>1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0</MonthlyScheduleMultipliers>
+            <GeneralWaterUseUsageMultiplier>1.0</GeneralWaterUseUsageMultiplier>
+            <GeneralWaterUseWeekdayScheduleFractions>0.023, 0.021, 0.021, 0.025, 0.027, 0.038, 0.044, 0.039, 0.037, 0.037, 0.034, 0.035, 0.035, 0.035, 0.039, 0.043, 0.051, 0.064, 0.065, 0.072, 0.073, 0.063, 0.045, 0.034</GeneralWaterUseWeekdayScheduleFractions>
+            <GeneralWaterUseWeekendScheduleFractions>0.023, 0.021, 0.021, 0.025, 0.027, 0.038, 0.044, 0.039, 0.037, 0.037, 0.034, 0.035, 0.035, 0.035, 0.039, 0.043, 0.051, 0.064, 0.065, 0.072, 0.073, 0.063, 0.045, 0.034</GeneralWaterUseWeekendScheduleFractions>
+            <GeneralWaterUseMonthlyScheduleMultipliers>1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0</GeneralWaterUseMonthlyScheduleMultipliers>
           </extension>
         </BuildingOccupancy>
         <BuildingConstruction>
           <ResidentialFacilityType>single-family attached</ResidentialFacilityType>
           <NumberofUnits>1</NumberofUnits>
+          <NumberofUnitsInBuilding>4</NumberofUnitsInBuilding>
           <NumberofConditionedFloors>2.0</NumberofConditionedFloors>
           <NumberofConditionedFloorsAboveGrade>2.0</NumberofConditionedFloorsAboveGrade>
           <AverageCeilingHeight>8.0</AverageCeilingHeight>
@@ -77,9 +97,11 @@
             <ManualJInputs>
               <HeatingDesignTemperature>6.62</HeatingDesignTemperature>
               <CoolingDesignTemperature>84.02</CoolingDesignTemperature>
+              <DailyTemperatureRange>medium</DailyTemperatureRange>
               <HeatingSetpoint>70.0</HeatingSetpoint>
               <CoolingSetpoint>75.0</CoolingSetpoint>
               <HumiditySetpoint>0.5</HumiditySetpoint>
+              <HumidityDifference>23.2</HumidityDifference>
               <InternalLoadsSensible>2400.0</InternalLoadsSensible>
               <InternalLoadsLatent>0.0</InternalLoadsLatent>
               <NumberofOccupants>2</NumberofOccupants>
@@ -297,6 +319,7 @@
             <InteriorFinish>
               <Type>none</Type>
             </InteriorFinish>
+            <RadiantBarrier>false</RadiantBarrier>
             <Insulation>
               <SystemIdentifier id='Wall5Insulation'/>
               <AssemblyEffectiveRValue>4.0</AssemblyEffectiveRValue>
@@ -320,6 +343,7 @@
             <InteriorFinish>
               <Type>none</Type>
             </InteriorFinish>
+            <RadiantBarrier>false</RadiantBarrier>
             <Insulation>
               <SystemIdentifier id='Wall6Insulation'/>
               <AssemblyEffectiveRValue>4.0</AssemblyEffectiveRValue>
@@ -340,6 +364,7 @@
               <Type>gypsum board</Type>
               <Thickness>0.5</Thickness>
             </InteriorFinish>
+            <RadiantBarrier>false</RadiantBarrier>
             <Insulation>
               <SystemIdentifier id='Floor1Insulation'/>
               <AssemblyEffectiveRValue>38.46153846</AssemblyEffectiveRValue>
@@ -369,6 +394,7 @@
               </Layer>
             </UnderSlabInsulation>
             <extension>
+              <GapInsulationRValue>0.0</GapInsulationRValue>
               <CarpetFraction>0.8</CarpetFraction>
               <CarpetRValue>2.0</CarpetRValue>
             </extension>
@@ -389,8 +415,8 @@
             </ExteriorShading>
             <InteriorShading>
               <SystemIdentifier id='Window1InteriorShading'/>
-              <SummerShadingCoefficient>0.7</SummerShadingCoefficient>
-              <WinterShadingCoefficient>0.85</WinterShadingCoefficient>
+              <SummerShadingCoefficient>0.8360000000000001</SummerShadingCoefficient>
+              <WinterShadingCoefficient>0.8360000000000001</WinterShadingCoefficient>
             </InteriorShading>
             <Overhangs>
               <Depth>2.0</Depth>
@@ -414,8 +440,8 @@
             </ExteriorShading>
             <InteriorShading>
               <SystemIdentifier id='Window2InteriorShading'/>
-              <SummerShadingCoefficient>0.7</SummerShadingCoefficient>
-              <WinterShadingCoefficient>0.85</WinterShadingCoefficient>
+              <SummerShadingCoefficient>0.8360000000000001</SummerShadingCoefficient>
+              <WinterShadingCoefficient>0.8360000000000001</WinterShadingCoefficient>
             </InteriorShading>
             <Overhangs>
               <Depth>2.0</Depth>
@@ -439,8 +465,8 @@
             </ExteriorShading>
             <InteriorShading>
               <SystemIdentifier id='Window3InteriorShading'/>
-              <SummerShadingCoefficient>0.7</SummerShadingCoefficient>
-              <WinterShadingCoefficient>0.85</WinterShadingCoefficient>
+              <SummerShadingCoefficient>0.8360000000000001</SummerShadingCoefficient>
+              <WinterShadingCoefficient>0.8360000000000001</WinterShadingCoefficient>
             </InteriorShading>
             <Overhangs>
               <Depth>2.0</Depth>
@@ -464,8 +490,8 @@
             </ExteriorShading>
             <InteriorShading>
               <SystemIdentifier id='Window4InteriorShading'/>
-              <SummerShadingCoefficient>0.7</SummerShadingCoefficient>
-              <WinterShadingCoefficient>0.85</WinterShadingCoefficient>
+              <SummerShadingCoefficient>0.8360000000000001</SummerShadingCoefficient>
+              <WinterShadingCoefficient>0.8360000000000001</WinterShadingCoefficient>
             </InteriorShading>
             <Overhangs>
               <Depth>2.0</Depth>
@@ -489,8 +515,8 @@
             </ExteriorShading>
             <InteriorShading>
               <SystemIdentifier id='Window5InteriorShading'/>
-              <SummerShadingCoefficient>0.7</SummerShadingCoefficient>
-              <WinterShadingCoefficient>0.85</WinterShadingCoefficient>
+              <SummerShadingCoefficient>0.8360000000000001</SummerShadingCoefficient>
+              <WinterShadingCoefficient>0.8360000000000001</WinterShadingCoefficient>
             </InteriorShading>
             <Overhangs>
               <Depth>2.0</Depth>
@@ -514,8 +540,8 @@
             </ExteriorShading>
             <InteriorShading>
               <SystemIdentifier id='Window6InteriorShading'/>
-              <SummerShadingCoefficient>0.7</SummerShadingCoefficient>
-              <WinterShadingCoefficient>0.85</WinterShadingCoefficient>
+              <SummerShadingCoefficient>0.8360000000000001</SummerShadingCoefficient>
+              <WinterShadingCoefficient>0.8360000000000001</WinterShadingCoefficient>
             </InteriorShading>
             <Overhangs>
               <Depth>2.0</Depth>
@@ -567,7 +593,7 @@
                 </Furnace>
               </HeatingSystemType>
               <HeatingSystemFuel>fuel oil</HeatingSystemFuel>
-              <HeatingCapacity>67769.0</HeatingCapacity>
+              <HeatingCapacity>64842.0</HeatingCapacity>
               <AnnualHeatingEfficiency>
                 <Units>AFUE</Units>
                 <Value>0.85</Value>
@@ -576,7 +602,8 @@
               <extension>
                 <FanPowerWattsPerCFM>0.5</FanPowerWattsPerCFM>
                 <AirflowDefectRatio>0.0</AirflowDefectRatio>
-                <HeatingAirflowCFM>1259.0</HeatingAirflowCFM>
+                <HeatingAirflowCFM>1204.0</HeatingAirflowCFM>
+                <HeatingAutosizingFactor>1.0</HeatingAutosizingFactor>
               </extension>
             </HeatingSystem>
             <CoolingSystem>
@@ -584,7 +611,7 @@
               <UnitLocation>conditioned space</UnitLocation>
               <CoolingSystemType>room air conditioner</CoolingSystemType>
               <CoolingSystemFuel>electricity</CoolingSystemFuel>
-              <CoolingCapacity>14036.0</CoolingCapacity>
+              <CoolingCapacity>15106.0</CoolingCapacity>
               <CompressorType>single stage</CompressorType>
               <FractionCoolLoadServed>1.0</FractionCoolLoadServed>
               <AnnualCoolingEfficiency>
@@ -593,15 +620,16 @@
               </AnnualCoolingEfficiency>
               <SensibleHeatFraction>0.65</SensibleHeatFraction>
               <extension>
-                <CoolingAirflowCFM>365.0</CoolingAirflowCFM>
+                <CoolingAirflowCFM>393.0</CoolingAirflowCFM>
                 <CrankcaseHeaterPowerWatts>0.0</CrankcaseHeaterPowerWatts>
+                <CoolingAutosizingFactor>1.0</CoolingAutosizingFactor>
               </extension>
             </CoolingSystem>
             <extension>
               <DesignLoads dataSource='software'>
                 <Heating>
-                  <Total>67769.0</Total>
-                  <Ducts>26988.0</Ducts>
+                  <Total>64842.0</Total>
+                  <Ducts>25792.0</Ducts>
                   <Windows>9883.0</Windows>
                   <Skylights>0.0</Skylights>
                   <Doors>288.0</Doors>
@@ -610,26 +638,31 @@
                   <Floors>0.0</Floors>
                   <Slabs>5707.0</Slabs>
                   <Ceilings>3774.0</Ceilings>
-                  <InfilVent>12764.0</InfilVent>
+                  <Infiltration>10292.0</Infiltration>
+                  <Ventilation>740.0</Ventilation>
                 </Heating>
                 <CoolingSensible>
-                  <Total>11768.0</Total>
+                  <Total>13052.0</Total>
                   <Ducts>0.0</Ducts>
-                  <Windows>5346.0</Windows>
+                  <Windows>6028.0</Windows>
                   <Skylights>0.0</Skylights>
                   <Doors>91.0</Doors>
-                  <Walls>607.0</Walls>
+                  <Walls>961.0</Walls>
                   <Roofs>0.0</Roofs>
                   <Floors>0.0</Floors>
                   <Slabs>0.0</Slabs>
                   <Ceilings>2026.0</Ceilings>
-                  <InfilVent>838.0</InfilVent>
+                  <Infiltration>584.0</Infiltration>
+                  <Ventilation>105.0</Ventilation>
                   <InternalLoads>2860.0</InternalLoads>
+                  <AEDExcursion>397.0</AEDExcursion>
+                  <AEDCurve>9175, 10676, 11793, 12960, 12916, 12681, 11115, 9569, 7955, 7597, 6479, 3054</AEDCurve>
                 </CoolingSensible>
                 <CoolingLatent>
-                  <Total>2062.0</Total>
+                  <Total>1832.0</Total>
                   <Ducts>0.0</Ducts>
-                  <InfilVent>1662.0</InfilVent>
+                  <Infiltration>929.0</Infiltration>
+                  <Ventilation>503.0</Ventilation>
                   <InternalLoads>400.0</InternalLoads>
                 </CoolingLatent>
               </DesignLoads>
@@ -678,12 +711,13 @@
                   <DuctType>supply</DuctType>
                   <DuctInsulationRValue>8.0</DuctInsulationRValue>
                   <DuctBuriedInsulationLevel>not buried</DuctBuriedInsulationLevel>
-                  <DuctEffectiveRValue>6.738999999999999</DuctEffectiveRValue>
+                  <DuctEffectiveRValue>6.94</DuctEffectiveRValue>
                   <DuctLocation>attic - vented</DuctLocation>
                   <FractionDuctArea>0.75</FractionDuctArea>
                   <DuctSurfaceArea>927.45</DuctSurfaceArea>
                   <extension>
                     <DuctSurfaceAreaMultiplier>1.0</DuctSurfaceAreaMultiplier>
+                    <DuctFractionRectangular>0.25</DuctFractionRectangular>
                   </extension>
                 </Ducts>
                 <Ducts>
@@ -691,12 +725,13 @@
                   <DuctType>return</DuctType>
                   <DuctInsulationRValue>8.0</DuctInsulationRValue>
                   <DuctBuriedInsulationLevel>not buried</DuctBuriedInsulationLevel>
-                  <DuctEffectiveRValue>7.6812000000000005</DuctEffectiveRValue>
+                  <DuctEffectiveRValue>9.0</DuctEffectiveRValue>
                   <DuctLocation>attic - vented</DuctLocation>
                   <FractionDuctArea>0.75</FractionDuctArea>
                   <DuctSurfaceArea>343.5</DuctSurfaceArea>
                   <extension>
                     <DuctSurfaceAreaMultiplier>1.0</DuctSurfaceAreaMultiplier>
+                    <DuctFractionRectangular>1.0</DuctFractionRectangular>
                   </extension>
                 </Ducts>
                 <Ducts>
@@ -704,12 +739,13 @@
                   <DuctType>supply</DuctType>
                   <DuctInsulationRValue>8.0</DuctInsulationRValue>
                   <DuctBuriedInsulationLevel>not buried</DuctBuriedInsulationLevel>
-                  <DuctEffectiveRValue>6.738999999999999</DuctEffectiveRValue>
+                  <DuctEffectiveRValue>6.94</DuctEffectiveRValue>
                   <DuctLocation>conditioned space</DuctLocation>
                   <FractionDuctArea>0.25</FractionDuctArea>
                   <DuctSurfaceArea>309.15000000000003</DuctSurfaceArea>
                   <extension>
                     <DuctSurfaceAreaMultiplier>1.0</DuctSurfaceAreaMultiplier>
+                    <DuctFractionRectangular>0.25</DuctFractionRectangular>
                   </extension>
                 </Ducts>
                 <Ducts>
@@ -717,12 +753,13 @@
                   <DuctType>return</DuctType>
                   <DuctInsulationRValue>8.0</DuctInsulationRValue>
                   <DuctBuriedInsulationLevel>not buried</DuctBuriedInsulationLevel>
-                  <DuctEffectiveRValue>7.6812000000000005</DuctEffectiveRValue>
+                  <DuctEffectiveRValue>9.0</DuctEffectiveRValue>
                   <DuctLocation>conditioned space</DuctLocation>
                   <FractionDuctArea>0.25</FractionDuctArea>
                   <DuctSurfaceArea>114.5</DuctSurfaceArea>
                   <extension>
                     <DuctSurfaceAreaMultiplier>1.0</DuctSurfaceAreaMultiplier>
+                    <DuctFractionRectangular>1.0</DuctFractionRectangular>
                   </extension>
                 </Ducts>
                 <NumberofReturnRegisters>2</NumberofReturnRegisters>
@@ -736,13 +773,13 @@
             <VentilationFan>
               <SystemIdentifier id='VentilationFan1'/>
               <FanType>energy recovery ventilator</FanType>
-              <RatedFlowRate>71.2</RatedFlowRate>
+              <RatedFlowRate>71.4</RatedFlowRate>
               <HoursInOperation>24.0</HoursInOperation>
               <UsedForWholeBuildingVentilation>true</UsedForWholeBuildingVentilation>
               <IsSharedSystem>false</IsSharedSystem>
               <TotalRecoveryEfficiency>0.48</TotalRecoveryEfficiency>
               <SensibleRecoveryEfficiency>0.72</SensibleRecoveryEfficiency>
-              <FanPower>71.2</FanPower>
+              <FanPower>71.4</FanPower>
             </VentilationFan>
             <VentilationFan>
               <SystemIdentifier id='VentilationFan2'/>
@@ -810,8 +847,8 @@
           </WaterFixture>
           <extension>
             <WaterFixturesUsageMultiplier>1.0</WaterFixturesUsageMultiplier>
-            <WaterFixturesWeekdayScheduleFractions>0.012, 0.006, 0.004, 0.005, 0.010, 0.034, 0.078, 0.087, 0.080, 0.067, 0.056, 0.047, 0.040, 0.035, 0.033, 0.031, 0.039, 0.051, 0.060, 0.060, 0.055, 0.048, 0.038, 0.026</WaterFixturesWeekdayScheduleFractions>
-            <WaterFixturesWeekendScheduleFractions>0.012, 0.006, 0.004, 0.005, 0.010, 0.034, 0.078, 0.087, 0.080, 0.067, 0.056, 0.047, 0.040, 0.035, 0.033, 0.031, 0.039, 0.051, 0.060, 0.060, 0.055, 0.048, 0.038, 0.026</WaterFixturesWeekendScheduleFractions>
+            <WaterFixturesWeekdayScheduleFractions>0.012, 0.006, 0.004, 0.005, 0.010, 0.034, 0.078, 0.086, 0.080, 0.067, 0.056, 0.047, 0.040, 0.035, 0.033, 0.031, 0.038, 0.051, 0.060, 0.060, 0.055, 0.048, 0.038, 0.026</WaterFixturesWeekdayScheduleFractions>
+            <WaterFixturesWeekendScheduleFractions>0.012, 0.006, 0.004, 0.005, 0.010, 0.034, 0.078, 0.086, 0.080, 0.067, 0.056, 0.047, 0.040, 0.035, 0.033, 0.031, 0.038, 0.051, 0.060, 0.060, 0.055, 0.048, 0.038, 0.026</WaterFixturesWeekendScheduleFractions>
             <WaterFixturesMonthlyScheduleMultipliers>1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0</WaterFixturesMonthlyScheduleMultipliers>
           </extension>
         </WaterHeating>
@@ -830,9 +867,9 @@
           <Capacity>4.5</Capacity>
           <extension>
             <UsageMultiplier>1.0</UsageMultiplier>
-            <WeekdayScheduleFractions>0.009, 0.007, 0.004, 0.004, 0.007, 0.011, 0.022, 0.049, 0.073, 0.086, 0.084, 0.075, 0.067, 0.060, 0.049, 0.052, 0.050, 0.049, 0.049, 0.049, 0.049, 0.047, 0.032, 0.017</WeekdayScheduleFractions>
-            <WeekendScheduleFractions>0.009, 0.007, 0.004, 0.004, 0.007, 0.011, 0.022, 0.049, 0.073, 0.086, 0.084, 0.075, 0.067, 0.060, 0.049, 0.052, 0.050, 0.049, 0.049, 0.049, 0.049, 0.047, 0.032, 0.017</WeekendScheduleFractions>
-            <MonthlyScheduleMultipliers>1.011, 1.002, 1.022, 1.020, 1.022, 0.996, 0.999, 0.999, 0.996, 0.964, 0.959, 1.011</MonthlyScheduleMultipliers>
+            <WeekdayScheduleFractions>0.009, 0.007, 0.004, 0.004, 0.007, 0.011, 0.022, 0.049, 0.073, 0.086, 0.084, 0.075, 0.067, 0.060, 0.049, 0.051, 0.050, 0.049, 0.049, 0.049, 0.049, 0.047, 0.032, 0.017</WeekdayScheduleFractions>
+            <WeekendScheduleFractions>0.009, 0.007, 0.004, 0.004, 0.007, 0.011, 0.022, 0.049, 0.073, 0.086, 0.084, 0.075, 0.067, 0.060, 0.049, 0.051, 0.050, 0.049, 0.049, 0.049, 0.049, 0.047, 0.032, 0.017</WeekendScheduleFractions>
+            <MonthlyScheduleMultipliers>1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0</MonthlyScheduleMultipliers>
           </extension>
         </ClothesWasher>
         <ClothesDryer>
@@ -845,8 +882,8 @@
           <VentedFlowRate>100.0</VentedFlowRate>
           <extension>
             <UsageMultiplier>1.0</UsageMultiplier>
-            <WeekdayScheduleFractions>0.010, 0.006, 0.004, 0.002, 0.004, 0.006, 0.016, 0.032, 0.048, 0.068, 0.078, 0.081, 0.074, 0.067, 0.057, 0.061, 0.055, 0.054, 0.051, 0.051, 0.052, 0.054, 0.044, 0.024</WeekdayScheduleFractions>
-            <WeekendScheduleFractions>0.010, 0.006, 0.004, 0.002, 0.004, 0.006, 0.016, 0.032, 0.048, 0.068, 0.078, 0.081, 0.074, 0.067, 0.057, 0.061, 0.055, 0.054, 0.051, 0.051, 0.052, 0.054, 0.044, 0.024</WeekendScheduleFractions>
+            <WeekdayScheduleFractions>0.010, 0.006, 0.004, 0.002, 0.004, 0.006, 0.016, 0.032, 0.048, 0.068, 0.078, 0.081, 0.074, 0.067, 0.058, 0.061, 0.055, 0.054, 0.051, 0.051, 0.052, 0.054, 0.044, 0.024</WeekdayScheduleFractions>
+            <WeekendScheduleFractions>0.010, 0.006, 0.004, 0.002, 0.004, 0.006, 0.016, 0.032, 0.048, 0.068, 0.078, 0.081, 0.074, 0.067, 0.058, 0.061, 0.055, 0.054, 0.051, 0.051, 0.052, 0.054, 0.044, 0.024</WeekendScheduleFractions>
             <MonthlyScheduleMultipliers>1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0</MonthlyScheduleMultipliers>
           </extension>
         </ClothesDryer>
@@ -862,9 +899,9 @@
           <LabelUsage>4.0</LabelUsage>
           <extension>
             <UsageMultiplier>1.0</UsageMultiplier>
-            <WeekdayScheduleFractions>0.015, 0.007, 0.005, 0.003, 0.003, 0.010, 0.020, 0.031, 0.058, 0.065, 0.056, 0.048, 0.041, 0.046, 0.036, 0.038, 0.038, 0.049, 0.087, 0.111, 0.090, 0.067, 0.044, 0.031</WeekdayScheduleFractions>
-            <WeekendScheduleFractions>0.015, 0.007, 0.005, 0.003, 0.003, 0.010, 0.020, 0.031, 0.058, 0.065, 0.056, 0.048, 0.041, 0.046, 0.036, 0.038, 0.038, 0.049, 0.087, 0.111, 0.090, 0.067, 0.044, 0.031</WeekendScheduleFractions>
-            <MonthlyScheduleMultipliers>1.097, 1.097, 0.991, 0.987, 0.991, 0.890, 0.896, 0.896, 0.890, 1.085, 1.085, 1.097</MonthlyScheduleMultipliers>
+            <WeekdayScheduleFractions>0.015, 0.007, 0.005, 0.003, 0.003, 0.010, 0.020, 0.031, 0.058, 0.065, 0.056, 0.048, 0.042, 0.046, 0.036, 0.038, 0.038, 0.049, 0.087, 0.111, 0.090, 0.067, 0.044, 0.031</WeekdayScheduleFractions>
+            <WeekendScheduleFractions>0.015, 0.007, 0.005, 0.003, 0.003, 0.010, 0.020, 0.031, 0.058, 0.065, 0.056, 0.048, 0.042, 0.046, 0.036, 0.038, 0.038, 0.049, 0.087, 0.111, 0.090, 0.067, 0.044, 0.031</WeekendScheduleFractions>
+            <MonthlyScheduleMultipliers>1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0</MonthlyScheduleMultipliers>
           </extension>
         </Dishwasher>
         <Refrigerator>
@@ -874,9 +911,8 @@
           <PrimaryIndicator>true</PrimaryIndicator>
           <extension>
             <UsageMultiplier>1.0</UsageMultiplier>
-            <WeekdayScheduleFractions>0.040, 0.039, 0.038, 0.037, 0.036, 0.036, 0.038, 0.040, 0.041, 0.041, 0.040, 0.040, 0.042, 0.042, 0.042, 0.041, 0.044, 0.048, 0.050, 0.048, 0.047, 0.046, 0.044, 0.041</WeekdayScheduleFractions>
-            <WeekendScheduleFractions>0.040, 0.039, 0.038, 0.037, 0.036, 0.036, 0.038, 0.040, 0.041, 0.041, 0.040, 0.040, 0.042, 0.042, 0.042, 0.041, 0.044, 0.048, 0.050, 0.048, 0.047, 0.046, 0.044, 0.041</WeekendScheduleFractions>
-            <MonthlyScheduleMultipliers>0.837, 0.835, 1.084, 1.084, 1.084, 1.096, 1.096, 1.096, 1.096, 0.931, 0.925, 0.837</MonthlyScheduleMultipliers>
+            <ConstantScheduleCoefficients>-0.487, -0.340, -0.370, -0.361, -0.515, -0.684, -0.471, -0.159, -0.079, -0.417, -0.411, -0.386, -0.240, -0.314, -0.160, -0.121, -0.469, -0.412, -0.091, 0.077, -0.118, -0.247, -0.445, -0.544</ConstantScheduleCoefficients>
+            <TemperatureScheduleCoefficients>0.019, 0.016, 0.017, 0.016, 0.018, 0.021, 0.019, 0.015, 0.015, 0.019, 0.018, 0.018, 0.016, 0.017, 0.015, 0.015, 0.020, 0.020, 0.017, 0.014, 0.016, 0.017, 0.019, 0.020</TemperatureScheduleCoefficients>
           </extension>
         </Refrigerator>
         <CookingRange>
@@ -886,9 +922,9 @@
           <IsInduction>false</IsInduction>
           <extension>
             <UsageMultiplier>1.0</UsageMultiplier>
-            <WeekdayScheduleFractions>0.007, 0.007, 0.004, 0.004, 0.007, 0.011, 0.025, 0.042, 0.046, 0.048, 0.042, 0.050, 0.057, 0.046, 0.057, 0.044, 0.092, 0.150, 0.117, 0.060, 0.035, 0.025, 0.016, 0.011</WeekdayScheduleFractions>
-            <WeekendScheduleFractions>0.007, 0.007, 0.004, 0.004, 0.007, 0.011, 0.025, 0.042, 0.046, 0.048, 0.042, 0.050, 0.057, 0.046, 0.057, 0.044, 0.092, 0.150, 0.117, 0.060, 0.035, 0.025, 0.016, 0.011</WeekendScheduleFractions>
-            <MonthlyScheduleMultipliers>1.097, 1.097, 0.991, 0.987, 0.991, 0.890, 0.896, 0.896, 0.890, 1.085, 1.085, 1.097</MonthlyScheduleMultipliers>
+            <WeekdayScheduleFractions>0.008, 0.008, 0.008, 0.008, 0.008, 0.015, 0.023, 0.039, 0.046, 0.046, 0.046, 0.054, 0.062, 0.046, 0.039, 0.054, 0.076, 0.134, 0.114, 0.058, 0.039, 0.031, 0.023, 0.015</WeekdayScheduleFractions>
+            <WeekendScheduleFractions>0.008, 0.008, 0.008, 0.008, 0.008, 0.015, 0.023, 0.039, 0.046, 0.046, 0.046, 0.054, 0.062, 0.046, 0.039, 0.054, 0.076, 0.134, 0.114, 0.058, 0.039, 0.031, 0.023, 0.015</WeekendScheduleFractions>
+            <MonthlyScheduleMultipliers>1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0</MonthlyScheduleMultipliers>
           </extension>
         </CookingRange>
         <Oven>
@@ -947,14 +983,11 @@
         </LightingGroup>
         <CeilingFan>
           <SystemIdentifier id='CeilingFan1'/>
-          <Airflow>
-            <FanSpeed>medium</FanSpeed>
-            <Efficiency>70.4225352112676</Efficiency>
-          </Airflow>
           <Count>2</Count>
+          <LabelEnergyUse>42.6</LabelEnergyUse>
           <extension>
-            <WeekdayScheduleFractions>0.057, 0.057, 0.057, 0.057, 0.057, 0.057, 0.057, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.057, 0.057, 0.057, 0.057, 0.057, 0.057</WeekdayScheduleFractions>
-            <WeekendScheduleFractions>0.057, 0.057, 0.057, 0.057, 0.057, 0.057, 0.057, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.057, 0.057, 0.057, 0.057, 0.057, 0.057</WeekendScheduleFractions>
+            <WeekdayScheduleFractions>0.057, 0.057, 0.057, 0.057, 0.057, 0.057, 0.057, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.052, 0.057, 0.057, 0.057, 0.057, 0.057</WeekdayScheduleFractions>
+            <WeekendScheduleFractions>0.057, 0.057, 0.057, 0.057, 0.057, 0.057, 0.057, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.052, 0.057, 0.057, 0.057, 0.057, 0.057</WeekendScheduleFractions>
             <MonthlyScheduleMultipliers>0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0</MonthlyScheduleMultipliers>
           </extension>
         </CeilingFan>
@@ -962,9 +995,12 @@
           <InteriorUsageMultiplier>1.0</InteriorUsageMultiplier>
           <GarageUsageMultiplier>1.0</GarageUsageMultiplier>
           <ExteriorUsageMultiplier>1.0</ExteriorUsageMultiplier>
-          <ExteriorWeekdayScheduleFractions>0.046, 0.046, 0.046, 0.046, 0.046, 0.037, 0.035, 0.034, 0.033, 0.028, 0.022, 0.015, 0.012, 0.011, 0.011, 0.012, 0.019, 0.037, 0.049, 0.065, 0.091, 0.105, 0.091, 0.063</ExteriorWeekdayScheduleFractions>
-          <ExteriorWeekendScheduleFractions>0.046, 0.046, 0.045, 0.045, 0.046, 0.045, 0.044, 0.041, 0.036, 0.03, 0.024, 0.016, 0.012, 0.011, 0.011, 0.012, 0.019, 0.038, 0.048, 0.06, 0.083, 0.098, 0.085, 0.059</ExteriorWeekendScheduleFractions>
-          <ExteriorMonthlyScheduleMultipliers>1.248, 1.257, 0.993, 0.989, 0.993, 0.827, 0.821, 0.821, 0.827, 0.99, 0.987, 1.248</ExteriorMonthlyScheduleMultipliers>
+          <InteriorWeekdayScheduleFractions>0.012, 0.010, 0.010, 0.010, 0.011, 0.018, 0.030, 0.038, 0.041, 0.041, 0.039, 0.037, 0.036, 0.035, 0.037, 0.041, 0.050, 0.065, 0.086, 0.106, 0.110, 0.079, 0.040, 0.018</InteriorWeekdayScheduleFractions>
+          <InteriorWeekendScheduleFractions>0.012, 0.010, 0.010, 0.010, 0.011, 0.018, 0.030, 0.038, 0.041, 0.041, 0.039, 0.037, 0.036, 0.035, 0.037, 0.041, 0.050, 0.065, 0.086, 0.106, 0.110, 0.079, 0.040, 0.018</InteriorWeekendScheduleFractions>
+          <InteriorMonthlyScheduleMultipliers>1.19, 1.11, 1.02, 0.93, 0.84, 0.80, 0.82, 0.88, 0.98, 1.07, 1.16, 1.20</InteriorMonthlyScheduleMultipliers>
+          <ExteriorWeekdayScheduleFractions>0.040, 0.037, 0.037, 0.035, 0.035, 0.039, 0.044, 0.041, 0.031, 0.025, 0.024, 0.024, 0.025, 0.028, 0.030, 0.035, 0.044, 0.056, 0.064, 0.068, 0.070, 0.065, 0.056, 0.047</ExteriorWeekdayScheduleFractions>
+          <ExteriorWeekendScheduleFractions>0.040, 0.037, 0.037, 0.035, 0.035, 0.039, 0.044, 0.041, 0.031, 0.025, 0.024, 0.024, 0.025, 0.028, 0.030, 0.035, 0.044, 0.056, 0.064, 0.068, 0.070, 0.065, 0.056, 0.047</ExteriorWeekendScheduleFractions>
+          <ExteriorMonthlyScheduleMultipliers>1.19, 1.11, 1.02, 0.93, 0.84, 0.80, 0.82, 0.88, 0.98, 1.07, 1.16, 1.20</ExteriorMonthlyScheduleMultipliers>
         </extension>
       </Lighting>
       <MiscLoads>
@@ -979,9 +1015,9 @@
             <FracSensible>1.0</FracSensible>
             <FracLatent>0.0</FracLatent>
             <UsageMultiplier>1.0</UsageMultiplier>
-            <WeekdayScheduleFractions>0.037, 0.018, 0.009, 0.007, 0.011, 0.018, 0.029, 0.040, 0.049, 0.058, 0.065, 0.072, 0.076, 0.086, 0.091, 0.102, 0.127, 0.156, 0.210, 0.294, 0.363, 0.344, 0.208, 0.090</WeekdayScheduleFractions>
-            <WeekendScheduleFractions>0.044, 0.022, 0.012, 0.008, 0.011, 0.014, 0.024, 0.043, 0.071, 0.094, 0.112, 0.123, 0.132, 0.156, 0.178, 0.196, 0.206, 0.213, 0.251, 0.330, 0.388, 0.358, 0.226, 0.103</WeekendScheduleFractions>
-            <MonthlyScheduleMultipliers>1.137, 1.129, 0.961, 0.969, 0.961, 0.993, 0.996, 0.96, 0.993, 0.867, 0.86, 1.137</MonthlyScheduleMultipliers>
+            <WeekdayScheduleFractions>0.014, 0.007, 0.004, 0.003, 0.004, 0.006, 0.010, 0.015, 0.020, 0.025, 0.028, 0.031, 0.033, 0.038, 0.042, 0.046, 0.054, 0.062, 0.080, 0.110, 0.132, 0.125, 0.077, 0.034</WeekdayScheduleFractions>
+            <WeekendScheduleFractions>0.014, 0.007, 0.004, 0.003, 0.004, 0.006, 0.010, 0.015, 0.020, 0.025, 0.028, 0.031, 0.033, 0.038, 0.042, 0.046, 0.054, 0.062, 0.080, 0.110, 0.132, 0.125, 0.077, 0.034</WeekendScheduleFractions>
+            <MonthlyScheduleMultipliers>1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0</MonthlyScheduleMultipliers>
           </extension>
         </PlugLoad>
         <PlugLoad>
@@ -995,9 +1031,9 @@
             <FracSensible>0.855</FracSensible>
             <FracLatent>0.04500000000000001</FracLatent>
             <UsageMultiplier>1.0</UsageMultiplier>
-            <WeekdayScheduleFractions>0.035, 0.033, 0.032, 0.031, 0.032, 0.033, 0.037, 0.042, 0.043, 0.043, 0.043, 0.044, 0.045, 0.045, 0.044, 0.046, 0.048, 0.052, 0.053, 0.05, 0.047, 0.045, 0.04, 0.036</WeekdayScheduleFractions>
-            <WeekendScheduleFractions>0.035, 0.033, 0.032, 0.031, 0.032, 0.033, 0.037, 0.042, 0.043, 0.043, 0.043, 0.044, 0.045, 0.045, 0.044, 0.046, 0.048, 0.052, 0.053, 0.05, 0.047, 0.045, 0.04, 0.036</WeekendScheduleFractions>
-            <MonthlyScheduleMultipliers>1.248, 1.257, 0.993, 0.989, 0.993, 0.827, 0.821, 0.821, 0.827, 0.99, 0.987, 1.248</MonthlyScheduleMultipliers>
+            <WeekdayScheduleFractions>0.036, 0.036, 0.036, 0.036, 0.036, 0.036, 0.038, 0.041, 0.042, 0.042, 0.042, 0.042, 0.042, 0.042, 0.042, 0.044, 0.047, 0.050, 0.051, 0.050, 0.048, 0.044, 0.040, 0.037</WeekdayScheduleFractions>
+            <WeekendScheduleFractions>0.036, 0.036, 0.036, 0.036, 0.036, 0.036, 0.038, 0.041, 0.042, 0.042, 0.042, 0.042, 0.042, 0.042, 0.042, 0.044, 0.047, 0.050, 0.051, 0.050, 0.048, 0.044, 0.040, 0.037</WeekendScheduleFractions>
+            <MonthlyScheduleMultipliers>1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0</MonthlyScheduleMultipliers>
           </extension>
         </PlugLoad>
       </MiscLoads>
@@ -1008,8 +1044,14 @@
     <Site>
       <SiteID id='SiteID_2'/>
       <Address>
+        <CityMunicipality>Buffalo Niagara Intl Ap</CityMunicipality>
         <StateCode>NY</StateCode>
       </Address>
+      <GeoLocation>
+        <Latitude>42.93</Latitude>
+        <Longitude>-78.73</Longitude>
+      </GeoLocation>
+      <Elevation>705.4</Elevation>
       <TimeZone>
         <UTCOffset>-5.0</UTCOffset>
         <DSTObserved>true</DSTObserved>
@@ -1030,22 +1072,32 @@
           <SiteType>suburban</SiteType>
           <Surroundings>attached on two sides</Surroundings>
           <VerticalSurroundings>no units above or below</VerticalSurroundings>
-          <ShieldingofHome>normal</ShieldingofHome>
+          <ShieldingofHome>well-shielded</ShieldingofHome>
           <AzimuthOfFrontOfHome>180</AzimuthOfFrontOfHome>
-          <extension>
-            <GroundConductivity>1.0</GroundConductivity>
-          </extension>
+          <Soil>
+            <SoilType>unknown</SoilType>
+            <MoistureType>mixed</MoistureType>
+            <Conductivity>1.0</Conductivity>
+            <extension>
+              <Diffusivity>0.0208</Diffusivity>
+            </extension>
+          </Soil>
         </Site>
         <BuildingOccupancy>
           <extension>
-            <WeekdayScheduleFractions>0.061, 0.061, 0.061, 0.061, 0.061, 0.061, 0.061, 0.053, 0.025, 0.015, 0.015, 0.015, 0.015, 0.015, 0.015, 0.015, 0.018, 0.033, 0.054, 0.054, 0.054, 0.061, 0.061, 0.061</WeekdayScheduleFractions>
-            <WeekendScheduleFractions>0.061, 0.061, 0.061, 0.061, 0.061, 0.061, 0.061, 0.053, 0.025, 0.015, 0.015, 0.015, 0.015, 0.015, 0.015, 0.015, 0.018, 0.033, 0.054, 0.054, 0.054, 0.061, 0.061, 0.061</WeekendScheduleFractions>
+            <WeekdayScheduleFractions>0.035, 0.035, 0.035, 0.035, 0.035, 0.059, 0.082, 0.055, 0.027, 0.014, 0.014, 0.014, 0.014, 0.014, 0.019, 0.027, 0.041, 0.055, 0.068, 0.082, 0.082, 0.070, 0.053, 0.035</WeekdayScheduleFractions>
+            <WeekendScheduleFractions>0.035, 0.035, 0.035, 0.035, 0.035, 0.059, 0.082, 0.055, 0.027, 0.014, 0.014, 0.014, 0.014, 0.014, 0.019, 0.027, 0.041, 0.055, 0.068, 0.082, 0.082, 0.070, 0.053, 0.035</WeekendScheduleFractions>
             <MonthlyScheduleMultipliers>1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0</MonthlyScheduleMultipliers>
+            <GeneralWaterUseUsageMultiplier>1.0</GeneralWaterUseUsageMultiplier>
+            <GeneralWaterUseWeekdayScheduleFractions>0.023, 0.021, 0.021, 0.025, 0.027, 0.038, 0.044, 0.039, 0.037, 0.037, 0.034, 0.035, 0.035, 0.035, 0.039, 0.043, 0.051, 0.064, 0.065, 0.072, 0.073, 0.063, 0.045, 0.034</GeneralWaterUseWeekdayScheduleFractions>
+            <GeneralWaterUseWeekendScheduleFractions>0.023, 0.021, 0.021, 0.025, 0.027, 0.038, 0.044, 0.039, 0.037, 0.037, 0.034, 0.035, 0.035, 0.035, 0.039, 0.043, 0.051, 0.064, 0.065, 0.072, 0.073, 0.063, 0.045, 0.034</GeneralWaterUseWeekendScheduleFractions>
+            <GeneralWaterUseMonthlyScheduleMultipliers>1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0</GeneralWaterUseMonthlyScheduleMultipliers>
           </extension>
         </BuildingOccupancy>
         <BuildingConstruction>
           <ResidentialFacilityType>single-family attached</ResidentialFacilityType>
           <NumberofUnits>1</NumberofUnits>
+          <NumberofUnitsInBuilding>4</NumberofUnitsInBuilding>
           <NumberofConditionedFloors>2.0</NumberofConditionedFloors>
           <NumberofConditionedFloorsAboveGrade>2.0</NumberofConditionedFloorsAboveGrade>
           <AverageCeilingHeight>8.0</AverageCeilingHeight>
@@ -1060,9 +1112,11 @@
             <ManualJInputs>
               <HeatingDesignTemperature>6.62</HeatingDesignTemperature>
               <CoolingDesignTemperature>84.02</CoolingDesignTemperature>
+              <DailyTemperatureRange>medium</DailyTemperatureRange>
               <HeatingSetpoint>70.0</HeatingSetpoint>
               <CoolingSetpoint>75.0</CoolingSetpoint>
               <HumiditySetpoint>0.5</HumiditySetpoint>
+              <HumidityDifference>23.2</HumidityDifference>
               <InternalLoadsSensible>2400.0</InternalLoadsSensible>
               <InternalLoadsLatent>0.0</InternalLoadsLatent>
               <NumberofOccupants>2</NumberofOccupants>
@@ -1276,6 +1330,7 @@
             <InteriorFinish>
               <Type>none</Type>
             </InteriorFinish>
+            <RadiantBarrier>false</RadiantBarrier>
             <Insulation>
               <SystemIdentifier id='Wall5Insulation_2'/>
               <AssemblyEffectiveRValue>4.0</AssemblyEffectiveRValue>
@@ -1294,6 +1349,7 @@
             <InteriorFinish>
               <Type>none</Type>
             </InteriorFinish>
+            <RadiantBarrier>false</RadiantBarrier>
             <Insulation>
               <SystemIdentifier id='Wall6Insulation_2'/>
               <AssemblyEffectiveRValue>4.0</AssemblyEffectiveRValue>
@@ -1314,6 +1370,7 @@
               <Type>gypsum board</Type>
               <Thickness>0.5</Thickness>
             </InteriorFinish>
+            <RadiantBarrier>false</RadiantBarrier>
             <Insulation>
               <SystemIdentifier id='Floor1Insulation_2'/>
               <AssemblyEffectiveRValue>38.46153846</AssemblyEffectiveRValue>
@@ -1343,6 +1400,7 @@
               </Layer>
             </UnderSlabInsulation>
             <extension>
+              <GapInsulationRValue>0.0</GapInsulationRValue>
               <CarpetFraction>0.8</CarpetFraction>
               <CarpetRValue>2.0</CarpetRValue>
             </extension>
@@ -1363,8 +1421,8 @@
             </ExteriorShading>
             <InteriorShading>
               <SystemIdentifier id='Window1InteriorShading_2'/>
-              <SummerShadingCoefficient>0.7</SummerShadingCoefficient>
-              <WinterShadingCoefficient>0.85</WinterShadingCoefficient>
+              <SummerShadingCoefficient>0.8360000000000001</SummerShadingCoefficient>
+              <WinterShadingCoefficient>0.8360000000000001</WinterShadingCoefficient>
             </InteriorShading>
             <Overhangs>
               <Depth>2.0</Depth>
@@ -1388,8 +1446,8 @@
             </ExteriorShading>
             <InteriorShading>
               <SystemIdentifier id='Window2InteriorShading_2'/>
-              <SummerShadingCoefficient>0.7</SummerShadingCoefficient>
-              <WinterShadingCoefficient>0.85</WinterShadingCoefficient>
+              <SummerShadingCoefficient>0.8360000000000001</SummerShadingCoefficient>
+              <WinterShadingCoefficient>0.8360000000000001</WinterShadingCoefficient>
             </InteriorShading>
             <Overhangs>
               <Depth>2.0</Depth>
@@ -1413,8 +1471,8 @@
             </ExteriorShading>
             <InteriorShading>
               <SystemIdentifier id='Window3InteriorShading_2'/>
-              <SummerShadingCoefficient>0.7</SummerShadingCoefficient>
-              <WinterShadingCoefficient>0.85</WinterShadingCoefficient>
+              <SummerShadingCoefficient>0.8360000000000001</SummerShadingCoefficient>
+              <WinterShadingCoefficient>0.8360000000000001</WinterShadingCoefficient>
             </InteriorShading>
             <Overhangs>
               <Depth>2.0</Depth>
@@ -1438,8 +1496,8 @@
             </ExteriorShading>
             <InteriorShading>
               <SystemIdentifier id='Window4InteriorShading_2'/>
-              <SummerShadingCoefficient>0.7</SummerShadingCoefficient>
-              <WinterShadingCoefficient>0.85</WinterShadingCoefficient>
+              <SummerShadingCoefficient>0.8360000000000001</SummerShadingCoefficient>
+              <WinterShadingCoefficient>0.8360000000000001</WinterShadingCoefficient>
             </InteriorShading>
             <Overhangs>
               <Depth>2.0</Depth>
@@ -1491,7 +1549,7 @@
                 </Furnace>
               </HeatingSystemType>
               <HeatingSystemFuel>fuel oil</HeatingSystemFuel>
-              <HeatingCapacity>61630.0</HeatingCapacity>
+              <HeatingCapacity>58704.0</HeatingCapacity>
               <AnnualHeatingEfficiency>
                 <Units>AFUE</Units>
                 <Value>0.85</Value>
@@ -1500,7 +1558,8 @@
               <extension>
                 <FanPowerWattsPerCFM>0.5</FanPowerWattsPerCFM>
                 <AirflowDefectRatio>0.0</AirflowDefectRatio>
-                <HeatingAirflowCFM>1145.0</HeatingAirflowCFM>
+                <HeatingAirflowCFM>1090.0</HeatingAirflowCFM>
+                <HeatingAutosizingFactor>1.0</HeatingAutosizingFactor>
               </extension>
             </HeatingSystem>
             <CoolingSystem>
@@ -1508,7 +1567,7 @@
               <UnitLocation>conditioned space</UnitLocation>
               <CoolingSystemType>room air conditioner</CoolingSystemType>
               <CoolingSystemFuel>electricity</CoolingSystemFuel>
-              <CoolingCapacity>12898.0</CoolingCapacity>
+              <CoolingCapacity>13297.0</CoolingCapacity>
               <CompressorType>single stage</CompressorType>
               <FractionCoolLoadServed>1.0</FractionCoolLoadServed>
               <AnnualCoolingEfficiency>
@@ -1517,15 +1576,16 @@
               </AnnualCoolingEfficiency>
               <SensibleHeatFraction>0.65</SensibleHeatFraction>
               <extension>
-                <CoolingAirflowCFM>335.0</CoolingAirflowCFM>
+                <CoolingAirflowCFM>346.0</CoolingAirflowCFM>
                 <CrankcaseHeaterPowerWatts>0.0</CrankcaseHeaterPowerWatts>
+                <CoolingAutosizingFactor>1.0</CoolingAutosizingFactor>
               </extension>
             </CoolingSystem>
             <extension>
               <DesignLoads dataSource='software'>
                 <Heating>
-                  <Total>61630.0</Total>
-                  <Ducts>25652.0</Ducts>
+                  <Total>58704.0</Total>
+                  <Ducts>24458.0</Ducts>
                   <Windows>7908.0</Windows>
                   <Skylights>0.0</Skylights>
                   <Doors>288.0</Doors>
@@ -1534,26 +1594,31 @@
                   <Floors>0.0</Floors>
                   <Slabs>4567.0</Slabs>
                   <Ceilings>3774.0</Ceilings>
-                  <InfilVent>12764.0</InfilVent>
+                  <Infiltration>10292.0</Infiltration>
+                  <Ventilation>740.0</Ventilation>
                 </Heating>
                 <CoolingSensible>
-                  <Total>10647.0</Total>
+                  <Total>11269.0</Total>
                   <Ducts>0.0</Ducts>
-                  <Windows>4419.0</Windows>
+                  <Windows>3362.0</Windows>
                   <Skylights>0.0</Skylights>
                   <Doors>91.0</Doors>
-                  <Walls>413.0</Walls>
+                  <Walls>767.0</Walls>
                   <Roofs>0.0</Roofs>
                   <Floors>0.0</Floors>
                   <Slabs>0.0</Slabs>
                   <Ceilings>2026.0</Ceilings>
-                  <InfilVent>838.0</InfilVent>
+                  <Infiltration>584.0</Infiltration>
+                  <Ventilation>105.0</Ventilation>
                   <InternalLoads>2860.0</InternalLoads>
+                  <AEDExcursion>1474.0</AEDExcursion>
+                  <AEDCurve>3562, 5249, 7258, 9542, 10557, 10513, 9077, 7682, 6318, 6232, 5405, 2447</AEDCurve>
                 </CoolingSensible>
                 <CoolingLatent>
-                  <Total>2062.0</Total>
+                  <Total>1832.0</Total>
                   <Ducts>0.0</Ducts>
-                  <InfilVent>1662.0</InfilVent>
+                  <Infiltration>929.0</Infiltration>
+                  <Ventilation>503.0</Ventilation>
                   <InternalLoads>400.0</InternalLoads>
                 </CoolingLatent>
               </DesignLoads>
@@ -1602,12 +1667,13 @@
                   <DuctType>supply</DuctType>
                   <DuctInsulationRValue>8.0</DuctInsulationRValue>
                   <DuctBuriedInsulationLevel>not buried</DuctBuriedInsulationLevel>
-                  <DuctEffectiveRValue>6.738999999999999</DuctEffectiveRValue>
+                  <DuctEffectiveRValue>6.94</DuctEffectiveRValue>
                   <DuctLocation>attic - vented</DuctLocation>
                   <FractionDuctArea>0.75</FractionDuctArea>
                   <DuctSurfaceArea>927.45</DuctSurfaceArea>
                   <extension>
                     <DuctSurfaceAreaMultiplier>1.0</DuctSurfaceAreaMultiplier>
+                    <DuctFractionRectangular>0.25</DuctFractionRectangular>
                   </extension>
                 </Ducts>
                 <Ducts>
@@ -1615,12 +1681,13 @@
                   <DuctType>return</DuctType>
                   <DuctInsulationRValue>8.0</DuctInsulationRValue>
                   <DuctBuriedInsulationLevel>not buried</DuctBuriedInsulationLevel>
-                  <DuctEffectiveRValue>7.6812000000000005</DuctEffectiveRValue>
+                  <DuctEffectiveRValue>9.0</DuctEffectiveRValue>
                   <DuctLocation>attic - vented</DuctLocation>
                   <FractionDuctArea>0.75</FractionDuctArea>
                   <DuctSurfaceArea>343.5</DuctSurfaceArea>
                   <extension>
                     <DuctSurfaceAreaMultiplier>1.0</DuctSurfaceAreaMultiplier>
+                    <DuctFractionRectangular>1.0</DuctFractionRectangular>
                   </extension>
                 </Ducts>
                 <Ducts>
@@ -1628,12 +1695,13 @@
                   <DuctType>supply</DuctType>
                   <DuctInsulationRValue>8.0</DuctInsulationRValue>
                   <DuctBuriedInsulationLevel>not buried</DuctBuriedInsulationLevel>
-                  <DuctEffectiveRValue>6.738999999999999</DuctEffectiveRValue>
+                  <DuctEffectiveRValue>6.94</DuctEffectiveRValue>
                   <DuctLocation>conditioned space</DuctLocation>
                   <FractionDuctArea>0.25</FractionDuctArea>
                   <DuctSurfaceArea>309.15000000000003</DuctSurfaceArea>
                   <extension>
                     <DuctSurfaceAreaMultiplier>1.0</DuctSurfaceAreaMultiplier>
+                    <DuctFractionRectangular>0.25</DuctFractionRectangular>
                   </extension>
                 </Ducts>
                 <Ducts>
@@ -1641,12 +1709,13 @@
                   <DuctType>return</DuctType>
                   <DuctInsulationRValue>8.0</DuctInsulationRValue>
                   <DuctBuriedInsulationLevel>not buried</DuctBuriedInsulationLevel>
-                  <DuctEffectiveRValue>7.6812000000000005</DuctEffectiveRValue>
+                  <DuctEffectiveRValue>9.0</DuctEffectiveRValue>
                   <DuctLocation>conditioned space</DuctLocation>
                   <FractionDuctArea>0.25</FractionDuctArea>
                   <DuctSurfaceArea>114.5</DuctSurfaceArea>
                   <extension>
                     <DuctSurfaceAreaMultiplier>1.0</DuctSurfaceAreaMultiplier>
+                    <DuctFractionRectangular>1.0</DuctFractionRectangular>
                   </extension>
                 </Ducts>
                 <NumberofReturnRegisters>2</NumberofReturnRegisters>
@@ -1660,13 +1729,13 @@
             <VentilationFan>
               <SystemIdentifier id='VentilationFan1_2'/>
               <FanType>energy recovery ventilator</FanType>
-              <RatedFlowRate>71.2</RatedFlowRate>
+              <RatedFlowRate>71.4</RatedFlowRate>
               <HoursInOperation>24.0</HoursInOperation>
               <UsedForWholeBuildingVentilation>true</UsedForWholeBuildingVentilation>
               <IsSharedSystem>false</IsSharedSystem>
               <TotalRecoveryEfficiency>0.48</TotalRecoveryEfficiency>
               <SensibleRecoveryEfficiency>0.72</SensibleRecoveryEfficiency>
-              <FanPower>71.2</FanPower>
+              <FanPower>71.4</FanPower>
             </VentilationFan>
             <VentilationFan>
               <SystemIdentifier id='VentilationFan2_2'/>
@@ -1734,8 +1803,8 @@
           </WaterFixture>
           <extension>
             <WaterFixturesUsageMultiplier>1.0</WaterFixturesUsageMultiplier>
-            <WaterFixturesWeekdayScheduleFractions>0.012, 0.006, 0.004, 0.005, 0.010, 0.034, 0.078, 0.087, 0.080, 0.067, 0.056, 0.047, 0.040, 0.035, 0.033, 0.031, 0.039, 0.051, 0.060, 0.060, 0.055, 0.048, 0.038, 0.026</WaterFixturesWeekdayScheduleFractions>
-            <WaterFixturesWeekendScheduleFractions>0.012, 0.006, 0.004, 0.005, 0.010, 0.034, 0.078, 0.087, 0.080, 0.067, 0.056, 0.047, 0.040, 0.035, 0.033, 0.031, 0.039, 0.051, 0.060, 0.060, 0.055, 0.048, 0.038, 0.026</WaterFixturesWeekendScheduleFractions>
+            <WaterFixturesWeekdayScheduleFractions>0.012, 0.006, 0.004, 0.005, 0.010, 0.034, 0.078, 0.086, 0.080, 0.067, 0.056, 0.047, 0.040, 0.035, 0.033, 0.031, 0.038, 0.051, 0.060, 0.060, 0.055, 0.048, 0.038, 0.026</WaterFixturesWeekdayScheduleFractions>
+            <WaterFixturesWeekendScheduleFractions>0.012, 0.006, 0.004, 0.005, 0.010, 0.034, 0.078, 0.086, 0.080, 0.067, 0.056, 0.047, 0.040, 0.035, 0.033, 0.031, 0.038, 0.051, 0.060, 0.060, 0.055, 0.048, 0.038, 0.026</WaterFixturesWeekendScheduleFractions>
             <WaterFixturesMonthlyScheduleMultipliers>1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0</WaterFixturesMonthlyScheduleMultipliers>
           </extension>
         </WaterHeating>
@@ -1754,9 +1823,9 @@
           <Capacity>4.5</Capacity>
           <extension>
             <UsageMultiplier>1.0</UsageMultiplier>
-            <WeekdayScheduleFractions>0.009, 0.007, 0.004, 0.004, 0.007, 0.011, 0.022, 0.049, 0.073, 0.086, 0.084, 0.075, 0.067, 0.060, 0.049, 0.052, 0.050, 0.049, 0.049, 0.049, 0.049, 0.047, 0.032, 0.017</WeekdayScheduleFractions>
-            <WeekendScheduleFractions>0.009, 0.007, 0.004, 0.004, 0.007, 0.011, 0.022, 0.049, 0.073, 0.086, 0.084, 0.075, 0.067, 0.060, 0.049, 0.052, 0.050, 0.049, 0.049, 0.049, 0.049, 0.047, 0.032, 0.017</WeekendScheduleFractions>
-            <MonthlyScheduleMultipliers>1.011, 1.002, 1.022, 1.020, 1.022, 0.996, 0.999, 0.999, 0.996, 0.964, 0.959, 1.011</MonthlyScheduleMultipliers>
+            <WeekdayScheduleFractions>0.009, 0.007, 0.004, 0.004, 0.007, 0.011, 0.022, 0.049, 0.073, 0.086, 0.084, 0.075, 0.067, 0.060, 0.049, 0.051, 0.050, 0.049, 0.049, 0.049, 0.049, 0.047, 0.032, 0.017</WeekdayScheduleFractions>
+            <WeekendScheduleFractions>0.009, 0.007, 0.004, 0.004, 0.007, 0.011, 0.022, 0.049, 0.073, 0.086, 0.084, 0.075, 0.067, 0.060, 0.049, 0.051, 0.050, 0.049, 0.049, 0.049, 0.049, 0.047, 0.032, 0.017</WeekendScheduleFractions>
+            <MonthlyScheduleMultipliers>1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0</MonthlyScheduleMultipliers>
           </extension>
         </ClothesWasher>
         <ClothesDryer>
@@ -1769,8 +1838,8 @@
           <VentedFlowRate>100.0</VentedFlowRate>
           <extension>
             <UsageMultiplier>1.0</UsageMultiplier>
-            <WeekdayScheduleFractions>0.010, 0.006, 0.004, 0.002, 0.004, 0.006, 0.016, 0.032, 0.048, 0.068, 0.078, 0.081, 0.074, 0.067, 0.057, 0.061, 0.055, 0.054, 0.051, 0.051, 0.052, 0.054, 0.044, 0.024</WeekdayScheduleFractions>
-            <WeekendScheduleFractions>0.010, 0.006, 0.004, 0.002, 0.004, 0.006, 0.016, 0.032, 0.048, 0.068, 0.078, 0.081, 0.074, 0.067, 0.057, 0.061, 0.055, 0.054, 0.051, 0.051, 0.052, 0.054, 0.044, 0.024</WeekendScheduleFractions>
+            <WeekdayScheduleFractions>0.010, 0.006, 0.004, 0.002, 0.004, 0.006, 0.016, 0.032, 0.048, 0.068, 0.078, 0.081, 0.074, 0.067, 0.058, 0.061, 0.055, 0.054, 0.051, 0.051, 0.052, 0.054, 0.044, 0.024</WeekdayScheduleFractions>
+            <WeekendScheduleFractions>0.010, 0.006, 0.004, 0.002, 0.004, 0.006, 0.016, 0.032, 0.048, 0.068, 0.078, 0.081, 0.074, 0.067, 0.058, 0.061, 0.055, 0.054, 0.051, 0.051, 0.052, 0.054, 0.044, 0.024</WeekendScheduleFractions>
             <MonthlyScheduleMultipliers>1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0</MonthlyScheduleMultipliers>
           </extension>
         </ClothesDryer>
@@ -1786,9 +1855,9 @@
           <LabelUsage>4.0</LabelUsage>
           <extension>
             <UsageMultiplier>1.0</UsageMultiplier>
-            <WeekdayScheduleFractions>0.015, 0.007, 0.005, 0.003, 0.003, 0.010, 0.020, 0.031, 0.058, 0.065, 0.056, 0.048, 0.041, 0.046, 0.036, 0.038, 0.038, 0.049, 0.087, 0.111, 0.090, 0.067, 0.044, 0.031</WeekdayScheduleFractions>
-            <WeekendScheduleFractions>0.015, 0.007, 0.005, 0.003, 0.003, 0.010, 0.020, 0.031, 0.058, 0.065, 0.056, 0.048, 0.041, 0.046, 0.036, 0.038, 0.038, 0.049, 0.087, 0.111, 0.090, 0.067, 0.044, 0.031</WeekendScheduleFractions>
-            <MonthlyScheduleMultipliers>1.097, 1.097, 0.991, 0.987, 0.991, 0.890, 0.896, 0.896, 0.890, 1.085, 1.085, 1.097</MonthlyScheduleMultipliers>
+            <WeekdayScheduleFractions>0.015, 0.007, 0.005, 0.003, 0.003, 0.010, 0.020, 0.031, 0.058, 0.065, 0.056, 0.048, 0.042, 0.046, 0.036, 0.038, 0.038, 0.049, 0.087, 0.111, 0.090, 0.067, 0.044, 0.031</WeekdayScheduleFractions>
+            <WeekendScheduleFractions>0.015, 0.007, 0.005, 0.003, 0.003, 0.010, 0.020, 0.031, 0.058, 0.065, 0.056, 0.048, 0.042, 0.046, 0.036, 0.038, 0.038, 0.049, 0.087, 0.111, 0.090, 0.067, 0.044, 0.031</WeekendScheduleFractions>
+            <MonthlyScheduleMultipliers>1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0</MonthlyScheduleMultipliers>
           </extension>
         </Dishwasher>
         <Refrigerator>
@@ -1798,9 +1867,8 @@
           <PrimaryIndicator>true</PrimaryIndicator>
           <extension>
             <UsageMultiplier>1.0</UsageMultiplier>
-            <WeekdayScheduleFractions>0.040, 0.039, 0.038, 0.037, 0.036, 0.036, 0.038, 0.040, 0.041, 0.041, 0.040, 0.040, 0.042, 0.042, 0.042, 0.041, 0.044, 0.048, 0.050, 0.048, 0.047, 0.046, 0.044, 0.041</WeekdayScheduleFractions>
-            <WeekendScheduleFractions>0.040, 0.039, 0.038, 0.037, 0.036, 0.036, 0.038, 0.040, 0.041, 0.041, 0.040, 0.040, 0.042, 0.042, 0.042, 0.041, 0.044, 0.048, 0.050, 0.048, 0.047, 0.046, 0.044, 0.041</WeekendScheduleFractions>
-            <MonthlyScheduleMultipliers>0.837, 0.835, 1.084, 1.084, 1.084, 1.096, 1.096, 1.096, 1.096, 0.931, 0.925, 0.837</MonthlyScheduleMultipliers>
+            <ConstantScheduleCoefficients>-0.487, -0.340, -0.370, -0.361, -0.515, -0.684, -0.471, -0.159, -0.079, -0.417, -0.411, -0.386, -0.240, -0.314, -0.160, -0.121, -0.469, -0.412, -0.091, 0.077, -0.118, -0.247, -0.445, -0.544</ConstantScheduleCoefficients>
+            <TemperatureScheduleCoefficients>0.019, 0.016, 0.017, 0.016, 0.018, 0.021, 0.019, 0.015, 0.015, 0.019, 0.018, 0.018, 0.016, 0.017, 0.015, 0.015, 0.020, 0.020, 0.017, 0.014, 0.016, 0.017, 0.019, 0.020</TemperatureScheduleCoefficients>
           </extension>
         </Refrigerator>
         <CookingRange>
@@ -1810,9 +1878,9 @@
           <IsInduction>false</IsInduction>
           <extension>
             <UsageMultiplier>1.0</UsageMultiplier>
-            <WeekdayScheduleFractions>0.007, 0.007, 0.004, 0.004, 0.007, 0.011, 0.025, 0.042, 0.046, 0.048, 0.042, 0.050, 0.057, 0.046, 0.057, 0.044, 0.092, 0.150, 0.117, 0.060, 0.035, 0.025, 0.016, 0.011</WeekdayScheduleFractions>
-            <WeekendScheduleFractions>0.007, 0.007, 0.004, 0.004, 0.007, 0.011, 0.025, 0.042, 0.046, 0.048, 0.042, 0.050, 0.057, 0.046, 0.057, 0.044, 0.092, 0.150, 0.117, 0.060, 0.035, 0.025, 0.016, 0.011</WeekendScheduleFractions>
-            <MonthlyScheduleMultipliers>1.097, 1.097, 0.991, 0.987, 0.991, 0.890, 0.896, 0.896, 0.890, 1.085, 1.085, 1.097</MonthlyScheduleMultipliers>
+            <WeekdayScheduleFractions>0.008, 0.008, 0.008, 0.008, 0.008, 0.015, 0.023, 0.039, 0.046, 0.046, 0.046, 0.054, 0.062, 0.046, 0.039, 0.054, 0.076, 0.134, 0.114, 0.058, 0.039, 0.031, 0.023, 0.015</WeekdayScheduleFractions>
+            <WeekendScheduleFractions>0.008, 0.008, 0.008, 0.008, 0.008, 0.015, 0.023, 0.039, 0.046, 0.046, 0.046, 0.054, 0.062, 0.046, 0.039, 0.054, 0.076, 0.134, 0.114, 0.058, 0.039, 0.031, 0.023, 0.015</WeekendScheduleFractions>
+            <MonthlyScheduleMultipliers>1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0</MonthlyScheduleMultipliers>
           </extension>
         </CookingRange>
         <Oven>
@@ -1871,14 +1939,11 @@
         </LightingGroup>
         <CeilingFan>
           <SystemIdentifier id='CeilingFan1_2'/>
-          <Airflow>
-            <FanSpeed>medium</FanSpeed>
-            <Efficiency>70.4225352112676</Efficiency>
-          </Airflow>
           <Count>2</Count>
+          <LabelEnergyUse>42.6</LabelEnergyUse>
           <extension>
-            <WeekdayScheduleFractions>0.057, 0.057, 0.057, 0.057, 0.057, 0.057, 0.057, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.057, 0.057, 0.057, 0.057, 0.057, 0.057</WeekdayScheduleFractions>
-            <WeekendScheduleFractions>0.057, 0.057, 0.057, 0.057, 0.057, 0.057, 0.057, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.057, 0.057, 0.057, 0.057, 0.057, 0.057</WeekendScheduleFractions>
+            <WeekdayScheduleFractions>0.057, 0.057, 0.057, 0.057, 0.057, 0.057, 0.057, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.052, 0.057, 0.057, 0.057, 0.057, 0.057</WeekdayScheduleFractions>
+            <WeekendScheduleFractions>0.057, 0.057, 0.057, 0.057, 0.057, 0.057, 0.057, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.052, 0.057, 0.057, 0.057, 0.057, 0.057</WeekendScheduleFractions>
             <MonthlyScheduleMultipliers>0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0</MonthlyScheduleMultipliers>
           </extension>
         </CeilingFan>
@@ -1886,9 +1951,12 @@
           <InteriorUsageMultiplier>1.0</InteriorUsageMultiplier>
           <GarageUsageMultiplier>1.0</GarageUsageMultiplier>
           <ExteriorUsageMultiplier>1.0</ExteriorUsageMultiplier>
-          <ExteriorWeekdayScheduleFractions>0.046, 0.046, 0.046, 0.046, 0.046, 0.037, 0.035, 0.034, 0.033, 0.028, 0.022, 0.015, 0.012, 0.011, 0.011, 0.012, 0.019, 0.037, 0.049, 0.065, 0.091, 0.105, 0.091, 0.063</ExteriorWeekdayScheduleFractions>
-          <ExteriorWeekendScheduleFractions>0.046, 0.046, 0.045, 0.045, 0.046, 0.045, 0.044, 0.041, 0.036, 0.03, 0.024, 0.016, 0.012, 0.011, 0.011, 0.012, 0.019, 0.038, 0.048, 0.06, 0.083, 0.098, 0.085, 0.059</ExteriorWeekendScheduleFractions>
-          <ExteriorMonthlyScheduleMultipliers>1.248, 1.257, 0.993, 0.989, 0.993, 0.827, 0.821, 0.821, 0.827, 0.99, 0.987, 1.248</ExteriorMonthlyScheduleMultipliers>
+          <InteriorWeekdayScheduleFractions>0.012, 0.010, 0.010, 0.010, 0.011, 0.018, 0.030, 0.038, 0.041, 0.041, 0.039, 0.037, 0.036, 0.035, 0.037, 0.041, 0.050, 0.065, 0.086, 0.106, 0.110, 0.079, 0.040, 0.018</InteriorWeekdayScheduleFractions>
+          <InteriorWeekendScheduleFractions>0.012, 0.010, 0.010, 0.010, 0.011, 0.018, 0.030, 0.038, 0.041, 0.041, 0.039, 0.037, 0.036, 0.035, 0.037, 0.041, 0.050, 0.065, 0.086, 0.106, 0.110, 0.079, 0.040, 0.018</InteriorWeekendScheduleFractions>
+          <InteriorMonthlyScheduleMultipliers>1.19, 1.11, 1.02, 0.93, 0.84, 0.80, 0.82, 0.88, 0.98, 1.07, 1.16, 1.20</InteriorMonthlyScheduleMultipliers>
+          <ExteriorWeekdayScheduleFractions>0.040, 0.037, 0.037, 0.035, 0.035, 0.039, 0.044, 0.041, 0.031, 0.025, 0.024, 0.024, 0.025, 0.028, 0.030, 0.035, 0.044, 0.056, 0.064, 0.068, 0.070, 0.065, 0.056, 0.047</ExteriorWeekdayScheduleFractions>
+          <ExteriorWeekendScheduleFractions>0.040, 0.037, 0.037, 0.035, 0.035, 0.039, 0.044, 0.041, 0.031, 0.025, 0.024, 0.024, 0.025, 0.028, 0.030, 0.035, 0.044, 0.056, 0.064, 0.068, 0.070, 0.065, 0.056, 0.047</ExteriorWeekendScheduleFractions>
+          <ExteriorMonthlyScheduleMultipliers>1.19, 1.11, 1.02, 0.93, 0.84, 0.80, 0.82, 0.88, 0.98, 1.07, 1.16, 1.20</ExteriorMonthlyScheduleMultipliers>
         </extension>
       </Lighting>
       <MiscLoads>
@@ -1903,9 +1971,9 @@
             <FracSensible>1.0</FracSensible>
             <FracLatent>0.0</FracLatent>
             <UsageMultiplier>1.0</UsageMultiplier>
-            <WeekdayScheduleFractions>0.037, 0.018, 0.009, 0.007, 0.011, 0.018, 0.029, 0.040, 0.049, 0.058, 0.065, 0.072, 0.076, 0.086, 0.091, 0.102, 0.127, 0.156, 0.210, 0.294, 0.363, 0.344, 0.208, 0.090</WeekdayScheduleFractions>
-            <WeekendScheduleFractions>0.044, 0.022, 0.012, 0.008, 0.011, 0.014, 0.024, 0.043, 0.071, 0.094, 0.112, 0.123, 0.132, 0.156, 0.178, 0.196, 0.206, 0.213, 0.251, 0.330, 0.388, 0.358, 0.226, 0.103</WeekendScheduleFractions>
-            <MonthlyScheduleMultipliers>1.137, 1.129, 0.961, 0.969, 0.961, 0.993, 0.996, 0.96, 0.993, 0.867, 0.86, 1.137</MonthlyScheduleMultipliers>
+            <WeekdayScheduleFractions>0.014, 0.007, 0.004, 0.003, 0.004, 0.006, 0.010, 0.015, 0.020, 0.025, 0.028, 0.031, 0.033, 0.038, 0.042, 0.046, 0.054, 0.062, 0.080, 0.110, 0.132, 0.125, 0.077, 0.034</WeekdayScheduleFractions>
+            <WeekendScheduleFractions>0.014, 0.007, 0.004, 0.003, 0.004, 0.006, 0.010, 0.015, 0.020, 0.025, 0.028, 0.031, 0.033, 0.038, 0.042, 0.046, 0.054, 0.062, 0.080, 0.110, 0.132, 0.125, 0.077, 0.034</WeekendScheduleFractions>
+            <MonthlyScheduleMultipliers>1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0</MonthlyScheduleMultipliers>
           </extension>
         </PlugLoad>
         <PlugLoad>
@@ -1919,9 +1987,9 @@
             <FracSensible>0.855</FracSensible>
             <FracLatent>0.04500000000000001</FracLatent>
             <UsageMultiplier>1.0</UsageMultiplier>
-            <WeekdayScheduleFractions>0.035, 0.033, 0.032, 0.031, 0.032, 0.033, 0.037, 0.042, 0.043, 0.043, 0.043, 0.044, 0.045, 0.045, 0.044, 0.046, 0.048, 0.052, 0.053, 0.05, 0.047, 0.045, 0.04, 0.036</WeekdayScheduleFractions>
-            <WeekendScheduleFractions>0.035, 0.033, 0.032, 0.031, 0.032, 0.033, 0.037, 0.042, 0.043, 0.043, 0.043, 0.044, 0.045, 0.045, 0.044, 0.046, 0.048, 0.052, 0.053, 0.05, 0.047, 0.045, 0.04, 0.036</WeekendScheduleFractions>
-            <MonthlyScheduleMultipliers>1.248, 1.257, 0.993, 0.989, 0.993, 0.827, 0.821, 0.821, 0.827, 0.99, 0.987, 1.248</MonthlyScheduleMultipliers>
+            <WeekdayScheduleFractions>0.036, 0.036, 0.036, 0.036, 0.036, 0.036, 0.038, 0.041, 0.042, 0.042, 0.042, 0.042, 0.042, 0.042, 0.042, 0.044, 0.047, 0.050, 0.051, 0.050, 0.048, 0.044, 0.040, 0.037</WeekdayScheduleFractions>
+            <WeekendScheduleFractions>0.036, 0.036, 0.036, 0.036, 0.036, 0.036, 0.038, 0.041, 0.042, 0.042, 0.042, 0.042, 0.042, 0.042, 0.042, 0.044, 0.047, 0.050, 0.051, 0.050, 0.048, 0.044, 0.040, 0.037</WeekendScheduleFractions>
+            <MonthlyScheduleMultipliers>1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0</MonthlyScheduleMultipliers>
           </extension>
         </PlugLoad>
       </MiscLoads>
@@ -1932,8 +2000,14 @@
     <Site>
       <SiteID id='SiteID_3'/>
       <Address>
+        <CityMunicipality>Buffalo Niagara Intl Ap</CityMunicipality>
         <StateCode>NY</StateCode>
       </Address>
+      <GeoLocation>
+        <Latitude>42.93</Latitude>
+        <Longitude>-78.73</Longitude>
+      </GeoLocation>
+      <Elevation>705.4</Elevation>
       <TimeZone>
         <UTCOffset>-5.0</UTCOffset>
         <DSTObserved>true</DSTObserved>
@@ -1954,22 +2028,32 @@
           <SiteType>suburban</SiteType>
           <Surroundings>attached on two sides</Surroundings>
           <VerticalSurroundings>no units above or below</VerticalSurroundings>
-          <ShieldingofHome>normal</ShieldingofHome>
+          <ShieldingofHome>well-shielded</ShieldingofHome>
           <AzimuthOfFrontOfHome>180</AzimuthOfFrontOfHome>
-          <extension>
-            <GroundConductivity>1.0</GroundConductivity>
-          </extension>
+          <Soil>
+            <SoilType>unknown</SoilType>
+            <MoistureType>mixed</MoistureType>
+            <Conductivity>1.0</Conductivity>
+            <extension>
+              <Diffusivity>0.0208</Diffusivity>
+            </extension>
+          </Soil>
         </Site>
         <BuildingOccupancy>
           <extension>
-            <WeekdayScheduleFractions>0.061, 0.061, 0.061, 0.061, 0.061, 0.061, 0.061, 0.053, 0.025, 0.015, 0.015, 0.015, 0.015, 0.015, 0.015, 0.015, 0.018, 0.033, 0.054, 0.054, 0.054, 0.061, 0.061, 0.061</WeekdayScheduleFractions>
-            <WeekendScheduleFractions>0.061, 0.061, 0.061, 0.061, 0.061, 0.061, 0.061, 0.053, 0.025, 0.015, 0.015, 0.015, 0.015, 0.015, 0.015, 0.015, 0.018, 0.033, 0.054, 0.054, 0.054, 0.061, 0.061, 0.061</WeekendScheduleFractions>
+            <WeekdayScheduleFractions>0.035, 0.035, 0.035, 0.035, 0.035, 0.059, 0.082, 0.055, 0.027, 0.014, 0.014, 0.014, 0.014, 0.014, 0.019, 0.027, 0.041, 0.055, 0.068, 0.082, 0.082, 0.070, 0.053, 0.035</WeekdayScheduleFractions>
+            <WeekendScheduleFractions>0.035, 0.035, 0.035, 0.035, 0.035, 0.059, 0.082, 0.055, 0.027, 0.014, 0.014, 0.014, 0.014, 0.014, 0.019, 0.027, 0.041, 0.055, 0.068, 0.082, 0.082, 0.070, 0.053, 0.035</WeekendScheduleFractions>
             <MonthlyScheduleMultipliers>1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0</MonthlyScheduleMultipliers>
+            <GeneralWaterUseUsageMultiplier>1.0</GeneralWaterUseUsageMultiplier>
+            <GeneralWaterUseWeekdayScheduleFractions>0.023, 0.021, 0.021, 0.025, 0.027, 0.038, 0.044, 0.039, 0.037, 0.037, 0.034, 0.035, 0.035, 0.035, 0.039, 0.043, 0.051, 0.064, 0.065, 0.072, 0.073, 0.063, 0.045, 0.034</GeneralWaterUseWeekdayScheduleFractions>
+            <GeneralWaterUseWeekendScheduleFractions>0.023, 0.021, 0.021, 0.025, 0.027, 0.038, 0.044, 0.039, 0.037, 0.037, 0.034, 0.035, 0.035, 0.035, 0.039, 0.043, 0.051, 0.064, 0.065, 0.072, 0.073, 0.063, 0.045, 0.034</GeneralWaterUseWeekendScheduleFractions>
+            <GeneralWaterUseMonthlyScheduleMultipliers>1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0</GeneralWaterUseMonthlyScheduleMultipliers>
           </extension>
         </BuildingOccupancy>
         <BuildingConstruction>
           <ResidentialFacilityType>single-family attached</ResidentialFacilityType>
           <NumberofUnits>1</NumberofUnits>
+          <NumberofUnitsInBuilding>4</NumberofUnitsInBuilding>
           <NumberofConditionedFloors>2.0</NumberofConditionedFloors>
           <NumberofConditionedFloorsAboveGrade>2.0</NumberofConditionedFloorsAboveGrade>
           <AverageCeilingHeight>8.0</AverageCeilingHeight>
@@ -1984,9 +2068,11 @@
             <ManualJInputs>
               <HeatingDesignTemperature>6.62</HeatingDesignTemperature>
               <CoolingDesignTemperature>84.02</CoolingDesignTemperature>
+              <DailyTemperatureRange>medium</DailyTemperatureRange>
               <HeatingSetpoint>70.0</HeatingSetpoint>
               <CoolingSetpoint>75.0</CoolingSetpoint>
               <HumiditySetpoint>0.5</HumiditySetpoint>
+              <HumidityDifference>23.2</HumidityDifference>
               <InternalLoadsSensible>2400.0</InternalLoadsSensible>
               <InternalLoadsLatent>0.0</InternalLoadsLatent>
               <NumberofOccupants>2</NumberofOccupants>
@@ -2200,6 +2286,7 @@
             <InteriorFinish>
               <Type>none</Type>
             </InteriorFinish>
+            <RadiantBarrier>false</RadiantBarrier>
             <Insulation>
               <SystemIdentifier id='Wall5Insulation_3'/>
               <AssemblyEffectiveRValue>4.0</AssemblyEffectiveRValue>
@@ -2218,6 +2305,7 @@
             <InteriorFinish>
               <Type>none</Type>
             </InteriorFinish>
+            <RadiantBarrier>false</RadiantBarrier>
             <Insulation>
               <SystemIdentifier id='Wall6Insulation_3'/>
               <AssemblyEffectiveRValue>4.0</AssemblyEffectiveRValue>
@@ -2238,6 +2326,7 @@
               <Type>gypsum board</Type>
               <Thickness>0.5</Thickness>
             </InteriorFinish>
+            <RadiantBarrier>false</RadiantBarrier>
             <Insulation>
               <SystemIdentifier id='Floor1Insulation_3'/>
               <AssemblyEffectiveRValue>38.46153846</AssemblyEffectiveRValue>
@@ -2267,6 +2356,7 @@
               </Layer>
             </UnderSlabInsulation>
             <extension>
+              <GapInsulationRValue>0.0</GapInsulationRValue>
               <CarpetFraction>0.8</CarpetFraction>
               <CarpetRValue>2.0</CarpetRValue>
             </extension>
@@ -2287,8 +2377,8 @@
             </ExteriorShading>
             <InteriorShading>
               <SystemIdentifier id='Window1InteriorShading_3'/>
-              <SummerShadingCoefficient>0.7</SummerShadingCoefficient>
-              <WinterShadingCoefficient>0.85</WinterShadingCoefficient>
+              <SummerShadingCoefficient>0.8360000000000001</SummerShadingCoefficient>
+              <WinterShadingCoefficient>0.8360000000000001</WinterShadingCoefficient>
             </InteriorShading>
             <Overhangs>
               <Depth>2.0</Depth>
@@ -2312,8 +2402,8 @@
             </ExteriorShading>
             <InteriorShading>
               <SystemIdentifier id='Window2InteriorShading_3'/>
-              <SummerShadingCoefficient>0.7</SummerShadingCoefficient>
-              <WinterShadingCoefficient>0.85</WinterShadingCoefficient>
+              <SummerShadingCoefficient>0.8360000000000001</SummerShadingCoefficient>
+              <WinterShadingCoefficient>0.8360000000000001</WinterShadingCoefficient>
             </InteriorShading>
             <Overhangs>
               <Depth>2.0</Depth>
@@ -2337,8 +2427,8 @@
             </ExteriorShading>
             <InteriorShading>
               <SystemIdentifier id='Window3InteriorShading_3'/>
-              <SummerShadingCoefficient>0.7</SummerShadingCoefficient>
-              <WinterShadingCoefficient>0.85</WinterShadingCoefficient>
+              <SummerShadingCoefficient>0.8360000000000001</SummerShadingCoefficient>
+              <WinterShadingCoefficient>0.8360000000000001</WinterShadingCoefficient>
             </InteriorShading>
             <Overhangs>
               <Depth>2.0</Depth>
@@ -2362,8 +2452,8 @@
             </ExteriorShading>
             <InteriorShading>
               <SystemIdentifier id='Window4InteriorShading_3'/>
-              <SummerShadingCoefficient>0.7</SummerShadingCoefficient>
-              <WinterShadingCoefficient>0.85</WinterShadingCoefficient>
+              <SummerShadingCoefficient>0.8360000000000001</SummerShadingCoefficient>
+              <WinterShadingCoefficient>0.8360000000000001</WinterShadingCoefficient>
             </InteriorShading>
             <Overhangs>
               <Depth>2.0</Depth>
@@ -2415,7 +2505,7 @@
                 </Furnace>
               </HeatingSystemType>
               <HeatingSystemFuel>fuel oil</HeatingSystemFuel>
-              <HeatingCapacity>61630.0</HeatingCapacity>
+              <HeatingCapacity>58704.0</HeatingCapacity>
               <AnnualHeatingEfficiency>
                 <Units>AFUE</Units>
                 <Value>0.85</Value>
@@ -2424,7 +2514,8 @@
               <extension>
                 <FanPowerWattsPerCFM>0.5</FanPowerWattsPerCFM>
                 <AirflowDefectRatio>0.0</AirflowDefectRatio>
-                <HeatingAirflowCFM>1145.0</HeatingAirflowCFM>
+                <HeatingAirflowCFM>1090.0</HeatingAirflowCFM>
+                <HeatingAutosizingFactor>1.0</HeatingAutosizingFactor>
               </extension>
             </HeatingSystem>
             <CoolingSystem>
@@ -2432,7 +2523,7 @@
               <UnitLocation>conditioned space</UnitLocation>
               <CoolingSystemType>room air conditioner</CoolingSystemType>
               <CoolingSystemFuel>electricity</CoolingSystemFuel>
-              <CoolingCapacity>12898.0</CoolingCapacity>
+              <CoolingCapacity>13297.0</CoolingCapacity>
               <CompressorType>single stage</CompressorType>
               <FractionCoolLoadServed>1.0</FractionCoolLoadServed>
               <AnnualCoolingEfficiency>
@@ -2441,15 +2532,16 @@
               </AnnualCoolingEfficiency>
               <SensibleHeatFraction>0.65</SensibleHeatFraction>
               <extension>
-                <CoolingAirflowCFM>335.0</CoolingAirflowCFM>
+                <CoolingAirflowCFM>346.0</CoolingAirflowCFM>
                 <CrankcaseHeaterPowerWatts>0.0</CrankcaseHeaterPowerWatts>
+                <CoolingAutosizingFactor>1.0</CoolingAutosizingFactor>
               </extension>
             </CoolingSystem>
             <extension>
               <DesignLoads dataSource='software'>
                 <Heating>
-                  <Total>61630.0</Total>
-                  <Ducts>25652.0</Ducts>
+                  <Total>58704.0</Total>
+                  <Ducts>24458.0</Ducts>
                   <Windows>7908.0</Windows>
                   <Skylights>0.0</Skylights>
                   <Doors>288.0</Doors>
@@ -2458,26 +2550,31 @@
                   <Floors>0.0</Floors>
                   <Slabs>4567.0</Slabs>
                   <Ceilings>3774.0</Ceilings>
-                  <InfilVent>12764.0</InfilVent>
+                  <Infiltration>10292.0</Infiltration>
+                  <Ventilation>740.0</Ventilation>
                 </Heating>
                 <CoolingSensible>
-                  <Total>10647.0</Total>
+                  <Total>11269.0</Total>
                   <Ducts>0.0</Ducts>
-                  <Windows>4419.0</Windows>
+                  <Windows>3362.0</Windows>
                   <Skylights>0.0</Skylights>
                   <Doors>91.0</Doors>
-                  <Walls>413.0</Walls>
+                  <Walls>767.0</Walls>
                   <Roofs>0.0</Roofs>
                   <Floors>0.0</Floors>
                   <Slabs>0.0</Slabs>
                   <Ceilings>2026.0</Ceilings>
-                  <InfilVent>838.0</InfilVent>
+                  <Infiltration>584.0</Infiltration>
+                  <Ventilation>105.0</Ventilation>
                   <InternalLoads>2860.0</InternalLoads>
+                  <AEDExcursion>1474.0</AEDExcursion>
+                  <AEDCurve>3562, 5249, 7258, 9542, 10557, 10513, 9077, 7682, 6318, 6232, 5405, 2447</AEDCurve>
                 </CoolingSensible>
                 <CoolingLatent>
-                  <Total>2062.0</Total>
+                  <Total>1832.0</Total>
                   <Ducts>0.0</Ducts>
-                  <InfilVent>1662.0</InfilVent>
+                  <Infiltration>929.0</Infiltration>
+                  <Ventilation>503.0</Ventilation>
                   <InternalLoads>400.0</InternalLoads>
                 </CoolingLatent>
               </DesignLoads>
@@ -2526,12 +2623,13 @@
                   <DuctType>supply</DuctType>
                   <DuctInsulationRValue>8.0</DuctInsulationRValue>
                   <DuctBuriedInsulationLevel>not buried</DuctBuriedInsulationLevel>
-                  <DuctEffectiveRValue>6.738999999999999</DuctEffectiveRValue>
+                  <DuctEffectiveRValue>6.94</DuctEffectiveRValue>
                   <DuctLocation>attic - vented</DuctLocation>
                   <FractionDuctArea>0.75</FractionDuctArea>
                   <DuctSurfaceArea>927.45</DuctSurfaceArea>
                   <extension>
                     <DuctSurfaceAreaMultiplier>1.0</DuctSurfaceAreaMultiplier>
+                    <DuctFractionRectangular>0.25</DuctFractionRectangular>
                   </extension>
                 </Ducts>
                 <Ducts>
@@ -2539,12 +2637,13 @@
                   <DuctType>return</DuctType>
                   <DuctInsulationRValue>8.0</DuctInsulationRValue>
                   <DuctBuriedInsulationLevel>not buried</DuctBuriedInsulationLevel>
-                  <DuctEffectiveRValue>7.6812000000000005</DuctEffectiveRValue>
+                  <DuctEffectiveRValue>9.0</DuctEffectiveRValue>
                   <DuctLocation>attic - vented</DuctLocation>
                   <FractionDuctArea>0.75</FractionDuctArea>
                   <DuctSurfaceArea>343.5</DuctSurfaceArea>
                   <extension>
                     <DuctSurfaceAreaMultiplier>1.0</DuctSurfaceAreaMultiplier>
+                    <DuctFractionRectangular>1.0</DuctFractionRectangular>
                   </extension>
                 </Ducts>
                 <Ducts>
@@ -2552,12 +2651,13 @@
                   <DuctType>supply</DuctType>
                   <DuctInsulationRValue>8.0</DuctInsulationRValue>
                   <DuctBuriedInsulationLevel>not buried</DuctBuriedInsulationLevel>
-                  <DuctEffectiveRValue>6.738999999999999</DuctEffectiveRValue>
+                  <DuctEffectiveRValue>6.94</DuctEffectiveRValue>
                   <DuctLocation>conditioned space</DuctLocation>
                   <FractionDuctArea>0.25</FractionDuctArea>
                   <DuctSurfaceArea>309.15000000000003</DuctSurfaceArea>
                   <extension>
                     <DuctSurfaceAreaMultiplier>1.0</DuctSurfaceAreaMultiplier>
+                    <DuctFractionRectangular>0.25</DuctFractionRectangular>
                   </extension>
                 </Ducts>
                 <Ducts>
@@ -2565,12 +2665,13 @@
                   <DuctType>return</DuctType>
                   <DuctInsulationRValue>8.0</DuctInsulationRValue>
                   <DuctBuriedInsulationLevel>not buried</DuctBuriedInsulationLevel>
-                  <DuctEffectiveRValue>7.6812000000000005</DuctEffectiveRValue>
+                  <DuctEffectiveRValue>9.0</DuctEffectiveRValue>
                   <DuctLocation>conditioned space</DuctLocation>
                   <FractionDuctArea>0.25</FractionDuctArea>
                   <DuctSurfaceArea>114.5</DuctSurfaceArea>
                   <extension>
                     <DuctSurfaceAreaMultiplier>1.0</DuctSurfaceAreaMultiplier>
+                    <DuctFractionRectangular>1.0</DuctFractionRectangular>
                   </extension>
                 </Ducts>
                 <NumberofReturnRegisters>2</NumberofReturnRegisters>
@@ -2584,13 +2685,13 @@
             <VentilationFan>
               <SystemIdentifier id='VentilationFan1_3'/>
               <FanType>energy recovery ventilator</FanType>
-              <RatedFlowRate>71.2</RatedFlowRate>
+              <RatedFlowRate>71.4</RatedFlowRate>
               <HoursInOperation>24.0</HoursInOperation>
               <UsedForWholeBuildingVentilation>true</UsedForWholeBuildingVentilation>
               <IsSharedSystem>false</IsSharedSystem>
               <TotalRecoveryEfficiency>0.48</TotalRecoveryEfficiency>
               <SensibleRecoveryEfficiency>0.72</SensibleRecoveryEfficiency>
-              <FanPower>71.2</FanPower>
+              <FanPower>71.4</FanPower>
             </VentilationFan>
             <VentilationFan>
               <SystemIdentifier id='VentilationFan2_3'/>
@@ -2658,8 +2759,8 @@
           </WaterFixture>
           <extension>
             <WaterFixturesUsageMultiplier>1.0</WaterFixturesUsageMultiplier>
-            <WaterFixturesWeekdayScheduleFractions>0.012, 0.006, 0.004, 0.005, 0.010, 0.034, 0.078, 0.087, 0.080, 0.067, 0.056, 0.047, 0.040, 0.035, 0.033, 0.031, 0.039, 0.051, 0.060, 0.060, 0.055, 0.048, 0.038, 0.026</WaterFixturesWeekdayScheduleFractions>
-            <WaterFixturesWeekendScheduleFractions>0.012, 0.006, 0.004, 0.005, 0.010, 0.034, 0.078, 0.087, 0.080, 0.067, 0.056, 0.047, 0.040, 0.035, 0.033, 0.031, 0.039, 0.051, 0.060, 0.060, 0.055, 0.048, 0.038, 0.026</WaterFixturesWeekendScheduleFractions>
+            <WaterFixturesWeekdayScheduleFractions>0.012, 0.006, 0.004, 0.005, 0.010, 0.034, 0.078, 0.086, 0.080, 0.067, 0.056, 0.047, 0.040, 0.035, 0.033, 0.031, 0.038, 0.051, 0.060, 0.060, 0.055, 0.048, 0.038, 0.026</WaterFixturesWeekdayScheduleFractions>
+            <WaterFixturesWeekendScheduleFractions>0.012, 0.006, 0.004, 0.005, 0.010, 0.034, 0.078, 0.086, 0.080, 0.067, 0.056, 0.047, 0.040, 0.035, 0.033, 0.031, 0.038, 0.051, 0.060, 0.060, 0.055, 0.048, 0.038, 0.026</WaterFixturesWeekendScheduleFractions>
             <WaterFixturesMonthlyScheduleMultipliers>1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0</WaterFixturesMonthlyScheduleMultipliers>
           </extension>
         </WaterHeating>
@@ -2678,9 +2779,9 @@
           <Capacity>4.5</Capacity>
           <extension>
             <UsageMultiplier>1.0</UsageMultiplier>
-            <WeekdayScheduleFractions>0.009, 0.007, 0.004, 0.004, 0.007, 0.011, 0.022, 0.049, 0.073, 0.086, 0.084, 0.075, 0.067, 0.060, 0.049, 0.052, 0.050, 0.049, 0.049, 0.049, 0.049, 0.047, 0.032, 0.017</WeekdayScheduleFractions>
-            <WeekendScheduleFractions>0.009, 0.007, 0.004, 0.004, 0.007, 0.011, 0.022, 0.049, 0.073, 0.086, 0.084, 0.075, 0.067, 0.060, 0.049, 0.052, 0.050, 0.049, 0.049, 0.049, 0.049, 0.047, 0.032, 0.017</WeekendScheduleFractions>
-            <MonthlyScheduleMultipliers>1.011, 1.002, 1.022, 1.020, 1.022, 0.996, 0.999, 0.999, 0.996, 0.964, 0.959, 1.011</MonthlyScheduleMultipliers>
+            <WeekdayScheduleFractions>0.009, 0.007, 0.004, 0.004, 0.007, 0.011, 0.022, 0.049, 0.073, 0.086, 0.084, 0.075, 0.067, 0.060, 0.049, 0.051, 0.050, 0.049, 0.049, 0.049, 0.049, 0.047, 0.032, 0.017</WeekdayScheduleFractions>
+            <WeekendScheduleFractions>0.009, 0.007, 0.004, 0.004, 0.007, 0.011, 0.022, 0.049, 0.073, 0.086, 0.084, 0.075, 0.067, 0.060, 0.049, 0.051, 0.050, 0.049, 0.049, 0.049, 0.049, 0.047, 0.032, 0.017</WeekendScheduleFractions>
+            <MonthlyScheduleMultipliers>1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0</MonthlyScheduleMultipliers>
           </extension>
         </ClothesWasher>
         <ClothesDryer>
@@ -2693,8 +2794,8 @@
           <VentedFlowRate>100.0</VentedFlowRate>
           <extension>
             <UsageMultiplier>1.0</UsageMultiplier>
-            <WeekdayScheduleFractions>0.010, 0.006, 0.004, 0.002, 0.004, 0.006, 0.016, 0.032, 0.048, 0.068, 0.078, 0.081, 0.074, 0.067, 0.057, 0.061, 0.055, 0.054, 0.051, 0.051, 0.052, 0.054, 0.044, 0.024</WeekdayScheduleFractions>
-            <WeekendScheduleFractions>0.010, 0.006, 0.004, 0.002, 0.004, 0.006, 0.016, 0.032, 0.048, 0.068, 0.078, 0.081, 0.074, 0.067, 0.057, 0.061, 0.055, 0.054, 0.051, 0.051, 0.052, 0.054, 0.044, 0.024</WeekendScheduleFractions>
+            <WeekdayScheduleFractions>0.010, 0.006, 0.004, 0.002, 0.004, 0.006, 0.016, 0.032, 0.048, 0.068, 0.078, 0.081, 0.074, 0.067, 0.058, 0.061, 0.055, 0.054, 0.051, 0.051, 0.052, 0.054, 0.044, 0.024</WeekdayScheduleFractions>
+            <WeekendScheduleFractions>0.010, 0.006, 0.004, 0.002, 0.004, 0.006, 0.016, 0.032, 0.048, 0.068, 0.078, 0.081, 0.074, 0.067, 0.058, 0.061, 0.055, 0.054, 0.051, 0.051, 0.052, 0.054, 0.044, 0.024</WeekendScheduleFractions>
             <MonthlyScheduleMultipliers>1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0</MonthlyScheduleMultipliers>
           </extension>
         </ClothesDryer>
@@ -2710,9 +2811,9 @@
           <LabelUsage>4.0</LabelUsage>
           <extension>
             <UsageMultiplier>1.0</UsageMultiplier>
-            <WeekdayScheduleFractions>0.015, 0.007, 0.005, 0.003, 0.003, 0.010, 0.020, 0.031, 0.058, 0.065, 0.056, 0.048, 0.041, 0.046, 0.036, 0.038, 0.038, 0.049, 0.087, 0.111, 0.090, 0.067, 0.044, 0.031</WeekdayScheduleFractions>
-            <WeekendScheduleFractions>0.015, 0.007, 0.005, 0.003, 0.003, 0.010, 0.020, 0.031, 0.058, 0.065, 0.056, 0.048, 0.041, 0.046, 0.036, 0.038, 0.038, 0.049, 0.087, 0.111, 0.090, 0.067, 0.044, 0.031</WeekendScheduleFractions>
-            <MonthlyScheduleMultipliers>1.097, 1.097, 0.991, 0.987, 0.991, 0.890, 0.896, 0.896, 0.890, 1.085, 1.085, 1.097</MonthlyScheduleMultipliers>
+            <WeekdayScheduleFractions>0.015, 0.007, 0.005, 0.003, 0.003, 0.010, 0.020, 0.031, 0.058, 0.065, 0.056, 0.048, 0.042, 0.046, 0.036, 0.038, 0.038, 0.049, 0.087, 0.111, 0.090, 0.067, 0.044, 0.031</WeekdayScheduleFractions>
+            <WeekendScheduleFractions>0.015, 0.007, 0.005, 0.003, 0.003, 0.010, 0.020, 0.031, 0.058, 0.065, 0.056, 0.048, 0.042, 0.046, 0.036, 0.038, 0.038, 0.049, 0.087, 0.111, 0.090, 0.067, 0.044, 0.031</WeekendScheduleFractions>
+            <MonthlyScheduleMultipliers>1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0</MonthlyScheduleMultipliers>
           </extension>
         </Dishwasher>
         <Refrigerator>
@@ -2722,9 +2823,8 @@
           <PrimaryIndicator>true</PrimaryIndicator>
           <extension>
             <UsageMultiplier>1.0</UsageMultiplier>
-            <WeekdayScheduleFractions>0.040, 0.039, 0.038, 0.037, 0.036, 0.036, 0.038, 0.040, 0.041, 0.041, 0.040, 0.040, 0.042, 0.042, 0.042, 0.041, 0.044, 0.048, 0.050, 0.048, 0.047, 0.046, 0.044, 0.041</WeekdayScheduleFractions>
-            <WeekendScheduleFractions>0.040, 0.039, 0.038, 0.037, 0.036, 0.036, 0.038, 0.040, 0.041, 0.041, 0.040, 0.040, 0.042, 0.042, 0.042, 0.041, 0.044, 0.048, 0.050, 0.048, 0.047, 0.046, 0.044, 0.041</WeekendScheduleFractions>
-            <MonthlyScheduleMultipliers>0.837, 0.835, 1.084, 1.084, 1.084, 1.096, 1.096, 1.096, 1.096, 0.931, 0.925, 0.837</MonthlyScheduleMultipliers>
+            <ConstantScheduleCoefficients>-0.487, -0.340, -0.370, -0.361, -0.515, -0.684, -0.471, -0.159, -0.079, -0.417, -0.411, -0.386, -0.240, -0.314, -0.160, -0.121, -0.469, -0.412, -0.091, 0.077, -0.118, -0.247, -0.445, -0.544</ConstantScheduleCoefficients>
+            <TemperatureScheduleCoefficients>0.019, 0.016, 0.017, 0.016, 0.018, 0.021, 0.019, 0.015, 0.015, 0.019, 0.018, 0.018, 0.016, 0.017, 0.015, 0.015, 0.020, 0.020, 0.017, 0.014, 0.016, 0.017, 0.019, 0.020</TemperatureScheduleCoefficients>
           </extension>
         </Refrigerator>
         <CookingRange>
@@ -2734,9 +2834,9 @@
           <IsInduction>false</IsInduction>
           <extension>
             <UsageMultiplier>1.0</UsageMultiplier>
-            <WeekdayScheduleFractions>0.007, 0.007, 0.004, 0.004, 0.007, 0.011, 0.025, 0.042, 0.046, 0.048, 0.042, 0.050, 0.057, 0.046, 0.057, 0.044, 0.092, 0.150, 0.117, 0.060, 0.035, 0.025, 0.016, 0.011</WeekdayScheduleFractions>
-            <WeekendScheduleFractions>0.007, 0.007, 0.004, 0.004, 0.007, 0.011, 0.025, 0.042, 0.046, 0.048, 0.042, 0.050, 0.057, 0.046, 0.057, 0.044, 0.092, 0.150, 0.117, 0.060, 0.035, 0.025, 0.016, 0.011</WeekendScheduleFractions>
-            <MonthlyScheduleMultipliers>1.097, 1.097, 0.991, 0.987, 0.991, 0.890, 0.896, 0.896, 0.890, 1.085, 1.085, 1.097</MonthlyScheduleMultipliers>
+            <WeekdayScheduleFractions>0.008, 0.008, 0.008, 0.008, 0.008, 0.015, 0.023, 0.039, 0.046, 0.046, 0.046, 0.054, 0.062, 0.046, 0.039, 0.054, 0.076, 0.134, 0.114, 0.058, 0.039, 0.031, 0.023, 0.015</WeekdayScheduleFractions>
+            <WeekendScheduleFractions>0.008, 0.008, 0.008, 0.008, 0.008, 0.015, 0.023, 0.039, 0.046, 0.046, 0.046, 0.054, 0.062, 0.046, 0.039, 0.054, 0.076, 0.134, 0.114, 0.058, 0.039, 0.031, 0.023, 0.015</WeekendScheduleFractions>
+            <MonthlyScheduleMultipliers>1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0</MonthlyScheduleMultipliers>
           </extension>
         </CookingRange>
         <Oven>
@@ -2795,14 +2895,11 @@
         </LightingGroup>
         <CeilingFan>
           <SystemIdentifier id='CeilingFan1_3'/>
-          <Airflow>
-            <FanSpeed>medium</FanSpeed>
-            <Efficiency>70.4225352112676</Efficiency>
-          </Airflow>
           <Count>2</Count>
+          <LabelEnergyUse>42.6</LabelEnergyUse>
           <extension>
-            <WeekdayScheduleFractions>0.057, 0.057, 0.057, 0.057, 0.057, 0.057, 0.057, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.057, 0.057, 0.057, 0.057, 0.057, 0.057</WeekdayScheduleFractions>
-            <WeekendScheduleFractions>0.057, 0.057, 0.057, 0.057, 0.057, 0.057, 0.057, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.057, 0.057, 0.057, 0.057, 0.057, 0.057</WeekendScheduleFractions>
+            <WeekdayScheduleFractions>0.057, 0.057, 0.057, 0.057, 0.057, 0.057, 0.057, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.052, 0.057, 0.057, 0.057, 0.057, 0.057</WeekdayScheduleFractions>
+            <WeekendScheduleFractions>0.057, 0.057, 0.057, 0.057, 0.057, 0.057, 0.057, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.052, 0.057, 0.057, 0.057, 0.057, 0.057</WeekendScheduleFractions>
             <MonthlyScheduleMultipliers>0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0</MonthlyScheduleMultipliers>
           </extension>
         </CeilingFan>
@@ -2810,9 +2907,12 @@
           <InteriorUsageMultiplier>1.0</InteriorUsageMultiplier>
           <GarageUsageMultiplier>1.0</GarageUsageMultiplier>
           <ExteriorUsageMultiplier>1.0</ExteriorUsageMultiplier>
-          <ExteriorWeekdayScheduleFractions>0.046, 0.046, 0.046, 0.046, 0.046, 0.037, 0.035, 0.034, 0.033, 0.028, 0.022, 0.015, 0.012, 0.011, 0.011, 0.012, 0.019, 0.037, 0.049, 0.065, 0.091, 0.105, 0.091, 0.063</ExteriorWeekdayScheduleFractions>
-          <ExteriorWeekendScheduleFractions>0.046, 0.046, 0.045, 0.045, 0.046, 0.045, 0.044, 0.041, 0.036, 0.03, 0.024, 0.016, 0.012, 0.011, 0.011, 0.012, 0.019, 0.038, 0.048, 0.06, 0.083, 0.098, 0.085, 0.059</ExteriorWeekendScheduleFractions>
-          <ExteriorMonthlyScheduleMultipliers>1.248, 1.257, 0.993, 0.989, 0.993, 0.827, 0.821, 0.821, 0.827, 0.99, 0.987, 1.248</ExteriorMonthlyScheduleMultipliers>
+          <InteriorWeekdayScheduleFractions>0.012, 0.010, 0.010, 0.010, 0.011, 0.018, 0.030, 0.038, 0.041, 0.041, 0.039, 0.037, 0.036, 0.035, 0.037, 0.041, 0.050, 0.065, 0.086, 0.106, 0.110, 0.079, 0.040, 0.018</InteriorWeekdayScheduleFractions>
+          <InteriorWeekendScheduleFractions>0.012, 0.010, 0.010, 0.010, 0.011, 0.018, 0.030, 0.038, 0.041, 0.041, 0.039, 0.037, 0.036, 0.035, 0.037, 0.041, 0.050, 0.065, 0.086, 0.106, 0.110, 0.079, 0.040, 0.018</InteriorWeekendScheduleFractions>
+          <InteriorMonthlyScheduleMultipliers>1.19, 1.11, 1.02, 0.93, 0.84, 0.80, 0.82, 0.88, 0.98, 1.07, 1.16, 1.20</InteriorMonthlyScheduleMultipliers>
+          <ExteriorWeekdayScheduleFractions>0.040, 0.037, 0.037, 0.035, 0.035, 0.039, 0.044, 0.041, 0.031, 0.025, 0.024, 0.024, 0.025, 0.028, 0.030, 0.035, 0.044, 0.056, 0.064, 0.068, 0.070, 0.065, 0.056, 0.047</ExteriorWeekdayScheduleFractions>
+          <ExteriorWeekendScheduleFractions>0.040, 0.037, 0.037, 0.035, 0.035, 0.039, 0.044, 0.041, 0.031, 0.025, 0.024, 0.024, 0.025, 0.028, 0.030, 0.035, 0.044, 0.056, 0.064, 0.068, 0.070, 0.065, 0.056, 0.047</ExteriorWeekendScheduleFractions>
+          <ExteriorMonthlyScheduleMultipliers>1.19, 1.11, 1.02, 0.93, 0.84, 0.80, 0.82, 0.88, 0.98, 1.07, 1.16, 1.20</ExteriorMonthlyScheduleMultipliers>
         </extension>
       </Lighting>
       <MiscLoads>
@@ -2827,9 +2927,9 @@
             <FracSensible>1.0</FracSensible>
             <FracLatent>0.0</FracLatent>
             <UsageMultiplier>1.0</UsageMultiplier>
-            <WeekdayScheduleFractions>0.037, 0.018, 0.009, 0.007, 0.011, 0.018, 0.029, 0.040, 0.049, 0.058, 0.065, 0.072, 0.076, 0.086, 0.091, 0.102, 0.127, 0.156, 0.210, 0.294, 0.363, 0.344, 0.208, 0.090</WeekdayScheduleFractions>
-            <WeekendScheduleFractions>0.044, 0.022, 0.012, 0.008, 0.011, 0.014, 0.024, 0.043, 0.071, 0.094, 0.112, 0.123, 0.132, 0.156, 0.178, 0.196, 0.206, 0.213, 0.251, 0.330, 0.388, 0.358, 0.226, 0.103</WeekendScheduleFractions>
-            <MonthlyScheduleMultipliers>1.137, 1.129, 0.961, 0.969, 0.961, 0.993, 0.996, 0.96, 0.993, 0.867, 0.86, 1.137</MonthlyScheduleMultipliers>
+            <WeekdayScheduleFractions>0.014, 0.007, 0.004, 0.003, 0.004, 0.006, 0.010, 0.015, 0.020, 0.025, 0.028, 0.031, 0.033, 0.038, 0.042, 0.046, 0.054, 0.062, 0.080, 0.110, 0.132, 0.125, 0.077, 0.034</WeekdayScheduleFractions>
+            <WeekendScheduleFractions>0.014, 0.007, 0.004, 0.003, 0.004, 0.006, 0.010, 0.015, 0.020, 0.025, 0.028, 0.031, 0.033, 0.038, 0.042, 0.046, 0.054, 0.062, 0.080, 0.110, 0.132, 0.125, 0.077, 0.034</WeekendScheduleFractions>
+            <MonthlyScheduleMultipliers>1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0</MonthlyScheduleMultipliers>
           </extension>
         </PlugLoad>
         <PlugLoad>
@@ -2843,9 +2943,9 @@
             <FracSensible>0.855</FracSensible>
             <FracLatent>0.04500000000000001</FracLatent>
             <UsageMultiplier>1.0</UsageMultiplier>
-            <WeekdayScheduleFractions>0.035, 0.033, 0.032, 0.031, 0.032, 0.033, 0.037, 0.042, 0.043, 0.043, 0.043, 0.044, 0.045, 0.045, 0.044, 0.046, 0.048, 0.052, 0.053, 0.05, 0.047, 0.045, 0.04, 0.036</WeekdayScheduleFractions>
-            <WeekendScheduleFractions>0.035, 0.033, 0.032, 0.031, 0.032, 0.033, 0.037, 0.042, 0.043, 0.043, 0.043, 0.044, 0.045, 0.045, 0.044, 0.046, 0.048, 0.052, 0.053, 0.05, 0.047, 0.045, 0.04, 0.036</WeekendScheduleFractions>
-            <MonthlyScheduleMultipliers>1.248, 1.257, 0.993, 0.989, 0.993, 0.827, 0.821, 0.821, 0.827, 0.99, 0.987, 1.248</MonthlyScheduleMultipliers>
+            <WeekdayScheduleFractions>0.036, 0.036, 0.036, 0.036, 0.036, 0.036, 0.038, 0.041, 0.042, 0.042, 0.042, 0.042, 0.042, 0.042, 0.042, 0.044, 0.047, 0.050, 0.051, 0.050, 0.048, 0.044, 0.040, 0.037</WeekdayScheduleFractions>
+            <WeekendScheduleFractions>0.036, 0.036, 0.036, 0.036, 0.036, 0.036, 0.038, 0.041, 0.042, 0.042, 0.042, 0.042, 0.042, 0.042, 0.042, 0.044, 0.047, 0.050, 0.051, 0.050, 0.048, 0.044, 0.040, 0.037</WeekendScheduleFractions>
+            <MonthlyScheduleMultipliers>1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0</MonthlyScheduleMultipliers>
           </extension>
         </PlugLoad>
       </MiscLoads>
@@ -2856,8 +2956,14 @@
     <Site>
       <SiteID id='SiteID_4'/>
       <Address>
+        <CityMunicipality dataSource='software'>Buffalo Niagara Intl Ap</CityMunicipality>
         <StateCode dataSource='software'>NY</StateCode>
       </Address>
+      <GeoLocation>
+        <Latitude dataSource='software'>42.93</Latitude>
+        <Longitude dataSource='software'>-78.73</Longitude>
+      </GeoLocation>
+      <Elevation dataSource='software'>705.4</Elevation>
       <TimeZone>
         <UTCOffset dataSource='software'>-5.0</UTCOffset>
         <DSTObserved dataSource='software'>true</DSTObserved>
@@ -2878,22 +2984,32 @@
           <SiteType dataSource='software'>suburban</SiteType>
           <Surroundings>attached on one side</Surroundings>
           <VerticalSurroundings>no units above or below</VerticalSurroundings>
-          <ShieldingofHome dataSource='software'>normal</ShieldingofHome>
+          <ShieldingofHome dataSource='software'>well-shielded</ShieldingofHome>
           <AzimuthOfFrontOfHome>180</AzimuthOfFrontOfHome>
-          <extension>
-            <GroundConductivity dataSource='software'>1.0</GroundConductivity>
-          </extension>
+          <Soil>
+            <SoilType dataSource='software'>unknown</SoilType>
+            <MoistureType dataSource='software'>mixed</MoistureType>
+            <Conductivity dataSource='software'>1.0</Conductivity>
+            <extension>
+              <Diffusivity dataSource='software'>0.0208</Diffusivity>
+            </extension>
+          </Soil>
         </Site>
         <BuildingOccupancy>
           <extension>
-            <WeekdayScheduleFractions dataSource='software'>0.061, 0.061, 0.061, 0.061, 0.061, 0.061, 0.061, 0.053, 0.025, 0.015, 0.015, 0.015, 0.015, 0.015, 0.015, 0.015, 0.018, 0.033, 0.054, 0.054, 0.054, 0.061, 0.061, 0.061</WeekdayScheduleFractions>
-            <WeekendScheduleFractions dataSource='software'>0.061, 0.061, 0.061, 0.061, 0.061, 0.061, 0.061, 0.053, 0.025, 0.015, 0.015, 0.015, 0.015, 0.015, 0.015, 0.015, 0.018, 0.033, 0.054, 0.054, 0.054, 0.061, 0.061, 0.061</WeekendScheduleFractions>
+            <WeekdayScheduleFractions dataSource='software'>0.035, 0.035, 0.035, 0.035, 0.035, 0.059, 0.082, 0.055, 0.027, 0.014, 0.014, 0.014, 0.014, 0.014, 0.019, 0.027, 0.041, 0.055, 0.068, 0.082, 0.082, 0.070, 0.053, 0.035</WeekdayScheduleFractions>
+            <WeekendScheduleFractions dataSource='software'>0.035, 0.035, 0.035, 0.035, 0.035, 0.059, 0.082, 0.055, 0.027, 0.014, 0.014, 0.014, 0.014, 0.014, 0.019, 0.027, 0.041, 0.055, 0.068, 0.082, 0.082, 0.070, 0.053, 0.035</WeekendScheduleFractions>
             <MonthlyScheduleMultipliers dataSource='software'>1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0</MonthlyScheduleMultipliers>
+            <GeneralWaterUseUsageMultiplier dataSource='software'>1.0</GeneralWaterUseUsageMultiplier>
+            <GeneralWaterUseWeekdayScheduleFractions dataSource='software'>0.023, 0.021, 0.021, 0.025, 0.027, 0.038, 0.044, 0.039, 0.037, 0.037, 0.034, 0.035, 0.035, 0.035, 0.039, 0.043, 0.051, 0.064, 0.065, 0.072, 0.073, 0.063, 0.045, 0.034</GeneralWaterUseWeekdayScheduleFractions>
+            <GeneralWaterUseWeekendScheduleFractions dataSource='software'>0.023, 0.021, 0.021, 0.025, 0.027, 0.038, 0.044, 0.039, 0.037, 0.037, 0.034, 0.035, 0.035, 0.035, 0.039, 0.043, 0.051, 0.064, 0.065, 0.072, 0.073, 0.063, 0.045, 0.034</GeneralWaterUseWeekendScheduleFractions>
+            <GeneralWaterUseMonthlyScheduleMultipliers dataSource='software'>1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0</GeneralWaterUseMonthlyScheduleMultipliers>
           </extension>
         </BuildingOccupancy>
         <BuildingConstruction>
           <ResidentialFacilityType>single-family attached</ResidentialFacilityType>
           <NumberofUnits dataSource='software'>1</NumberofUnits>
+          <NumberofUnitsInBuilding>4</NumberofUnitsInBuilding>
           <NumberofConditionedFloors>2.0</NumberofConditionedFloors>
           <NumberofConditionedFloorsAboveGrade>2.0</NumberofConditionedFloorsAboveGrade>
           <AverageCeilingHeight>8.0</AverageCeilingHeight>
@@ -2908,9 +3024,11 @@
             <ManualJInputs>
               <HeatingDesignTemperature dataSource='software'>6.62</HeatingDesignTemperature>
               <CoolingDesignTemperature dataSource='software'>84.02</CoolingDesignTemperature>
+              <DailyTemperatureRange dataSource='software'>medium</DailyTemperatureRange>
               <HeatingSetpoint dataSource='software'>70.0</HeatingSetpoint>
               <CoolingSetpoint dataSource='software'>75.0</CoolingSetpoint>
               <HumiditySetpoint dataSource='software'>0.5</HumiditySetpoint>
+              <HumidityDifference dataSource='software'>23.2</HumidityDifference>
               <InternalLoadsSensible dataSource='software'>2400.0</InternalLoadsSensible>
               <InternalLoadsLatent dataSource='software'>0.0</InternalLoadsLatent>
               <NumberofOccupants dataSource='software'>2</NumberofOccupants>
@@ -2999,7 +3117,7 @@
               <Type dataSource='software'>none</Type>
             </InteriorFinish>
             <Pitch>6.0</Pitch>
-            <RadiantBarrier>false</RadiantBarrier>
+            <RadiantBarrier dataSource='software'>false</RadiantBarrier>
             <Insulation>
               <SystemIdentifier id='Roof1Insulation_4'/>
               <AssemblyEffectiveRValue>2.3</AssemblyEffectiveRValue>
@@ -3019,7 +3137,7 @@
               <Type dataSource='software'>none</Type>
             </InteriorFinish>
             <Pitch>6.0</Pitch>
-            <RadiantBarrier>false</RadiantBarrier>
+            <RadiantBarrier dataSource='software'>false</RadiantBarrier>
             <Insulation>
               <SystemIdentifier id='Roof2Insulation_4'/>
               <AssemblyEffectiveRValue>2.3</AssemblyEffectiveRValue>
@@ -3133,6 +3251,7 @@
             <InteriorFinish>
               <Type dataSource='software'>none</Type>
             </InteriorFinish>
+            <RadiantBarrier dataSource='software'>false</RadiantBarrier>
             <Insulation>
               <SystemIdentifier id='Wall5Insulation_4'/>
               <AssemblyEffectiveRValue>4.0</AssemblyEffectiveRValue>
@@ -3151,6 +3270,7 @@
             <InteriorFinish>
               <Type dataSource='software'>none</Type>
             </InteriorFinish>
+            <RadiantBarrier dataSource='software'>false</RadiantBarrier>
             <Insulation>
               <SystemIdentifier id='Wall6Insulation_4'/>
               <AssemblyEffectiveRValue>4.0</AssemblyEffectiveRValue>
@@ -3171,6 +3291,7 @@
               <Type dataSource='software'>gypsum board</Type>
               <Thickness dataSource='software'>0.5</Thickness>
             </InteriorFinish>
+            <RadiantBarrier dataSource='software'>false</RadiantBarrier>
             <Insulation>
               <SystemIdentifier id='Floor1Insulation_4'/>
               <AssemblyEffectiveRValue>38.46153846</AssemblyEffectiveRValue>
@@ -3200,6 +3321,7 @@
               </Layer>
             </UnderSlabInsulation>
             <extension>
+              <GapInsulationRValue dataSource='software'>0.0</GapInsulationRValue>
               <CarpetFraction dataSource='software'>0.8</CarpetFraction>
               <CarpetRValue dataSource='software'>2.0</CarpetRValue>
             </extension>
@@ -3220,8 +3342,8 @@
             </ExteriorShading>
             <InteriorShading>
               <SystemIdentifier id='Window1InteriorShading_4'/>
-              <SummerShadingCoefficient dataSource='software'>0.7</SummerShadingCoefficient>
-              <WinterShadingCoefficient dataSource='software'>0.85</WinterShadingCoefficient>
+              <SummerShadingCoefficient dataSource='software'>0.8360000000000001</SummerShadingCoefficient>
+              <WinterShadingCoefficient dataSource='software'>0.8360000000000001</WinterShadingCoefficient>
             </InteriorShading>
             <Overhangs>
               <Depth>2.0</Depth>
@@ -3245,8 +3367,8 @@
             </ExteriorShading>
             <InteriorShading>
               <SystemIdentifier id='Window2InteriorShading_4'/>
-              <SummerShadingCoefficient dataSource='software'>0.7</SummerShadingCoefficient>
-              <WinterShadingCoefficient dataSource='software'>0.85</WinterShadingCoefficient>
+              <SummerShadingCoefficient dataSource='software'>0.8360000000000001</SummerShadingCoefficient>
+              <WinterShadingCoefficient dataSource='software'>0.8360000000000001</WinterShadingCoefficient>
             </InteriorShading>
             <Overhangs>
               <Depth>2.0</Depth>
@@ -3270,8 +3392,8 @@
             </ExteriorShading>
             <InteriorShading>
               <SystemIdentifier id='Window3InteriorShading_4'/>
-              <SummerShadingCoefficient dataSource='software'>0.7</SummerShadingCoefficient>
-              <WinterShadingCoefficient dataSource='software'>0.85</WinterShadingCoefficient>
+              <SummerShadingCoefficient dataSource='software'>0.8360000000000001</SummerShadingCoefficient>
+              <WinterShadingCoefficient dataSource='software'>0.8360000000000001</WinterShadingCoefficient>
             </InteriorShading>
             <Overhangs>
               <Depth>2.0</Depth>
@@ -3295,8 +3417,8 @@
             </ExteriorShading>
             <InteriorShading>
               <SystemIdentifier id='Window4InteriorShading_4'/>
-              <SummerShadingCoefficient dataSource='software'>0.7</SummerShadingCoefficient>
-              <WinterShadingCoefficient dataSource='software'>0.85</WinterShadingCoefficient>
+              <SummerShadingCoefficient dataSource='software'>0.8360000000000001</SummerShadingCoefficient>
+              <WinterShadingCoefficient dataSource='software'>0.8360000000000001</WinterShadingCoefficient>
             </InteriorShading>
             <Overhangs>
               <Depth>2.0</Depth>
@@ -3320,8 +3442,8 @@
             </ExteriorShading>
             <InteriorShading>
               <SystemIdentifier id='Window5InteriorShading_4'/>
-              <SummerShadingCoefficient dataSource='software'>0.7</SummerShadingCoefficient>
-              <WinterShadingCoefficient dataSource='software'>0.85</WinterShadingCoefficient>
+              <SummerShadingCoefficient dataSource='software'>0.8360000000000001</SummerShadingCoefficient>
+              <WinterShadingCoefficient dataSource='software'>0.8360000000000001</WinterShadingCoefficient>
             </InteriorShading>
             <Overhangs>
               <Depth>2.0</Depth>
@@ -3345,8 +3467,8 @@
             </ExteriorShading>
             <InteriorShading>
               <SystemIdentifier id='Window6InteriorShading_4'/>
-              <SummerShadingCoefficient dataSource='software'>0.7</SummerShadingCoefficient>
-              <WinterShadingCoefficient dataSource='software'>0.85</WinterShadingCoefficient>
+              <SummerShadingCoefficient dataSource='software'>0.8360000000000001</SummerShadingCoefficient>
+              <WinterShadingCoefficient dataSource='software'>0.8360000000000001</WinterShadingCoefficient>
             </InteriorShading>
             <Overhangs>
               <Depth>2.0</Depth>
@@ -3398,7 +3520,7 @@
                 </Furnace>
               </HeatingSystemType>
               <HeatingSystemFuel>fuel oil</HeatingSystemFuel>
-              <HeatingCapacity dataSource='software'>67769.0</HeatingCapacity>
+              <HeatingCapacity dataSource='software'>64842.0</HeatingCapacity>
               <AnnualHeatingEfficiency>
                 <Units>AFUE</Units>
                 <Value>0.85</Value>
@@ -3407,7 +3529,8 @@
               <extension>
                 <FanPowerWattsPerCFM dataSource='software'>0.5</FanPowerWattsPerCFM>
                 <AirflowDefectRatio dataSource='software'>0.0</AirflowDefectRatio>
-                <HeatingAirflowCFM dataSource='software'>1259.0</HeatingAirflowCFM>
+                <HeatingAirflowCFM dataSource='software'>1204.0</HeatingAirflowCFM>
+                <HeatingAutosizingFactor dataSource='software'>1.0</HeatingAutosizingFactor>
               </extension>
             </HeatingSystem>
             <CoolingSystem>
@@ -3415,7 +3538,7 @@
               <UnitLocation dataSource='software'>conditioned space</UnitLocation>
               <CoolingSystemType>room air conditioner</CoolingSystemType>
               <CoolingSystemFuel>electricity</CoolingSystemFuel>
-              <CoolingCapacity dataSource='software'>14294.0</CoolingCapacity>
+              <CoolingCapacity dataSource='software'>14775.0</CoolingCapacity>
               <CompressorType dataSource='software'>single stage</CompressorType>
               <FractionCoolLoadServed>1.0</FractionCoolLoadServed>
               <AnnualCoolingEfficiency>
@@ -3424,15 +3547,16 @@
               </AnnualCoolingEfficiency>
               <SensibleHeatFraction dataSource='software'>0.65</SensibleHeatFraction>
               <extension>
-                <CoolingAirflowCFM dataSource='software'>372.0</CoolingAirflowCFM>
+                <CoolingAirflowCFM dataSource='software'>384.0</CoolingAirflowCFM>
                 <CrankcaseHeaterPowerWatts dataSource='software'>0.0</CrankcaseHeaterPowerWatts>
+                <CoolingAutosizingFactor dataSource='software'>1.0</CoolingAutosizingFactor>
               </extension>
             </CoolingSystem>
             <extension>
               <DesignLoads dataSource='software'>
                 <Heating>
-                  <Total>67769.0</Total>
-                  <Ducts>26988.0</Ducts>
+                  <Total>64842.0</Total>
+                  <Ducts>25792.0</Ducts>
                   <Windows>9883.0</Windows>
                   <Skylights>0.0</Skylights>
                   <Doors>288.0</Doors>
@@ -3441,26 +3565,31 @@
                   <Floors>0.0</Floors>
                   <Slabs>5707.0</Slabs>
                   <Ceilings>3774.0</Ceilings>
-                  <InfilVent>12764.0</InfilVent>
+                  <Infiltration>10292.0</Infiltration>
+                  <Ventilation>740.0</Ventilation>
                 </Heating>
                 <CoolingSensible>
-                  <Total>12023.0</Total>
+                  <Total>12727.0</Total>
                   <Ducts>0.0</Ducts>
-                  <Windows>5601.0</Windows>
+                  <Windows>6028.0</Windows>
                   <Skylights>0.0</Skylights>
                   <Doors>91.0</Doors>
-                  <Walls>607.0</Walls>
+                  <Walls>961.0</Walls>
                   <Roofs>0.0</Roofs>
                   <Floors>0.0</Floors>
                   <Slabs>0.0</Slabs>
                   <Ceilings>2026.0</Ceilings>
-                  <InfilVent>838.0</InfilVent>
+                  <Infiltration>584.0</Infiltration>
+                  <Ventilation>105.0</Ventilation>
                   <InternalLoads>2860.0</InternalLoads>
+                  <AEDExcursion>71.0</AEDExcursion>
+                  <AEDCurve>4333, 6263, 8513, 10952, 12113, 13243, 13211, 13154, 12471, 12978, 10495, 3857</AEDCurve>
                 </CoolingSensible>
                 <CoolingLatent>
-                  <Total>2062.0</Total>
+                  <Total>1832.0</Total>
                   <Ducts>0.0</Ducts>
-                  <InfilVent>1662.0</InfilVent>
+                  <Infiltration>929.0</Infiltration>
+                  <Ventilation>503.0</Ventilation>
                   <InternalLoads>400.0</InternalLoads>
                 </CoolingLatent>
               </DesignLoads>
@@ -3509,12 +3638,13 @@
                   <DuctType>supply</DuctType>
                   <DuctInsulationRValue>8.0</DuctInsulationRValue>
                   <DuctBuriedInsulationLevel dataSource='software'>not buried</DuctBuriedInsulationLevel>
-                  <DuctEffectiveRValue dataSource='software'>6.738999999999999</DuctEffectiveRValue>
+                  <DuctEffectiveRValue dataSource='software'>6.94</DuctEffectiveRValue>
                   <DuctLocation dataSource='software'>attic - vented</DuctLocation>
                   <FractionDuctArea dataSource='software'>0.75</FractionDuctArea>
                   <DuctSurfaceArea dataSource='software'>927.45</DuctSurfaceArea>
                   <extension>
                     <DuctSurfaceAreaMultiplier dataSource='software'>1.0</DuctSurfaceAreaMultiplier>
+                    <DuctFractionRectangular dataSource='software'>0.25</DuctFractionRectangular>
                   </extension>
                 </Ducts>
                 <Ducts>
@@ -3522,12 +3652,13 @@
                   <DuctType>return</DuctType>
                   <DuctInsulationRValue>8.0</DuctInsulationRValue>
                   <DuctBuriedInsulationLevel dataSource='software'>not buried</DuctBuriedInsulationLevel>
-                  <DuctEffectiveRValue dataSource='software'>7.6812000000000005</DuctEffectiveRValue>
+                  <DuctEffectiveRValue dataSource='software'>9.0</DuctEffectiveRValue>
                   <DuctLocation dataSource='software'>attic - vented</DuctLocation>
                   <FractionDuctArea dataSource='software'>0.75</FractionDuctArea>
                   <DuctSurfaceArea dataSource='software'>343.5</DuctSurfaceArea>
                   <extension>
                     <DuctSurfaceAreaMultiplier dataSource='software'>1.0</DuctSurfaceAreaMultiplier>
+                    <DuctFractionRectangular dataSource='software'>1.0</DuctFractionRectangular>
                   </extension>
                 </Ducts>
                 <Ducts>
@@ -3535,12 +3666,13 @@
                   <DuctType>supply</DuctType>
                   <DuctInsulationRValue>8.0</DuctInsulationRValue>
                   <DuctBuriedInsulationLevel dataSource='software'>not buried</DuctBuriedInsulationLevel>
-                  <DuctEffectiveRValue dataSource='software'>6.738999999999999</DuctEffectiveRValue>
+                  <DuctEffectiveRValue dataSource='software'>6.94</DuctEffectiveRValue>
                   <DuctLocation dataSource='software'>conditioned space</DuctLocation>
                   <FractionDuctArea dataSource='software'>0.25</FractionDuctArea>
                   <DuctSurfaceArea dataSource='software'>309.15000000000003</DuctSurfaceArea>
                   <extension>
                     <DuctSurfaceAreaMultiplier dataSource='software'>1.0</DuctSurfaceAreaMultiplier>
+                    <DuctFractionRectangular dataSource='software'>0.25</DuctFractionRectangular>
                   </extension>
                 </Ducts>
                 <Ducts>
@@ -3548,12 +3680,13 @@
                   <DuctType>return</DuctType>
                   <DuctInsulationRValue>8.0</DuctInsulationRValue>
                   <DuctBuriedInsulationLevel dataSource='software'>not buried</DuctBuriedInsulationLevel>
-                  <DuctEffectiveRValue dataSource='software'>7.6812000000000005</DuctEffectiveRValue>
+                  <DuctEffectiveRValue dataSource='software'>9.0</DuctEffectiveRValue>
                   <DuctLocation dataSource='software'>conditioned space</DuctLocation>
                   <FractionDuctArea dataSource='software'>0.25</FractionDuctArea>
                   <DuctSurfaceArea dataSource='software'>114.5</DuctSurfaceArea>
                   <extension>
                     <DuctSurfaceAreaMultiplier dataSource='software'>1.0</DuctSurfaceAreaMultiplier>
+                    <DuctFractionRectangular dataSource='software'>1.0</DuctFractionRectangular>
                   </extension>
                 </Ducts>
                 <NumberofReturnRegisters dataSource='software'>2</NumberofReturnRegisters>
@@ -3567,13 +3700,13 @@
             <VentilationFan>
               <SystemIdentifier id='VentilationFan1_4'/>
               <FanType>energy recovery ventilator</FanType>
-              <RatedFlowRate dataSource='software'>71.2</RatedFlowRate>
+              <RatedFlowRate dataSource='software'>71.4</RatedFlowRate>
               <HoursInOperation dataSource='software'>24.0</HoursInOperation>
               <UsedForWholeBuildingVentilation>true</UsedForWholeBuildingVentilation>
               <IsSharedSystem dataSource='software'>false</IsSharedSystem>
               <TotalRecoveryEfficiency>0.48</TotalRecoveryEfficiency>
               <SensibleRecoveryEfficiency>0.72</SensibleRecoveryEfficiency>
-              <FanPower dataSource='software'>71.2</FanPower>
+              <FanPower dataSource='software'>71.4</FanPower>
             </VentilationFan>
             <VentilationFan>
               <SystemIdentifier id='VentilationFan2_4'/>
@@ -3641,8 +3774,8 @@
           </WaterFixture>
           <extension>
             <WaterFixturesUsageMultiplier>1.0</WaterFixturesUsageMultiplier>
-            <WaterFixturesWeekdayScheduleFractions dataSource='software'>0.012, 0.006, 0.004, 0.005, 0.010, 0.034, 0.078, 0.087, 0.080, 0.067, 0.056, 0.047, 0.040, 0.035, 0.033, 0.031, 0.039, 0.051, 0.060, 0.060, 0.055, 0.048, 0.038, 0.026</WaterFixturesWeekdayScheduleFractions>
-            <WaterFixturesWeekendScheduleFractions dataSource='software'>0.012, 0.006, 0.004, 0.005, 0.010, 0.034, 0.078, 0.087, 0.080, 0.067, 0.056, 0.047, 0.040, 0.035, 0.033, 0.031, 0.039, 0.051, 0.060, 0.060, 0.055, 0.048, 0.038, 0.026</WaterFixturesWeekendScheduleFractions>
+            <WaterFixturesWeekdayScheduleFractions dataSource='software'>0.012, 0.006, 0.004, 0.005, 0.010, 0.034, 0.078, 0.086, 0.080, 0.067, 0.056, 0.047, 0.040, 0.035, 0.033, 0.031, 0.038, 0.051, 0.060, 0.060, 0.055, 0.048, 0.038, 0.026</WaterFixturesWeekdayScheduleFractions>
+            <WaterFixturesWeekendScheduleFractions dataSource='software'>0.012, 0.006, 0.004, 0.005, 0.010, 0.034, 0.078, 0.086, 0.080, 0.067, 0.056, 0.047, 0.040, 0.035, 0.033, 0.031, 0.038, 0.051, 0.060, 0.060, 0.055, 0.048, 0.038, 0.026</WaterFixturesWeekendScheduleFractions>
             <WaterFixturesMonthlyScheduleMultipliers dataSource='software'>1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0</WaterFixturesMonthlyScheduleMultipliers>
           </extension>
         </WaterHeating>
@@ -3661,9 +3794,9 @@
           <Capacity>4.5</Capacity>
           <extension>
             <UsageMultiplier dataSource='software'>1.0</UsageMultiplier>
-            <WeekdayScheduleFractions dataSource='software'>0.009, 0.007, 0.004, 0.004, 0.007, 0.011, 0.022, 0.049, 0.073, 0.086, 0.084, 0.075, 0.067, 0.060, 0.049, 0.052, 0.050, 0.049, 0.049, 0.049, 0.049, 0.047, 0.032, 0.017</WeekdayScheduleFractions>
-            <WeekendScheduleFractions dataSource='software'>0.009, 0.007, 0.004, 0.004, 0.007, 0.011, 0.022, 0.049, 0.073, 0.086, 0.084, 0.075, 0.067, 0.060, 0.049, 0.052, 0.050, 0.049, 0.049, 0.049, 0.049, 0.047, 0.032, 0.017</WeekendScheduleFractions>
-            <MonthlyScheduleMultipliers dataSource='software'>1.011, 1.002, 1.022, 1.020, 1.022, 0.996, 0.999, 0.999, 0.996, 0.964, 0.959, 1.011</MonthlyScheduleMultipliers>
+            <WeekdayScheduleFractions dataSource='software'>0.009, 0.007, 0.004, 0.004, 0.007, 0.011, 0.022, 0.049, 0.073, 0.086, 0.084, 0.075, 0.067, 0.060, 0.049, 0.051, 0.050, 0.049, 0.049, 0.049, 0.049, 0.047, 0.032, 0.017</WeekdayScheduleFractions>
+            <WeekendScheduleFractions dataSource='software'>0.009, 0.007, 0.004, 0.004, 0.007, 0.011, 0.022, 0.049, 0.073, 0.086, 0.084, 0.075, 0.067, 0.060, 0.049, 0.051, 0.050, 0.049, 0.049, 0.049, 0.049, 0.047, 0.032, 0.017</WeekendScheduleFractions>
+            <MonthlyScheduleMultipliers dataSource='software'>1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0</MonthlyScheduleMultipliers>
           </extension>
         </ClothesWasher>
         <ClothesDryer>
@@ -3676,8 +3809,8 @@
           <VentedFlowRate dataSource='software'>100.0</VentedFlowRate>
           <extension>
             <UsageMultiplier dataSource='software'>1.0</UsageMultiplier>
-            <WeekdayScheduleFractions dataSource='software'>0.010, 0.006, 0.004, 0.002, 0.004, 0.006, 0.016, 0.032, 0.048, 0.068, 0.078, 0.081, 0.074, 0.067, 0.057, 0.061, 0.055, 0.054, 0.051, 0.051, 0.052, 0.054, 0.044, 0.024</WeekdayScheduleFractions>
-            <WeekendScheduleFractions dataSource='software'>0.010, 0.006, 0.004, 0.002, 0.004, 0.006, 0.016, 0.032, 0.048, 0.068, 0.078, 0.081, 0.074, 0.067, 0.057, 0.061, 0.055, 0.054, 0.051, 0.051, 0.052, 0.054, 0.044, 0.024</WeekendScheduleFractions>
+            <WeekdayScheduleFractions dataSource='software'>0.010, 0.006, 0.004, 0.002, 0.004, 0.006, 0.016, 0.032, 0.048, 0.068, 0.078, 0.081, 0.074, 0.067, 0.058, 0.061, 0.055, 0.054, 0.051, 0.051, 0.052, 0.054, 0.044, 0.024</WeekdayScheduleFractions>
+            <WeekendScheduleFractions dataSource='software'>0.010, 0.006, 0.004, 0.002, 0.004, 0.006, 0.016, 0.032, 0.048, 0.068, 0.078, 0.081, 0.074, 0.067, 0.058, 0.061, 0.055, 0.054, 0.051, 0.051, 0.052, 0.054, 0.044, 0.024</WeekendScheduleFractions>
             <MonthlyScheduleMultipliers dataSource='software'>1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0</MonthlyScheduleMultipliers>
           </extension>
         </ClothesDryer>
@@ -3693,9 +3826,9 @@
           <LabelUsage>4.0</LabelUsage>
           <extension>
             <UsageMultiplier dataSource='software'>1.0</UsageMultiplier>
-            <WeekdayScheduleFractions dataSource='software'>0.015, 0.007, 0.005, 0.003, 0.003, 0.010, 0.020, 0.031, 0.058, 0.065, 0.056, 0.048, 0.041, 0.046, 0.036, 0.038, 0.038, 0.049, 0.087, 0.111, 0.090, 0.067, 0.044, 0.031</WeekdayScheduleFractions>
-            <WeekendScheduleFractions dataSource='software'>0.015, 0.007, 0.005, 0.003, 0.003, 0.010, 0.020, 0.031, 0.058, 0.065, 0.056, 0.048, 0.041, 0.046, 0.036, 0.038, 0.038, 0.049, 0.087, 0.111, 0.090, 0.067, 0.044, 0.031</WeekendScheduleFractions>
-            <MonthlyScheduleMultipliers dataSource='software'>1.097, 1.097, 0.991, 0.987, 0.991, 0.890, 0.896, 0.896, 0.890, 1.085, 1.085, 1.097</MonthlyScheduleMultipliers>
+            <WeekdayScheduleFractions dataSource='software'>0.015, 0.007, 0.005, 0.003, 0.003, 0.010, 0.020, 0.031, 0.058, 0.065, 0.056, 0.048, 0.042, 0.046, 0.036, 0.038, 0.038, 0.049, 0.087, 0.111, 0.090, 0.067, 0.044, 0.031</WeekdayScheduleFractions>
+            <WeekendScheduleFractions dataSource='software'>0.015, 0.007, 0.005, 0.003, 0.003, 0.010, 0.020, 0.031, 0.058, 0.065, 0.056, 0.048, 0.042, 0.046, 0.036, 0.038, 0.038, 0.049, 0.087, 0.111, 0.090, 0.067, 0.044, 0.031</WeekendScheduleFractions>
+            <MonthlyScheduleMultipliers dataSource='software'>1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0</MonthlyScheduleMultipliers>
           </extension>
         </Dishwasher>
         <Refrigerator>
@@ -3705,9 +3838,8 @@
           <PrimaryIndicator dataSource='software'>true</PrimaryIndicator>
           <extension>
             <UsageMultiplier dataSource='software'>1.0</UsageMultiplier>
-            <WeekdayScheduleFractions dataSource='software'>0.040, 0.039, 0.038, 0.037, 0.036, 0.036, 0.038, 0.040, 0.041, 0.041, 0.040, 0.040, 0.042, 0.042, 0.042, 0.041, 0.044, 0.048, 0.050, 0.048, 0.047, 0.046, 0.044, 0.041</WeekdayScheduleFractions>
-            <WeekendScheduleFractions dataSource='software'>0.040, 0.039, 0.038, 0.037, 0.036, 0.036, 0.038, 0.040, 0.041, 0.041, 0.040, 0.040, 0.042, 0.042, 0.042, 0.041, 0.044, 0.048, 0.050, 0.048, 0.047, 0.046, 0.044, 0.041</WeekendScheduleFractions>
-            <MonthlyScheduleMultipliers dataSource='software'>0.837, 0.835, 1.084, 1.084, 1.084, 1.096, 1.096, 1.096, 1.096, 0.931, 0.925, 0.837</MonthlyScheduleMultipliers>
+            <ConstantScheduleCoefficients dataSource='software'>-0.487, -0.340, -0.370, -0.361, -0.515, -0.684, -0.471, -0.159, -0.079, -0.417, -0.411, -0.386, -0.240, -0.314, -0.160, -0.121, -0.469, -0.412, -0.091, 0.077, -0.118, -0.247, -0.445, -0.544</ConstantScheduleCoefficients>
+            <TemperatureScheduleCoefficients dataSource='software'>0.019, 0.016, 0.017, 0.016, 0.018, 0.021, 0.019, 0.015, 0.015, 0.019, 0.018, 0.018, 0.016, 0.017, 0.015, 0.015, 0.020, 0.020, 0.017, 0.014, 0.016, 0.017, 0.019, 0.020</TemperatureScheduleCoefficients>
           </extension>
         </Refrigerator>
         <CookingRange>
@@ -3717,9 +3849,9 @@
           <IsInduction dataSource='software'>false</IsInduction>
           <extension>
             <UsageMultiplier dataSource='software'>1.0</UsageMultiplier>
-            <WeekdayScheduleFractions dataSource='software'>0.007, 0.007, 0.004, 0.004, 0.007, 0.011, 0.025, 0.042, 0.046, 0.048, 0.042, 0.050, 0.057, 0.046, 0.057, 0.044, 0.092, 0.150, 0.117, 0.060, 0.035, 0.025, 0.016, 0.011</WeekdayScheduleFractions>
-            <WeekendScheduleFractions dataSource='software'>0.007, 0.007, 0.004, 0.004, 0.007, 0.011, 0.025, 0.042, 0.046, 0.048, 0.042, 0.050, 0.057, 0.046, 0.057, 0.044, 0.092, 0.150, 0.117, 0.060, 0.035, 0.025, 0.016, 0.011</WeekendScheduleFractions>
-            <MonthlyScheduleMultipliers dataSource='software'>1.097, 1.097, 0.991, 0.987, 0.991, 0.890, 0.896, 0.896, 0.890, 1.085, 1.085, 1.097</MonthlyScheduleMultipliers>
+            <WeekdayScheduleFractions dataSource='software'>0.008, 0.008, 0.008, 0.008, 0.008, 0.015, 0.023, 0.039, 0.046, 0.046, 0.046, 0.054, 0.062, 0.046, 0.039, 0.054, 0.076, 0.134, 0.114, 0.058, 0.039, 0.031, 0.023, 0.015</WeekdayScheduleFractions>
+            <WeekendScheduleFractions dataSource='software'>0.008, 0.008, 0.008, 0.008, 0.008, 0.015, 0.023, 0.039, 0.046, 0.046, 0.046, 0.054, 0.062, 0.046, 0.039, 0.054, 0.076, 0.134, 0.114, 0.058, 0.039, 0.031, 0.023, 0.015</WeekendScheduleFractions>
+            <MonthlyScheduleMultipliers dataSource='software'>1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0</MonthlyScheduleMultipliers>
           </extension>
         </CookingRange>
         <Oven>
@@ -3778,14 +3910,11 @@
         </LightingGroup>
         <CeilingFan>
           <SystemIdentifier id='CeilingFan1_4'/>
-          <Airflow>
-            <FanSpeed>medium</FanSpeed>
-            <Efficiency dataSource='software'>70.4225352112676</Efficiency>
-          </Airflow>
           <Count dataSource='software'>2</Count>
+          <LabelEnergyUse dataSource='software'>42.6</LabelEnergyUse>
           <extension>
-            <WeekdayScheduleFractions dataSource='software'>0.057, 0.057, 0.057, 0.057, 0.057, 0.057, 0.057, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.057, 0.057, 0.057, 0.057, 0.057, 0.057</WeekdayScheduleFractions>
-            <WeekendScheduleFractions dataSource='software'>0.057, 0.057, 0.057, 0.057, 0.057, 0.057, 0.057, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.057, 0.057, 0.057, 0.057, 0.057, 0.057</WeekendScheduleFractions>
+            <WeekdayScheduleFractions dataSource='software'>0.057, 0.057, 0.057, 0.057, 0.057, 0.057, 0.057, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.052, 0.057, 0.057, 0.057, 0.057, 0.057</WeekdayScheduleFractions>
+            <WeekendScheduleFractions dataSource='software'>0.057, 0.057, 0.057, 0.057, 0.057, 0.057, 0.057, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.024, 0.052, 0.057, 0.057, 0.057, 0.057, 0.057</WeekendScheduleFractions>
             <MonthlyScheduleMultipliers dataSource='software'>0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0</MonthlyScheduleMultipliers>
           </extension>
         </CeilingFan>
@@ -3793,9 +3922,12 @@
           <InteriorUsageMultiplier dataSource='software'>1.0</InteriorUsageMultiplier>
           <GarageUsageMultiplier dataSource='software'>1.0</GarageUsageMultiplier>
           <ExteriorUsageMultiplier dataSource='software'>1.0</ExteriorUsageMultiplier>
-          <ExteriorWeekdayScheduleFractions dataSource='software'>0.046, 0.046, 0.046, 0.046, 0.046, 0.037, 0.035, 0.034, 0.033, 0.028, 0.022, 0.015, 0.012, 0.011, 0.011, 0.012, 0.019, 0.037, 0.049, 0.065, 0.091, 0.105, 0.091, 0.063</ExteriorWeekdayScheduleFractions>
-          <ExteriorWeekendScheduleFractions dataSource='software'>0.046, 0.046, 0.045, 0.045, 0.046, 0.045, 0.044, 0.041, 0.036, 0.03, 0.024, 0.016, 0.012, 0.011, 0.011, 0.012, 0.019, 0.038, 0.048, 0.06, 0.083, 0.098, 0.085, 0.059</ExteriorWeekendScheduleFractions>
-          <ExteriorMonthlyScheduleMultipliers dataSource='software'>1.248, 1.257, 0.993, 0.989, 0.993, 0.827, 0.821, 0.821, 0.827, 0.99, 0.987, 1.248</ExteriorMonthlyScheduleMultipliers>
+          <InteriorWeekdayScheduleFractions dataSource='software'>0.012, 0.010, 0.010, 0.010, 0.011, 0.018, 0.030, 0.038, 0.041, 0.041, 0.039, 0.037, 0.036, 0.035, 0.037, 0.041, 0.050, 0.065, 0.086, 0.106, 0.110, 0.079, 0.040, 0.018</InteriorWeekdayScheduleFractions>
+          <InteriorWeekendScheduleFractions dataSource='software'>0.012, 0.010, 0.010, 0.010, 0.011, 0.018, 0.030, 0.038, 0.041, 0.041, 0.039, 0.037, 0.036, 0.035, 0.037, 0.041, 0.050, 0.065, 0.086, 0.106, 0.110, 0.079, 0.040, 0.018</InteriorWeekendScheduleFractions>
+          <InteriorMonthlyScheduleMultipliers dataSource='software'>1.19, 1.11, 1.02, 0.93, 0.84, 0.80, 0.82, 0.88, 0.98, 1.07, 1.16, 1.20</InteriorMonthlyScheduleMultipliers>
+          <ExteriorWeekdayScheduleFractions dataSource='software'>0.040, 0.037, 0.037, 0.035, 0.035, 0.039, 0.044, 0.041, 0.031, 0.025, 0.024, 0.024, 0.025, 0.028, 0.030, 0.035, 0.044, 0.056, 0.064, 0.068, 0.070, 0.065, 0.056, 0.047</ExteriorWeekdayScheduleFractions>
+          <ExteriorWeekendScheduleFractions dataSource='software'>0.040, 0.037, 0.037, 0.035, 0.035, 0.039, 0.044, 0.041, 0.031, 0.025, 0.024, 0.024, 0.025, 0.028, 0.030, 0.035, 0.044, 0.056, 0.064, 0.068, 0.070, 0.065, 0.056, 0.047</ExteriorWeekendScheduleFractions>
+          <ExteriorMonthlyScheduleMultipliers dataSource='software'>1.19, 1.11, 1.02, 0.93, 0.84, 0.80, 0.82, 0.88, 0.98, 1.07, 1.16, 1.20</ExteriorMonthlyScheduleMultipliers>
         </extension>
       </Lighting>
       <MiscLoads>
@@ -3810,9 +3942,9 @@
             <FracSensible dataSource='software'>1.0</FracSensible>
             <FracLatent dataSource='software'>0.0</FracLatent>
             <UsageMultiplier dataSource='software'>1.0</UsageMultiplier>
-            <WeekdayScheduleFractions dataSource='software'>0.037, 0.018, 0.009, 0.007, 0.011, 0.018, 0.029, 0.040, 0.049, 0.058, 0.065, 0.072, 0.076, 0.086, 0.091, 0.102, 0.127, 0.156, 0.210, 0.294, 0.363, 0.344, 0.208, 0.090</WeekdayScheduleFractions>
-            <WeekendScheduleFractions dataSource='software'>0.044, 0.022, 0.012, 0.008, 0.011, 0.014, 0.024, 0.043, 0.071, 0.094, 0.112, 0.123, 0.132, 0.156, 0.178, 0.196, 0.206, 0.213, 0.251, 0.330, 0.388, 0.358, 0.226, 0.103</WeekendScheduleFractions>
-            <MonthlyScheduleMultipliers dataSource='software'>1.137, 1.129, 0.961, 0.969, 0.961, 0.993, 0.996, 0.96, 0.993, 0.867, 0.86, 1.137</MonthlyScheduleMultipliers>
+            <WeekdayScheduleFractions dataSource='software'>0.014, 0.007, 0.004, 0.003, 0.004, 0.006, 0.010, 0.015, 0.020, 0.025, 0.028, 0.031, 0.033, 0.038, 0.042, 0.046, 0.054, 0.062, 0.080, 0.110, 0.132, 0.125, 0.077, 0.034</WeekdayScheduleFractions>
+            <WeekendScheduleFractions dataSource='software'>0.014, 0.007, 0.004, 0.003, 0.004, 0.006, 0.010, 0.015, 0.020, 0.025, 0.028, 0.031, 0.033, 0.038, 0.042, 0.046, 0.054, 0.062, 0.080, 0.110, 0.132, 0.125, 0.077, 0.034</WeekendScheduleFractions>
+            <MonthlyScheduleMultipliers dataSource='software'>1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0</MonthlyScheduleMultipliers>
           </extension>
         </PlugLoad>
         <PlugLoad>
@@ -3826,9 +3958,9 @@
             <FracSensible dataSource='software'>0.855</FracSensible>
             <FracLatent dataSource='software'>0.04500000000000001</FracLatent>
             <UsageMultiplier dataSource='software'>1.0</UsageMultiplier>
-            <WeekdayScheduleFractions dataSource='software'>0.035, 0.033, 0.032, 0.031, 0.032, 0.033, 0.037, 0.042, 0.043, 0.043, 0.043, 0.044, 0.045, 0.045, 0.044, 0.046, 0.048, 0.052, 0.053, 0.05, 0.047, 0.045, 0.04, 0.036</WeekdayScheduleFractions>
-            <WeekendScheduleFractions dataSource='software'>0.035, 0.033, 0.032, 0.031, 0.032, 0.033, 0.037, 0.042, 0.043, 0.043, 0.043, 0.044, 0.045, 0.045, 0.044, 0.046, 0.048, 0.052, 0.053, 0.05, 0.047, 0.045, 0.04, 0.036</WeekendScheduleFractions>
-            <MonthlyScheduleMultipliers dataSource='software'>1.248, 1.257, 0.993, 0.989, 0.993, 0.827, 0.821, 0.821, 0.827, 0.99, 0.987, 1.248</MonthlyScheduleMultipliers>
+            <WeekdayScheduleFractions dataSource='software'>0.036, 0.036, 0.036, 0.036, 0.036, 0.036, 0.038, 0.041, 0.042, 0.042, 0.042, 0.042, 0.042, 0.042, 0.042, 0.044, 0.047, 0.050, 0.051, 0.050, 0.048, 0.044, 0.040, 0.037</WeekdayScheduleFractions>
+            <WeekendScheduleFractions dataSource='software'>0.036, 0.036, 0.036, 0.036, 0.036, 0.036, 0.038, 0.041, 0.042, 0.042, 0.042, 0.042, 0.042, 0.042, 0.042, 0.044, 0.047, 0.050, 0.051, 0.050, 0.048, 0.044, 0.040, 0.037</WeekendScheduleFractions>
+            <MonthlyScheduleMultipliers dataSource='software'>1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0</MonthlyScheduleMultipliers>
           </extension>
         </PlugLoad>
       </MiscLoads>

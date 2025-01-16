@@ -30,20 +30,17 @@ Gem::Specification.new do |spec|
   spec.bindir = 'bin'
   spec.executables = ['uo']
   spec.require_paths = ['lib', 'example_files']
-  spec.required_ruby_version = '~> 2.7.0'
+  spec.required_ruby_version = '3.2.2'
 
   # use specific versions of urbanopt and openstudio dependencies while under heavy development
-  spec.add_runtime_dependency 'optimist', '~> 3'
-  spec.add_runtime_dependency 'urbanopt-geojson', '~> 0.11.2'
-  spec.add_runtime_dependency 'urbanopt-reopt', '~> 0.12.0'
-  spec.add_runtime_dependency 'urbanopt-reporting', '~> 0.10.1'
-  spec.add_runtime_dependency 'urbanopt-rnm-us', '~> 0.7.0'
-  spec.add_runtime_dependency 'urbanopt-scenario', '~> 0.12.0'
+  spec.add_runtime_dependency 'optimist', '~> 3.2'
+  # spec.add_runtime_dependency 'urbanopt-geojson', '~> 0.11.2'
+  # spec.add_runtime_dependency 'urbanopt-reopt', '~> 0.12.0'
+  # spec.add_runtime_dependency 'urbanopt-reporting', '~> 0.10.1'
+  # spec.add_runtime_dependency 'urbanopt-rnm-us', '~> 0.7.0'
+  # spec.add_runtime_dependency 'urbanopt-scenario', '~> 0.12.0'
 
-  spec.add_development_dependency 'bundler', '~> 2.1'
-  spec.add_development_dependency 'rake', '~> 13.0'
-  spec.add_development_dependency 'rspec', '~> 3.9'
-  spec.add_development_dependency 'rubocop', '~> 1.15.0'
-  spec.add_development_dependency 'rubocop-checkstyle_formatter', '~> 0.4.0'
-  spec.add_development_dependency 'rubocop-performance', '~> 1.11.3'
+  spec.add_development_dependency 'rspec', '~> 3.13'
+  spec.add_development_dependency 'simplecov', '0.22.0'
+  spec.add_development_dependency 'simplecov-lcov', '0.8.0'
 end

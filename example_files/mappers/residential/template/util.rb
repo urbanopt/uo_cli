@@ -67,7 +67,7 @@ def get_lookup_tsv(args, filepath)
   rows = []
   headers = []
   units = []
-  CSV.foreach(filepath, { col_sep: "\t" }) do |row|
+  CSV.foreach(filepath, col_sep: "\t") do |row|
     if headers.empty?
       row.each do |header|
         next if header == 'Source'

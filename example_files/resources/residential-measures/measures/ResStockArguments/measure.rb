@@ -11,7 +11,6 @@ require_relative '../../resources/hpxml-measures/HPXMLtoOpenStudio/resources/met
 class ResStockArguments < OpenStudio::Measure::ModelMeasure
   # human readable name
   def name
-    # Measure name should be the title case of the class name.
     return 'ResStock Arguments'
   end
 
@@ -27,29 +26,29 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
 
   # define the arguments that the user will input
   def arguments(model)
-    measures_dir = File.absolute_path(File.join(File.dirname(__FILE__), '../../resources/hpxml-measures'))
     args = OpenStudio::Measure::OSArgumentVector.new
 
     # BuildResidentialHPXML
 
+    measures_dir = File.absolute_path(File.join(File.dirname(__FILE__), '../../resources/hpxml-measures'))
     full_measure_path = File.join(measures_dir, 'BuildResidentialHPXML', 'measure.rb')
-    measure = get_measure_instance(full_measure_path)
+    @build_residential_hpxml_measure_arguments = get_measure_instance(full_measure_path).arguments(model)
 
-    measure.arguments(model).each do |arg|
-      next if Constants.build_residential_hpxml_excludes.include? arg.name
+    @build_residential_hpxml_measure_arguments.each do |arg|
+      next if Constants::BuildResidentialHPXMLExcludes.include? arg.name
 
       # Following are arguments with the same name but different options
       next if arg.name == 'geometry_unit_cfa'
 
-      # Convert optional arguments to string arguments that allow Constants.Auto for defaulting
+      # Convert optional arguments to string arguments that allow Constants::Auto for defaulting
       if !arg.required
         case arg.type.valueName.downcase
         when 'choice'
           choices = arg.choiceValues.map(&:to_s)
-          choices.unshift(Constants.Auto)
+          choices.unshift(Constants::Auto)
           new_arg = OpenStudio::Measure::OSArgument.makeChoiceArgument(arg.name, choices, false)
         when 'boolean'
-          choices = [Constants.Auto, 'true', 'false']
+          choices = [Constants::Auto, 'true', 'false']
           new_arg = OpenStudio::Measure::OSArgument.makeChoiceArgument(arg.name, choices, false)
         else
           new_arg = OpenStudio::Measure::OSArgument.makeStringArgument(arg.name, false)
@@ -66,15 +65,45 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     # BuildResidentialScheduleFile
 
     full_measure_path = File.join(measures_dir, 'BuildResidentialScheduleFile', 'measure.rb')
-    measure = get_measure_instance(full_measure_path)
+    @build_residential_schedule_file_measure_arguments = get_measure_instance(full_measure_path).arguments(model)
 
-    measure.arguments(model).each do |arg|
-      next if Constants.build_residential_schedule_file_excludes.include? arg.name
+    @build_residential_schedule_file_measure_arguments.each do |arg|
+      next if Constants::BuildResidentialScheduleFileExcludes.include? arg.name
 
       args << arg
     end
 
     # Additional arguments
+
+    arg = OpenStudio::Measure::OSArgument.makeIntegerArgument('building_id', false)
+    arg.setDisplayName('Building Unit ID')
+    arg.setDescription('The building unit number (between 1 and the number of samples).')
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument.makeStringArgument('schedules_vacancy_periods', false)
+    arg.setDisplayName('Schedules: Vacancy Periods')
+    arg.setDescription('Specifies the vacancy periods. Enter a date like "Dec 15 - Jan 15". Optionally, can enter hour of the day like "Dec 15 2 - Jan 15 20" (start hour can be 0 through 23 and end hour can be 1 through 24). If multiple periods, use a comma-separated list.')
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument.makeStringArgument('schedules_power_outage_periods', false)
+    arg.setDisplayName('Schedules: Power Outage Periods')
+    arg.setDescription('Specifies the power outage periods. Enter a date like "Dec 15 - Jan 15". Optionally, can enter hour of the day like "Dec 15 2 - Jan 15 20" (start hour can be 0 through 23 and end hour can be 1 through 24). If multiple periods, use a comma-separated list.')
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument.makeStringArgument('schedules_power_outage_periods_window_natvent_availability', false)
+    arg.setDisplayName('Schedules: Power Outage Periods Window Natural Ventilation Availability')
+    arg.setDescription("The availability of the natural ventilation schedule during the power outage periods. Valid choices are '#{[HPXML::ScheduleRegular, HPXML::ScheduleAvailable, HPXML::ScheduleUnavailable].join("', '")}'. If multiple periods, use a comma-separated list.")
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument.makeIntegerArgument('schedules_space_heating_unavailable_days', false)
+    arg.setDisplayName('Schedules: Space Heating Unavailability')
+    arg.setDescription('Number of days space heating equipment is unavailable.')
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument.makeIntegerArgument('schedules_space_cooling_unavailable_days', false)
+    arg.setDisplayName('Schedules: Space Cooling Unavailability')
+    arg.setDescription('Number of days space cooling equipment is unavailable.')
+    args << arg
 
     arg = OpenStudio::Measure::OSArgument::makeStringArgument('geometry_unit_cfa_bin', true)
     arg.setDisplayName('Geometry: Unit Conditioned Floor Area Bin')
@@ -85,7 +114,7 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     # Adds a geometry_unit_cfa argument similar to the BuildResidentialHPXML measure, but as a string with "auto" allowed
     arg = OpenStudio::Measure::OSArgument::makeStringArgument('geometry_unit_cfa', true)
     arg.setDisplayName('Geometry: Unit Conditioned Floor Area')
-    arg.setDescription("E.g., '2000' or '#{Constants.Auto}'.")
+    arg.setDescription("E.g., '2000' or '#{Constants::Auto}'.")
     arg.setUnits('sqft')
     arg.setDefaultValue('2000')
     args << arg
@@ -186,6 +215,12 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('air_leakage_percent_reduction', false)
     arg.setDisplayName('Air Leakage: Value Reduction')
     arg.setDescription('Reduction (%) on the air exchange rate value.')
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('misc_plug_loads_television_2_usage_multiplier', true)
+    arg.setDisplayName('Plug Loads: Television Usage Multiplier 2')
+    arg.setDescription('Additional multiplier on the television energy usage that can reflect, e.g., high/low usage occupants.')
+    arg.setDefaultValue(1.0)
     args << arg
 
     arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('misc_plug_loads_other_2_usage_multiplier', true)
@@ -301,19 +336,19 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     arg = OpenStudio::Measure::OSArgument::makeStringArgument('heating_system_has_flue_or_chimney', true)
     arg.setDisplayName('Heating System: Has Flue or Chimney')
     arg.setDescription('Whether the heating system has a flue or chimney.')
-    arg.setDefaultValue(Constants.Auto)
+    arg.setDefaultValue(Constants::Auto)
     args << arg
 
     arg = OpenStudio::Measure::OSArgument::makeStringArgument('heating_system_2_has_flue_or_chimney', true)
     arg.setDisplayName('Heating System 2: Has Flue or Chimney')
     arg.setDescription('Whether the second heating system has a flue or chimney.')
-    arg.setDefaultValue(Constants.Auto)
+    arg.setDefaultValue(Constants::Auto)
     args << arg
 
     arg = OpenStudio::Measure::OSArgument::makeStringArgument('water_heater_has_flue_or_chimney', true)
     arg.setDisplayName('Water Heater: Has Flue or Chimney')
     arg.setDescription('Whether the water heater has a flue or chimney.')
-    arg.setDefaultValue(Constants.Auto)
+    arg.setDefaultValue(Constants::Auto)
     args << arg
 
     arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('heating_system_rated_cfm_per_ton', false)
@@ -382,16 +417,14 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     end
 
     # assign the user inputs to variables
-    args = get_argument_values(runner, arguments(model), user_arguments)
+    args = runner.getArgumentValues(arguments(model), user_arguments)
+    args = convert_args(args)
 
-    measures_dir = File.absolute_path(File.join(File.dirname(__FILE__), '../../resources/hpxml-measures'))
+    # collect arguments for deletion
     arg_names = []
-    { 'BuildResidentialHPXML' => Constants.build_residential_hpxml_excludes,
-      'BuildResidentialScheduleFile' => Constants.build_residential_schedule_file_excludes }.each do |measure_name, measure_excludes|
-      full_measure_path = File.join(measures_dir, measure_name, 'measure.rb')
-      measure = get_measure_instance(full_measure_path)
-
-      measure.arguments(model).each do |arg|
+    { @build_residential_hpxml_measure_arguments => Constants::BuildResidentialHPXMLExcludes,
+      @build_residential_schedule_file_measure_arguments => Constants::BuildResidentialScheduleFileExcludes }.each do |measure_arguments, measure_excludes|
+      measure_arguments.each do |arg|
         next if measure_excludes.include? arg.name
 
         arg_names << arg.name.to_sym
@@ -401,34 +434,44 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     args_to_delete = args.keys - arg_names # these are the extra ones added in the arguments section
 
     # Conditioned floor area
-    if args[:geometry_unit_cfa] == Constants.Auto
+    if args[:geometry_unit_cfa] == Constants::Auto
+      # TODO: Disaggregate detached and mobile home
       cfas = { ['0-499', HPXML::ResidentialTypeSFD] => 298, # AHS 2021, 1 detached and mobile home weighted average
-               ['0-499', HPXML::ResidentialTypeSFA] => 273, # AHS 2021, 1 detached and mobile home weighted average
+               ['0-499', HPXML::ResidentialTypeSFA] => 273, # AHS 2021, 1 attached
                ['0-499', HPXML::ResidentialTypeApartment] => 322, # AHS 2021, multi-family weighted average
+               ['0-499', HPXML::ResidentialTypeManufactured] => 298, # AHS 2021, 1 detached and mobile home weighted average
                ['500-749', HPXML::ResidentialTypeSFD] => 634, # AHS 2021, 1 detached and mobile home weighted average
                ['500-749', HPXML::ResidentialTypeSFA] => 625, # AHS 2021, 1 attached
                ['500-749', HPXML::ResidentialTypeApartment] => 623, # AHS 2021, multi-family weighted average
+               ['500-749', HPXML::ResidentialTypeManufactured] => 634, # AHS 2021, 1 detached and mobile home weighted average
                ['750-999', HPXML::ResidentialTypeSFD] => 881, # AHS 2021, 1 detached and mobile home weighted average
                ['750-999', HPXML::ResidentialTypeSFA] => 872, # AHS 2021, 1 attached
                ['750-999', HPXML::ResidentialTypeApartment] => 854, # AHS 2021, multi-family weighted average
+               ['750-999', HPXML::ResidentialTypeManufactured] => 881, # AHS 2021, 1 detached and mobile home weighted average
                ['1000-1499', HPXML::ResidentialTypeSFD] => 1228, # AHS 2021, 1 detached and mobile home weighted average
                ['1000-1499', HPXML::ResidentialTypeSFA] => 1207, # AHS 2021, 1 attached
                ['1000-1499', HPXML::ResidentialTypeApartment] => 1138, # AHS 2021, multi-family weighted average
+               ['1000-1499', HPXML::ResidentialTypeManufactured] => 1228, # AHS 2021, 1 detached and mobile home weighted average
                ['1500-1999', HPXML::ResidentialTypeSFD] => 1698, # AHS 2021, 1 detached and mobile home weighted average
                ['1500-1999', HPXML::ResidentialTypeSFA] => 1678, # AHS 2021, 1 attached
                ['1500-1999', HPXML::ResidentialTypeApartment] => 1682, # AHS 2021, multi-family weighted average
+               ['1500-1999', HPXML::ResidentialTypeManufactured] => 1698, # AHS 2021, 1 detached and mobile home weighted average
                ['2000-2499', HPXML::ResidentialTypeSFD] => 2179, # AHS 2021, 1 detached and mobile home weighted average
                ['2000-2499', HPXML::ResidentialTypeSFA] => 2152, # AHS 2021, 1 attached
                ['2000-2499', HPXML::ResidentialTypeApartment] => 2115, # AHS 2021, multi-family weighted average
+               ['2000-2499', HPXML::ResidentialTypeManufactured] => 2179, # AHS 2021, 1 detached and mobile home weighted average
                ['2500-2999', HPXML::ResidentialTypeSFD] => 2678, # AHS 2021, 1 detached and mobile home weighted average
                ['2500-2999', HPXML::ResidentialTypeSFA] => 2663, # AHS 2021, 1 attached
                ['2500-2999', HPXML::ResidentialTypeApartment] => 2648, # AHS 2021, multi-family weighted average
+               ['2500-2999', HPXML::ResidentialTypeManufactured] => 2678, # AHS 2021, 1 detached and mobile home weighted average
                ['3000-3999', HPXML::ResidentialTypeSFD] => 3310, # AHS 2021, 1 detached and mobile home weighted average
                ['3000-3999', HPXML::ResidentialTypeSFA] => 3228, # AHS 2021, 1 attached
                ['3000-3999', HPXML::ResidentialTypeApartment] => 3171, # AHS 2021, multi-family weighted average
+               ['3000-3999', HPXML::ResidentialTypeManufactured] => 3310, # AHS 2021, 1 detached and mobile home weighted average
                ['4000+', HPXML::ResidentialTypeSFD] => 5587, # AHS 2021, 1 detached and mobile home weighted average
                ['4000+', HPXML::ResidentialTypeSFA] => 7414, # AHS 2019, 1 attached
-               ['4000+', HPXML::ResidentialTypeApartment] => 6348 } # AHS 2021, 4,000 or more all unit average
+               ['4000+', HPXML::ResidentialTypeApartment] => 6348, # AHS 2021, 4,000 or more all unit average
+               ['4000+', HPXML::ResidentialTypeManufactured] => 5587 } # AHS 2021, 1 detached and mobile home weighted average
       cfa = cfas[[args[:geometry_unit_cfa_bin], args[:geometry_unit_type]]]
       if cfa.nil?
         runner.registerError("ResStockArguments: Could not look up conditioned floor area for '#{args[:geometry_unit_cfa_bin]}' and '#{args[:geometry_unit_type]}'.")
@@ -436,81 +479,154 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
       end
       args[:geometry_unit_cfa] = Float(cfa)
     else
-      args[:geometry_unit_cfa] = Float(args[:geometry_unit_cfa])
+      args[:geometry_unit_cfa] = args[:geometry_unit_cfa]
     end
 
     # Vintage
-    if args[:vintage].is_initialized && args[:year_built].to_s == Constants.Auto
-      args[:year_built] = Integer(Float(args[:vintage].get.gsub(/[^0-9]/, ''))) # strip non-numeric
+    if !args[:vintage].nil? && args[:year_built] == Constants::Auto
+      args[:year_built] = Integer(Float(args[:vintage].gsub(/[^0-9]/, ''))) # strip non-numeric
     end
 
     # Num Occupants
-    if args[:geometry_unit_num_occupants].to_s == Constants.Auto
+    if args[:geometry_unit_num_occupants] == Constants::Auto
       args[:geometry_unit_num_occupants] = Geometry.get_occupancy_default_num(args[:geometry_unit_num_bedrooms])
-    else
-      args[:geometry_unit_num_occupants] = Integer(args[:geometry_unit_num_occupants].to_s)
     end
 
     # Plug Loads
-    args[:misc_plug_loads_television_annual_kwh] = 0.0 # "other" now accounts for television
-    args[:misc_plug_loads_television_usage_multiplier] = 0.0 # "other" now accounts for television
-    args[:misc_plug_loads_other_usage_multiplier] = Float(args[:misc_plug_loads_other_usage_multiplier].to_s) * args[:misc_plug_loads_other_2_usage_multiplier]
-    args[:misc_plug_loads_well_pump_usage_multiplier] = Float(args[:misc_plug_loads_well_pump_usage_multiplier].to_s) * args[:misc_plug_loads_well_pump_2_usage_multiplier]
-    args[:misc_plug_loads_vehicle_usage_multiplier] = Float(args[:misc_plug_loads_vehicle_usage_multiplier].to_s) * args[:misc_plug_loads_vehicle_2_usage_multiplier]
-
-    if args[:misc_plug_loads_other_annual_kwh].to_s == Constants.Auto
-      if [HPXML::ResidentialTypeSFD].include?(args[:geometry_unit_type])
-        args[:misc_plug_loads_other_annual_kwh] = 1146.95 + 296.94 * args[:geometry_unit_num_occupants] + 0.3 * args[:geometry_unit_cfa] # RECS 2015
-      elsif [HPXML::ResidentialTypeSFA].include?(args[:geometry_unit_type])
-        args[:misc_plug_loads_other_annual_kwh] = 1395.84 + 136.53 * args[:geometry_unit_num_occupants] + 0.16 * args[:geometry_unit_cfa] # RECS 2015
-      elsif [HPXML::ResidentialTypeApartment].include?(args[:geometry_unit_type])
-        args[:misc_plug_loads_other_annual_kwh] = 875.22 + 184.11 * args[:geometry_unit_num_occupants] + 0.38 * args[:geometry_unit_cfa] # RECS 2015
-      end
-    end
+    args[:misc_plug_loads_television_usage_multiplier] = args[:misc_plug_loads_television_usage_multiplier] * args[:misc_plug_loads_television_2_usage_multiplier]
+    args[:misc_plug_loads_other_usage_multiplier] = args[:misc_plug_loads_other_usage_multiplier] * args[:misc_plug_loads_other_2_usage_multiplier]
+    args[:misc_plug_loads_well_pump_usage_multiplier] = args[:misc_plug_loads_well_pump_usage_multiplier] * args[:misc_plug_loads_well_pump_2_usage_multiplier]
+    args[:misc_plug_loads_vehicle_usage_multiplier] = args[:misc_plug_loads_vehicle_usage_multiplier] * args[:misc_plug_loads_vehicle_2_usage_multiplier]
 
     # PV
-    if args[:pv_system_module_type] != 'none'
-      args[:pv_system_num_bedrooms_served] = Integer(args[:geometry_unit_num_bedrooms])
+    if args[:pv_system_present]
+      args[:pv_system_num_bedrooms_served] = args[:geometry_unit_num_bedrooms]
     else
       args[:pv_system_num_bedrooms_served] = 0
     end
 
-    # Setpoints
-    weekday_heating_setpoints = [args[:hvac_control_heating_weekday_setpoint_temp]] * 24
-    weekend_heating_setpoints = [args[:hvac_control_heating_weekend_setpoint_temp]] * 24
-
-    weekday_cooling_setpoints = [args[:hvac_control_cooling_weekday_setpoint_temp]] * 24
-    weekend_cooling_setpoints = [args[:hvac_control_cooling_weekend_setpoint_temp]] * 24
-
-    hvac_control_heating_weekday_setpoint_offset_magnitude = args[:hvac_control_heating_weekday_setpoint_offset_magnitude]
-    hvac_control_heating_weekday_setpoint_schedule = args[:hvac_control_heating_weekday_setpoint_schedule].split(',').map { |i| Float(i) }
-    weekday_heating_setpoints = modify_setpoint_schedule(weekday_heating_setpoints, hvac_control_heating_weekday_setpoint_offset_magnitude, hvac_control_heating_weekday_setpoint_schedule)
-
-    hvac_control_heating_weekend_setpoint_offset_magnitude = args[:hvac_control_heating_weekend_setpoint_offset_magnitude]
-    hvac_control_heating_weekend_setpoint_schedule = args[:hvac_control_heating_weekend_setpoint_schedule].split(',').map { |i| Float(i) }
-    weekend_heating_setpoints = modify_setpoint_schedule(weekend_heating_setpoints, hvac_control_heating_weekend_setpoint_offset_magnitude, hvac_control_heating_weekend_setpoint_schedule)
-
-    hvac_control_cooling_weekday_setpoint_offset_magnitude = args[:hvac_control_cooling_weekday_setpoint_offset_magnitude]
-    hvac_control_cooling_weekday_setpoint_schedule = args[:hvac_control_cooling_weekday_setpoint_schedule].split(',').map { |i| Float(i) }
-    weekday_cooling_setpoints = modify_setpoint_schedule(weekday_cooling_setpoints, hvac_control_cooling_weekday_setpoint_offset_magnitude, hvac_control_cooling_weekday_setpoint_schedule)
-
-    hvac_control_cooling_weekend_setpoint_offset_magnitude = args[:hvac_control_cooling_weekend_setpoint_offset_magnitude]
-    hvac_control_cooling_weekend_setpoint_schedule = args[:hvac_control_cooling_weekend_setpoint_schedule].split(',').map { |i| Float(i) }
-    weekend_cooling_setpoints = modify_setpoint_schedule(weekend_cooling_setpoints, hvac_control_cooling_weekend_setpoint_offset_magnitude, hvac_control_cooling_weekend_setpoint_schedule)
-
-    args[:hvac_control_heating_weekday_setpoint] = weekday_heating_setpoints.join(', ')
-    args[:hvac_control_heating_weekend_setpoint] = weekend_heating_setpoints.join(', ')
-    args[:hvac_control_cooling_weekday_setpoint] = weekday_cooling_setpoints.join(', ')
-    args[:hvac_control_cooling_weekend_setpoint] = weekend_cooling_setpoints.join(', ')
-
-    # Seasons
-    if args[:use_auto_heating_season] && args[:hvac_control_heating_season_period].to_s == Constants.Auto
-      args[:hvac_control_heating_season_period] = HPXML::BuildingAmerica
+    # Battery
+    if args[:battery_present]
+      args[:battery_num_bedrooms_served] = args[:geometry_unit_num_bedrooms]
+    else
+      args[:battery_num_bedrooms_served] = 0
     end
 
-    if args[:use_auto_cooling_season] && args[:hvac_control_cooling_season_period].to_s == Constants.Auto
-      args[:hvac_control_cooling_season_period] = HPXML::BuildingAmerica
+    # HVAC Setpoints
+    [Constants::Heating, Constants::Cooling].each do |htg_or_clg|
+      [Constants::Weekday, Constants::Weekend].each do |wkdy_or_wked|
+        setpoints = [args["hvac_control_#{htg_or_clg}_#{wkdy_or_wked}_setpoint_temp".to_sym]] * 24
+
+        hvac_control_setpoint_offset_magnitude = args["hvac_control_#{htg_or_clg}_#{wkdy_or_wked}_setpoint_offset_magnitude".to_sym]
+        hvac_control_setpoint_schedule = args["hvac_control_#{htg_or_clg}_#{wkdy_or_wked}_setpoint_schedule".to_sym].split(',').map { |i| Float(i) }
+        setpoints = modify_setpoint_schedule(setpoints, hvac_control_setpoint_offset_magnitude, hvac_control_setpoint_schedule)
+
+        args["hvac_control_#{htg_or_clg}_#{wkdy_or_wked}_setpoint".to_sym] = setpoints.join(', ')
+      end
     end
+
+    # HVAC Seasons
+    [Constants::Heating, Constants::Cooling].each do |htg_or_clg|
+      use_auto_season = "use_auto_#{htg_or_clg}_season".to_sym
+      hvac_control_season_period = "hvac_control_#{htg_or_clg}_season_period".to_sym
+      if use_auto_season && hvac_control_season_period
+        args[hvac_control_season_period] = Constants::BuildingAmerica
+      end
+    end
+
+    # Unavailable Periods
+    schedules_unavailable_period_types = []
+    schedules_unavailable_period_dates = []
+    schedules_unavailable_period_window_natvent_availabilities = []
+
+    # Vacancy
+    if !args[:schedules_vacancy_periods].nil?
+      schedules_vacancy_periods = args[:schedules_vacancy_periods].split(',').map(&:strip)
+      schedules_vacancy_periods.each do |schedules_vacancy_period|
+        schedules_unavailable_period_types << 'Vacancy'
+        schedules_unavailable_period_dates << schedules_vacancy_period
+        schedules_unavailable_period_window_natvent_availabilities << ''
+      end
+    end
+
+    # Power Outage
+    if !args[:schedules_power_outage_periods].nil?
+      schedules_power_outage_periods = args[:schedules_power_outage_periods].split(',').map(&:strip)
+
+      natvent_availabilities = []
+      if not args[:schedules_power_outage_periods_window_natvent_availability].nil?
+        natvent_availabilities = args[:schedules_power_outage_periods_window_natvent_availability].split(',').map(&:strip)
+      end
+
+      schedules_power_outage_periods = schedules_power_outage_periods.zip(natvent_availabilities)
+      schedules_power_outage_periods.each do |schedules_power_outage_period|
+        outage_period, natvent_availability = schedules_power_outage_period
+
+        schedules_unavailable_period_types << 'Power Outage'
+        schedules_unavailable_period_dates << outage_period
+        schedules_unavailable_period_window_natvent_availabilities << natvent_availability
+      end
+    end
+
+    # HVAC Unavailability
+    if (args[:schedules_space_heating_unavailable_days] > 0) || (args[:schedules_space_cooling_unavailable_days] > 0)
+      epw_path = File.absolute_path(File.join(File.dirname(__FILE__), '../../weather', File.basename(args[:weather_station_epw_filepath])))
+      if not File.exist? epw_path
+        runner.registerError("ResStockArguments: Could not find EPW file at '#{epw_path}'.")
+        return false
+      end
+      weather = WeatherFile.new(epw_path: epw_path, runner: nil)
+
+      heating_months, cooling_months, sim_calendar_year = get_heating_and_cooling_seasons(args, weather)
+    end
+
+    [Constants::Heating, Constants::Cooling].each do |htg_or_clg|
+      unavailable_days = args["schedules_space_#{htg_or_clg}_unavailable_days".to_sym]
+      unavailable_period = "#{htg_or_clg}_unavailable_period"
+      args[unavailable_period] = 'Never'
+
+      next unless unavailable_days > 0
+
+      if unavailable_days < 365 # partial-year unavailability
+        if htg_or_clg == Constants::Heating
+          months = heating_months
+        elsif htg_or_clg == Constants::Cooling
+          months = cooling_months
+        end
+
+        if months.sum > 0 # has defined BA heating/cooling months
+          begin_month, begin_day, end_month, end_day = Calendar.get_begin_and_end_dates_from_monthly_array(months, sim_calendar_year)
+        else # no defined BA heating/cooling months
+          if htg_or_clg == Constants::Heating # Dec/Jan/Feb
+            begin_month, begin_day, end_month, end_day = 12, 1, 2, 28
+            end_day += 1 if Date.leap?(sim_calendar_year)
+          elsif htg_or_clg == Constants::Cooling # Jun/Jul/Aug
+            begin_month, begin_day, end_month, end_day = 6, 1, 8, 31
+          end
+        end
+
+        begin_day_num = Calendar.get_day_num_from_month_day(sim_calendar_year, begin_month, begin_day)
+        end_day_num = Calendar.get_day_num_from_month_day(sim_calendar_year, end_month, end_day)
+
+        unavail_begin_day_num, unavail_end_day_num = get_begin_end_day_nums(args[:building_id], unavailable_days, begin_day_num, end_day_num, sim_calendar_year)
+      else # year-round unavailability
+        unavail_begin_day_num, unavail_end_day_num = 1, 365
+        unavail_end_day_num += 1 if Date.leap?(sim_calendar_year)
+      end
+
+      unavail_begin_date = get_month_day_from_day_num(unavail_begin_day_num, sim_calendar_year)
+      unavail_end_date = get_month_day_from_day_num(unavail_end_day_num, sim_calendar_year)
+      unavailable_period_dates = "#{unavail_begin_date} - #{unavail_end_date}"
+      args[unavailable_period] = unavailable_period_dates
+
+      schedules_unavailable_period_types << "No Space #{htg_or_clg.capitalize}"
+      schedules_unavailable_period_dates << unavailable_period_dates
+      schedules_unavailable_period_window_natvent_availabilities << ''
+    end
+
+    args[:schedules_unavailable_period_types] = schedules_unavailable_period_types.join(', ')
+    args[:schedules_unavailable_period_dates] = schedules_unavailable_period_dates.join(', ')
+    args[:schedules_unavailable_period_window_natvent_availabilities] = schedules_unavailable_period_window_natvent_availabilities.join(', ')
 
     # Flue or Chimney
     if (args[:heating_system_has_flue_or_chimney] == 'false') &&
@@ -543,29 +659,29 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     end
 
     # HVAC Faults
-    if args[:heating_system_rated_cfm_per_ton].is_initialized && args[:heating_system_actual_cfm_per_ton].is_initialized
-      args[:heating_system_airflow_defect_ratio] = (args[:heating_system_actual_cfm_per_ton].get - args[:heating_system_rated_cfm_per_ton].get) / args[:heating_system_rated_cfm_per_ton].get
+    if !args[:heating_system_rated_cfm_per_ton].nil? && !args[:heating_system_actual_cfm_per_ton].nil?
+      args[:heating_system_airflow_defect_ratio] = (args[:heating_system_actual_cfm_per_ton] - args[:heating_system_rated_cfm_per_ton]) / args[:heating_system_rated_cfm_per_ton]
     end
 
-    if args[:cooling_system_rated_cfm_per_ton].is_initialized && args[:cooling_system_actual_cfm_per_ton].is_initialized
-      args[:cooling_system_airflow_defect_ratio] = (args[:cooling_system_actual_cfm_per_ton].get - args[:cooling_system_rated_cfm_per_ton].get) / args[:cooling_system_rated_cfm_per_ton].get
+    if !args[:cooling_system_rated_cfm_per_ton].nil? && !args[:cooling_system_actual_cfm_per_ton].nil?
+      args[:cooling_system_airflow_defect_ratio] = (args[:cooling_system_actual_cfm_per_ton] - args[:cooling_system_rated_cfm_per_ton]) / args[:cooling_system_rated_cfm_per_ton]
     end
 
-    if args[:cooling_system_frac_manufacturer_charge].is_initialized
-      args[:cooling_system_charge_defect_ratio] = args[:cooling_system_frac_manufacturer_charge].get - 1.0
+    if !args[:cooling_system_frac_manufacturer_charge].nil?
+      args[:cooling_system_charge_defect_ratio] = args[:cooling_system_frac_manufacturer_charge] - 1.0
     end
 
-    if args[:heat_pump_rated_cfm_per_ton].is_initialized && args[:heat_pump_actual_cfm_per_ton].is_initialized
-      args[:heat_pump_airflow_defect_ratio] = (args[:heat_pump_actual_cfm_per_ton].get - args[:heat_pump_rated_cfm_per_ton].get) / args[:cooling_system_rated_cfm_per_ton].get
+    if !args[:heat_pump_rated_cfm_per_ton].nil? && !args[:heat_pump_actual_cfm_per_ton].nil?
+      args[:heat_pump_airflow_defect_ratio] = (args[:heat_pump_actual_cfm_per_ton] - args[:heat_pump_rated_cfm_per_ton]) / args[:heat_pump_rated_cfm_per_ton]
     end
 
-    if args[:heat_pump_frac_manufacturer_charge].is_initialized
-      args[:heat_pump_charge_defect_ratio] = args[:heat_pump_frac_manufacturer_charge].get - 1.0
+    if !args[:heat_pump_frac_manufacturer_charge].nil?
+      args[:heat_pump_charge_defect_ratio] = args[:heat_pump_frac_manufacturer_charge] - 1.0
     end
 
     # Error check geometry inputs
     corridor_width = args[:geometry_corridor_width]
-    corridor_position = args[:geometry_corridor_position].to_s
+    corridor_position = args[:geometry_corridor_position]
 
     if (corridor_width == 0) && (corridor_position != 'None')
       corridor_position = 'None'
@@ -585,11 +701,10 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     args[:geometry_unit_back_wall_is_adiabatic] = false
 
     # Map corridor arguments to adiabatic walls and shading
-    n_floors = Float(args[:geometry_num_floors_above_grade].to_s)
     if [HPXML::ResidentialTypeApartment, HPXML::ResidentialTypeSFA].include? args[:geometry_unit_type]
-      n_units = Float(args[:geometry_building_num_units].to_s)
-      horiz_location = args[:geometry_unit_horizontal_location].to_s
-      aspect_ratio = Float(args[:geometry_unit_aspect_ratio].to_s)
+      n_floors = Float(args[:geometry_num_floors_above_grade])
+      n_units = Float(args[:geometry_building_num_units])
+      horiz_location = args[:geometry_unit_horizontal_location]
 
       if args[:geometry_unit_type] == HPXML::ResidentialTypeApartment
         n_units_per_floor = n_units / n_floors
@@ -626,7 +741,6 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
         end
 
       elsif args[:geometry_unit_type] == HPXML::ResidentialTypeSFA
-        n_floors = 1.0
         n_units_per_floor = n_units
         has_rear_units = false
       end
@@ -649,41 +763,6 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
         return false
       end
 
-      # Infiltration adjustment for SFA/MF units
-      # Calculate exposed wall area ratio for the unit (unit exposed wall area
-      # divided by average unit exposed wall area)
-      if (n_units_per_floor <= 2) || (n_units_per_floor == 4 && has_rear_units) # No middle unit(s)
-        exposed_wall_area_ratio = 1.0 # all units have same exterior wall area
-      else # Has middle unit(s)
-        if has_rear_units
-          n_end_units = 4 * n_floors
-          n_mid_units = n_units - n_end_units
-          n_bldg_fronts_backs = n_end_units + n_mid_units
-          n_bldg_sides = n_end_units
-        else
-          n_end_units = 2 * n_floors
-          n_mid_units = n_units - n_end_units
-          n_bldg_fronts_backs = n_end_units * 2 + n_mid_units * 2
-          n_bldg_sides = n_end_units
-        end
-        if has_rear_units
-          n_unit_fronts_backs = 1
-        else
-          n_unit_fronts_backs = 2
-        end
-        if ['Middle'].include? horiz_location
-          n_unit_sides = 0
-        elsif ['Left', 'Right'].include? horiz_location
-          n_unit_sides = 1
-        end
-        n_bldg_sides_equivalent = n_bldg_sides + n_bldg_fronts_backs * aspect_ratio
-        n_unit_sides_equivalent = n_unit_sides + n_unit_fronts_backs * aspect_ratio
-        exposed_wall_area_ratio = n_unit_sides_equivalent / (n_bldg_sides_equivalent / n_units)
-      end
-
-      # Apply adjustment to infiltration value
-      args[:air_leakage_value] *= exposed_wall_area_ratio
-
       if horiz_location == 'Left'
         args[:geometry_unit_right_wall_is_adiabatic] = true
       elsif horiz_location == 'Middle'
@@ -695,41 +774,57 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     end
 
     # Infiltration Reduction
-    if args[:air_leakage_percent_reduction].is_initialized
-      args[:air_leakage_value] *= (1.0 - args[:air_leakage_percent_reduction].get / 100.0)
+    if not args[:air_leakage_percent_reduction].nil?
+      args[:air_leakage_value] *= (1.0 - args[:air_leakage_percent_reduction] / 100.0)
     end
 
     # Num Floors
     if args[:geometry_unit_type] == HPXML::ResidentialTypeApartment
       args[:geometry_unit_num_floors_above_grade] = 1
     else
-      args[:geometry_unit_num_floors_above_grade] = Integer(args[:geometry_num_floors_above_grade])
+      args[:geometry_unit_num_floors_above_grade] = args[:geometry_num_floors_above_grade]
     end
 
     # Adiabatic Floor/Ceiling
-    if args[:geometry_unit_level].is_initialized
-      if args[:geometry_unit_level].get == 'Bottom'
+    if not args[:geometry_unit_level].nil?
+      if args[:geometry_unit_level] == 'Bottom'
         if args[:geometry_num_floors_above_grade] > 1 # this could be "bottom" of a 1-story building
           args[:geometry_attic_type] = HPXML::AtticTypeBelowApartment
         end
-      elsif args[:geometry_unit_level].get == 'Middle'
+      elsif args[:geometry_unit_level] == 'Middle'
         args[:geometry_foundation_type] = HPXML::FoundationTypeAboveApartment
         args[:geometry_attic_type] = HPXML::AtticTypeBelowApartment
-      elsif args[:geometry_unit_level].get == 'Top'
+      elsif args[:geometry_unit_level] == 'Top'
         args[:geometry_foundation_type] = HPXML::FoundationTypeAboveApartment
       end
+    end
+
+    # Height Above Grade
+    if args[:geometry_unit_type] == HPXML::ResidentialTypeApartment
+      n_floors = Float(args[:geometry_num_floors_above_grade])
+      avg_ceiling_height = args[:geometry_average_ceiling_height]
+
+      if args[:geometry_unit_level] == 'Top'
+        args[:geometry_unit_height_above_grade] = (n_floors - 1) * avg_ceiling_height
+      elsif args[:geometry_unit_level] == 'Middle'
+        args[:geometry_unit_height_above_grade] = (n_floors - 1) / 2.0 * avg_ceiling_height
+      elsif args[:geometry_unit_level] == 'Bottom'
+        args[:geometry_unit_height_above_grade] = Constants::Auto
+      end
+    else
+      args[:geometry_unit_height_above_grade] = Constants::Auto
     end
 
     # Wall Assembly R-Value
     args[:wall_assembly_r] += args[:exterior_finish_r]
 
-    if args[:wall_continuous_exterior_r].is_initialized
-      args[:wall_assembly_r] += args[:wall_continuous_exterior_r].get
+    if not args[:wall_continuous_exterior_r].nil?
+      args[:wall_assembly_r] += args[:wall_continuous_exterior_r]
     end
 
     # Rim Joist Assembly R-Value
     rim_joist_assembly_r = 0
-    if Float(args[:geometry_rim_joist_height].to_s) > 0
+    if args[:geometry_rim_joist_height] > 0
       drywall_assembly_r = 0.9
       uninsulated_wall_assembly_r = 3.4
 
@@ -754,16 +849,7 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     args[:rim_joist_assembly_r] = rim_joist_assembly_r
 
     args.each do |arg_name, arg_value|
-      begin
-        if arg_value.is_initialized
-          arg_value = arg_value.get
-        else
-          next
-        end
-      rescue
-      end
-
-      if args_to_delete.include?(arg_name) || (arg_value == Constants.Auto)
+      if args_to_delete.include?(arg_name) || (arg_value == Constants::Auto)
         arg_value = '' # don't assign these to BuildResidentialHPXML or BuildResidentialScheduleFile
       end
 
@@ -778,6 +864,60 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
       schedule[i] += offset_magnitude * direction
     end
     return schedule
+  end
+
+  def get_heating_and_cooling_seasons(args, weather)
+    latitude = args[:site_latitude]
+    latitude = nil if latitude == Constants::Auto
+    latitude = Defaults.get_latitude(latitude, weather)
+
+    heating_months, cooling_months = HVAC.get_building_america_hvac_seasons(weather, latitude)
+    sim_calendar_year = Location.get_sim_calendar_year(nil, weather)
+
+    return heating_months, cooling_months, sim_calendar_year
+  end
+
+  def get_begin_end_day_nums(building_id, n_days, begin_day_num, end_day_num, year)
+    if begin_day_num > end_day_num
+      num_days = Calendar.num_days_in_year(year)
+      begin_day_nums = (begin_day_num..num_days).to_a + (1..end_day_num).to_a
+    else
+      begin_day_nums = (begin_day_num..end_day_num).to_a
+    end
+
+    unavail_begin_day_nums = begin_day_nums.sample(1, random: Random.new(building_id))
+    unavail_begin_day_num = unavail_begin_day_nums[0]
+    unavail_begin_date = OpenStudio::Date::fromDayOfYear(unavail_begin_day_num, year)
+    unavail_end_date = unavail_begin_date + OpenStudio::Time.new(n_days - 1)
+    unavail_end_month = unavail_end_date.monthOfYear.value
+    unavail_end_day = unavail_end_date.dayOfMonth
+    unavail_end_day_num = Calendar.get_day_num_from_month_day(year, unavail_end_month, unavail_end_day)
+
+    return unavail_begin_day_num, unavail_end_day_num
+  end
+
+  def get_month_day_from_day_num(day_num, year)
+    date = OpenStudio::Date::fromDayOfYear(day_num, year)
+    month_names = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    month_day = "#{month_names[date.monthOfYear.value - 1]} #{date.dayOfMonth}"
+    return month_day
+  end
+
+  def convert_args(args)
+    measure_arguments = @build_residential_hpxml_measure_arguments
+    measure_arguments.each do |arg|
+      arg_name = arg.name.to_sym
+      value = args[arg_name]
+      next if value.nil? || (value == Constants::Auto)
+
+      case arg.type.valueName.downcase
+      when 'double'
+        args[arg_name] = Float(value)
+      when 'integer'
+        args[arg_name] = Integer(value)
+      end
+    end
+    return args
   end
 end
 

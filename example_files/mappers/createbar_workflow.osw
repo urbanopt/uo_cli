@@ -5,7 +5,7 @@
   "file_paths": [],
   "run_directory": null,
   "steps": [
-    
+
     {
       "measure_dir_name": "set_run_period",
       "arguments": {
@@ -45,7 +45,7 @@
         "ns_to_ew_ratio": 0,
         "wwr": 0,
         "party_wall_fraction": 0,
-        "story_multiplier": "None",
+        "story_multiplier_method": "None",
         "bar_division_method": "Multiple Space Types - Individual Stories Sliced",
         "make_mid_story_surfaces_adiabatic": true
       }
@@ -58,9 +58,9 @@
         "add_refrigeration": true,
         "system_type": "Inferred"
       }
-    },{  
+    },{
       "measure_dir_name":"PredictedMeanVote",
-      "arguments":{  
+      "arguments":{
         "__SKIP__":false,
         "comfortWarnings":true,
         "workEfficiencySchedule":"Work Efficiency Schedule",
@@ -72,19 +72,19 @@
       "arguments": {
         "__SKIP__": true,
         "r_value": 10
-      } 
+      }
     },{
       "measure_dir_name": "ReduceElectricEquipmentLoadsByPercentage",
       "arguments": {
         "__SKIP__": true,
         "elecequip_power_reduction_percent": 20
-      } 
+      }
     },{
       "measure_dir_name": "ReduceLightingLoadsByPercentage",
       "arguments": {
         "__SKIP__": true,
         "lighting_power_reduction_percent": 30
-      } 
+      }
     },
     {
       "measure_dir_name": "envelope_and_internal_load_breakdown",
@@ -96,10 +96,6 @@
       "measure_dir_name": "generic_qaqc",
       "arguments": {
         "template": "90.1-2004",
-        "check_eui_reasonableness": true,
-        "check_eui_reasonableness_tol": 0.25,
-        "check_eui_by_end_use": true,
-        "check_eui_by_end_use_tol": 0.25,
         "check_mech_sys_part_load_eff": true,
         "check_mech_sys_part_load_eff_tol": 0.25,
         "check_mech_sys_capacity": false,

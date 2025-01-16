@@ -1332,7 +1332,7 @@
       <default_value>0</default_value>
     </argument>
     <argument>
-      <name>slab_perimeter_depth</name>
+      <name>slab_perimeter_insulation_depth</name>
       <display_name>Slab: Perimeter Insulation Depth</display_name>
       <description>Depth from grade to bottom of vertical slab perimeter insulation. Applies to slab-on-grade foundations and basement/crawlspace floors.</description>
       <type>Double</type>

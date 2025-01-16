@@ -2,12 +2,12 @@ name: CLI CI
 
 on:
   workflow_dispatch:
-  # Run on demand and weeknights
   push:
+  # Run on demand and weeknights
   schedule:
-  #   # https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#schedule
-  #   # 5:24 am UTC (11:24pm MDT the day before) every weekday night in MDT
-    - cron: '24 5 * * 2-6'
+    #   # https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#schedule
+    #   # 5:24 am UTC (11:24pm MDT the day before) every weekday night in MDT
+    - cron: "24 5 * * 2-6"
 
 env:
   # Favor_Local_Gems enforces develop branch of all Ruby dependencies
@@ -15,7 +15,6 @@ env:
   # If CI is then successful, we have a breaking change in a dependency somewhere.
   # FAVOR_LOCAL_GEMS: true
   GEM_DEVELOPER_KEY: ${{ secrets.GEM_DEVELOPER_KEY }}
-  # RUBYLIB: /usr/local/openstudio-3.7.0/Ruby
   UO_NUM_PARALLEL: 4
   # GHA machines have 4 cores. Trying to run more concurrently will slow everything down.
   # https://github.blog/2024-01-17-github-hosted-runners-double-the-power-for-open-source/
@@ -29,19 +28,19 @@ jobs:
         simulation-type: [basic, GHE, GEB, residential, electric]
     runs-on: ubuntu-latest
     container:
-      image: docker://nrel/openstudio:3.7.0
+      image: docker://nrel/openstudio:3.9.0
     steps:
       - uses: actions/checkout@v4
       - name: Change Owner of Container Working Directory
-      # working dir permissions workaround from https://github.com/actions/runner-images/issues/6775s#issuecomment-1377299658
+        # working dir permissions workaround from https://github.com/actions/runner-images/issues/6775s#issuecomment-1377299658
         run: |
           chown root:root .
       - name: Install Ruby dependencies
         run: |
           which ruby
           ruby --version
+          bundle install
           bundle update
-          bundle exec certified-update
       - name: Install python dependencies
         if: ${{ matrix.simulation-type == 'electric' || matrix.simulation-type == 'GHE' }}
         run: bundle exec rspec -e 'Install python dependencies'
@@ -56,7 +55,7 @@ jobs:
       - name: Test simulations
         run: bundle exec rspec -e 'Run and work with a small ${{ matrix.simulation-type }} simulation'
       - name: Upload artifacts
-      # Save results for examination - useful for debugging
+        # Save results for examination - useful for debugging
         uses: actions/upload-artifact@v3
         # Using v4 would mean we have to change our path design, and/or the test dir names
         # Only upload if a previous step fails

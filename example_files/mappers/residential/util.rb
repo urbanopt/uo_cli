@@ -54,7 +54,9 @@ def residential(scenario, feature, args, building_type)
   rescue StandardError
   end
 
-  year_built = nil
+  year_built = 2000
+  # OS-HPXML requires a year_built to set air leakage as of 1.9.0
+  # https://openstudio-hpxml.readthedocs.io/en/latest/workflow_inputs.html#id117 (footnote 56sd)
   begin
     year_built = feature.year_built
   rescue StandardError
@@ -130,7 +132,7 @@ def residential_simulation(args, timestep, run_period, calendar_year, weather_fi
   args[:simulation_control_run_period] = run_period
   args[:simulation_control_run_period_calendar_year] = calendar_year
   args[:weather_station_epw_filepath] = "../../../../../weather/#{weather_filename}"
-  args[:year_built] = year_built if !year_built.nil?
+  args[:year_built] = year_built
 end
 
 def residential_geometry_unit(args, building_type, floor_area, number_of_bedrooms, geometry_unit_orientation, geometry_unit_aspect_ratio, occupancy_calculation_type, number_of_occupants, maximum_roof_height)
@@ -144,10 +146,10 @@ def residential_geometry_unit(args, building_type, floor_area, number_of_bedroom
   when 'Single-Family Attached'
     args[:geometry_unit_type] = 'single-family attached'
     args[:geometry_unit_num_floors_above_grade] = number_of_stories_above_ground
-    args[:air_leakage_type] = 'unit exterior only'
+    args[:air_leakage_type] = 'unit total' # consistent with ResStock
   when 'Multifamily'
     args[:geometry_unit_type] = 'apartment unit'
-    args[:air_leakage_type] = 'unit exterior only'
+    args[:air_leakage_type] = 'unit total' # consistent with ResStock
   end
 
   args[:geometry_unit_cfa] = floor_area / args[:geometry_building_num_units]

@@ -54,7 +54,7 @@ module URBANopt
           # opt :no_pager, "Disable paging"
           stop_on COMMAND_MAP.keys
           banner "\nCommands:"
-          COMMAND_MAP.each { |cmd, desc| banner format('  %-14s %s', cmd, desc) }
+          COMMAND_MAP.each { |cmd, desc| banner format('  %-14<cmd>s %<desc>s', cmd: cmd, desc: desc) }
           banner "\nFor help with a specific command: uo <command> --help"
           banner "\nAdditional config options can be set with the 'runner.conf' file inside your project folder"
           banner 'Fewer warnings are presented when using full paths and the user is not inside the project folder'
@@ -540,7 +540,8 @@ module URBANopt
               end
             elsif feature_id == feature[:properties][:id]
               csv << [feature[:properties][:id], feature[:properties][:name], "URBANopt::Scenario::#{mapper_name}Mapper"]
-            elsif unless feature_file_json[:features].any? { |hash| hash[:properties][:id].include?(feature_id.to_s) }
+            else
+              unless feature_file_json[:features].any? { |hash| hash[:properties][:id].include?(feature_id.to_s) }
                     abort("\nYou must provide Feature ID from FeatureFile!\n---\n\n")
                   end
               # If Feature ID specified does not exist in the Feature File raise error
@@ -650,6 +651,9 @@ module URBANopt
             # copy gemfile
             FileUtils.cp(example_files_dir / 'Gemfile', project_path)
 
+            # Copy measures dir
+            FileUtils.cp_r(example_files_dir / 'measures', project_path / 'measures')
+
             # copy validation schema
             FileUtils.cp(example_files_dir / 'validation_schema.yaml', project_path)
 
@@ -743,7 +747,6 @@ module URBANopt
             if @opthash.subopts[:class_coincident]
               # copy residential files
               FileUtils.cp_r(example_files_dir / 'mappers' / 'residential', project_path / 'mappers' / 'residential')
-              FileUtils.cp_r(example_files_dir / 'measures', project_path / 'measures')
               FileUtils.cp_r(example_files_dir / 'resources', project_path / 'resources')
               FileUtils.cp_r(example_files_dir / 'xml_building', project_path / 'xml_building')
               # copy class project files
@@ -760,7 +763,6 @@ module URBANopt
             if @opthash.subopts[:class_diverse]
               # copy residential files
               FileUtils.cp_r(example_files_dir / 'mappers' / 'residential', project_path / 'mappers' / 'residential')
-              FileUtils.cp_r(example_files_dir / 'measures', project_path / 'measures')
               FileUtils.cp_r(example_files_dir / 'resources', project_path / 'resources')
               FileUtils.cp_r(example_files_dir / 'xml_building', project_path / 'xml_building')
               # copy class project files
@@ -777,7 +779,6 @@ module URBANopt
             if @opthash.subopts[:combined]
               # copy residential files
               FileUtils.cp_r(example_files_dir / 'mappers' / 'residential', project_path / 'mappers' / 'residential')
-              FileUtils.cp_r(example_files_dir / 'measures', project_path / 'measures')
               FileUtils.cp_r(example_files_dir / 'resources', project_path / 'resources')
               FileUtils.cp(example_files_dir / 'example_project_combined.json', dir_name)
               FileUtils.cp_r(example_files_dir / 'xml_building', project_path / 'xml_building')
@@ -795,7 +796,6 @@ module URBANopt
             if @opthash.subopts[:combined]
               # copy residential files
               FileUtils.cp_r(example_files_dir / 'mappers' / 'residential', project_path / 'mappers' / 'residential')
-              FileUtils.cp_r(example_files_dir / 'measures', project_path / 'measures')
               FileUtils.cp_r(example_files_dir / 'resources', project_path / 'resources')
               FileUtils.cp(example_files_dir / 'example_project_combined.json', dir_name)
               if File.exist?(project_path / 'example_project.json')

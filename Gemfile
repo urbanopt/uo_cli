@@ -11,10 +11,6 @@ gemspec
 # checkout the latest version (develop) from github.
 allow_local = ENV['FAVOR_LOCAL_GEMS']
 
-# pin this dependency to avoid unicode_normalize error
-gem 'addressable', '2.8.1'
-# pin this dependency to avoid using racc dependency (which has native extensions)
-gem 'parser', '3.2.2.2'
 
 # Uncomment (and modify path/branch) if you need to test local development versions. Otherwise
 # these are included in the gemspec file
@@ -24,33 +20,36 @@ gem 'parser', '3.2.2.2'
 # elsif allow_local
 #   gem 'openstudio-extension', github: 'NREL/OpenStudio-extension-gem', branch: 'develop'
 # end
+gem 'openstudio-extension', '0.8.3'
+
+gem 'urbanopt-core', github: 'URBANopt/urbanopt-core-gem', branch: 'os39'
 
 # if allow_local && File.exist?('../urbanopt-scenario-gem')
 #  gem 'urbanopt-scenario', path: '../urbanopt-scenario-gem'
 # elsif allow_local
-# gem 'urbanopt-scenario', github: 'URBANopt/urbanopt-scenario-gem', branch: 'develop'
+gem 'urbanopt-scenario', github: 'URBANopt/urbanopt-scenario-gem', branch: 'os39'
 # end
 
 # if allow_local && File.exist?('../urbanopt-geojson-gem')
 #   gem 'urbanopt-geojson', path: '../urbanopt-geojson-gem'
 # elsif allow_local
-#  gem 'urbanopt-geojson', github: 'URBANopt/urbanopt-geojson-gem', branch: 'develop'
+ gem 'urbanopt-geojson', github: 'URBANopt/urbanopt-geojson-gem', branch: 'os39'
 # end
 
 # if allow_local && File.exist?('../urbanopt-reopt-gem')
 #  gem 'urbanopt-reopt', path: '../urbanopt-reopt-gem'
 # elsif allow_local
-# gem 'urbanopt-reopt', github: 'URBANopt/urbanopt-reopt-gem', branch: 'develop'
+gem 'urbanopt-reopt', github: 'URBANopt/urbanopt-reopt-gem', branch: 'os39'
 # end
 
 # if allow_local && File.exist?('../urbanopt-reporting-gem')
 #  gem 'urbanopt-reporting', path: '../urbanopt-reporting-gem'
 # elsif allow_local
-# gem 'urbanopt-reporting', github: 'URBANopt/urbanopt-reporting-gem', branch: 'develop'
+gem 'urbanopt-reporting', github: 'URBANopt/urbanopt-reporting-gem', branch: 'os39'
 # end
 
 # if allow_local && File.exist?('../urbanopt-rnm-us-gem')
 # gem 'urbanopt-rnm-us', path: '../urbanopt-rnm-us-gem'
 # elsif allow_local
-#  gem 'urbanopt-rnm-us', github: 'URBANopt/urbanopt-rnm-us-gem', branch: 'develop'
+ gem 'urbanopt-rnm-us', github: 'URBANopt/urbanopt-rnm-us-gem', branch: 'os39'
 # end

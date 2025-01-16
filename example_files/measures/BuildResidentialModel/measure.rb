@@ -110,17 +110,17 @@ class BuildResidentialModel < OpenStudio::Measure::ModelMeasure
     end
 
     # assign the user inputs to variables
-    args = get_argument_values(runner, arguments(model), user_arguments)
+    args = runner.getArgumentValues(arguments(model), user_arguments)
 
     # optionals: get or remove
-    args.each_key do |arg|
-      if args[arg].is_initialized
-        args[arg] = args[arg].get
-      else
-        args.delete(arg)
-      end
-    rescue StandardError # this is needed for when args[arg] is actually a value
-    end
+    # args.each_key do |arg|
+    #   if args[arg].is_initialized
+    #     args[arg] = args[arg].get
+    #   else
+    #     args.delete(arg)
+    #   end
+    # rescue StandardError # this is needed for when args[arg] is actually a value
+    # end
 
     # Get file/dir paths
     resources_dir = File.absolute_path(File.join(File.dirname(__FILE__), '../../resources'))
@@ -196,9 +196,9 @@ class BuildResidentialModel < OpenStudio::Measure::ModelMeasure
         print_option_assignment(parameter_name, option_name, runner)
         options_measure_args, _errors = get_measure_args_from_option_names(lookup_csv_data, [option_name], parameter_name, lookup_file, runner)
         options_measure_args[option_name].each do |measure_subdir, args_hash|
-          update_args_hash(measures, measure_subdir, args_hash, false)
+          update_args_hash(measures, measure_subdir, args_hash)
         end
-      end      
+      end
 
       # Fill in defaults where any missing parameters from the buildstock csv haven't assigned arguments
       args.each_key do |arg_name|
@@ -207,6 +207,7 @@ class BuildResidentialModel < OpenStudio::Measure::ModelMeasure
 
       # ResStockArguments
       measure_subdir = 'ResStockArguments'
+      measures['ResStockArguments'][0]['building_id'] = building_id
       full_measure_path = File.join(measures_dir, measure_subdir, 'measure.rb')
       check_file_exists(full_measure_path, runner)
 
@@ -266,7 +267,7 @@ class BuildResidentialModel < OpenStudio::Measure::ModelMeasure
       hpxml_path = hpxml_paths[0]
       units << { 'hpxml_path' => hpxml_path }
 
-      hpxml = HPXML.new(hpxml_path: hpxml_path, building_id: 'ALL')
+      hpxml = HPXML.new(hpxml_path: hpxml_path)
       standards_number_of_living_units = 0
       hpxml.buildings.each do |hpxml_bldg|
         number_of_units = 1
@@ -286,6 +287,8 @@ class BuildResidentialModel < OpenStudio::Measure::ModelMeasure
       measures = {}
       if !unit.key?('hpxml_path') # create a single new HPXML file describing all dwelling units of the feature
 
+        whole_sfa_or_mf_building_sim = true
+
         # BuildResidentialHPXML
         measure_subdir = 'BuildResidentialHPXML'
         full_measure_path = File.join(hpxml_measures_dir, measure_subdir, 'measure.rb')
@@ -298,13 +301,16 @@ class BuildResidentialModel < OpenStudio::Measure::ModelMeasure
           measure_args['battery_present'] = 'false' # limitation of OS-HPXML
         end
 
+        # Set whole SFA/MF building simulation items
+        measure_args['whole_sfa_or_mf_building_sim'] = whole_sfa_or_mf_building_sim
+
         measure_args['software_info_program_used'] = 'URBANopt'
         begin
           version_rb File.absolute_path(File.join(File.dirname(__FILE__), '../../../lib/uo_cli/version.rb'))
           require version_rb
           measure_args['software_info_program_version'] = URBANopt::CLI::VERSION
         rescue StandardError
-          measure_args['software_info_program_version'] = '0.10.0' # FIXME: is there a way to get the version of urbanopt-example-geojson-project?
+          measure_args['software_info_program_version'] = '0.11.0' # FIXME: is there a way to get the version of urbanopt-example-geojson-project?
         end
         measure_args['apply_defaults'] = true
 
@@ -363,7 +369,6 @@ class BuildResidentialModel < OpenStudio::Measure::ModelMeasure
     measure_args['hpxml_path'] = hpxml_path
     measure_args['output_dir'] = File.expand_path(args[:output_dir])
     measure_args['debug'] = true
-    measure_args['building_id'] = 'ALL'
 
     measures[measure_subdir] = [measure_args]
 

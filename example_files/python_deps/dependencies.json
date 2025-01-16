@@ -1,6 +1,6 @@
 [
-  { "name": "ThermalNetwork", "version": "0.3.0"},
+  { "name": "ThermalNetwork", "version": "0.3.2"},
   { "name": "urbanopt-ditto-reader", "version": "0.6.4"},
   { "name": "NREL-disco", "version": "0.5.1"},
-  { "name": "geojson-modelica-translator", "version": "0.8.0"}
+  { "name": "geojson-modelica-translator", "version": "0.9.1"}
 ]

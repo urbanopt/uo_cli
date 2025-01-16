@@ -264,7 +264,7 @@ module URBANopt
       def get_climate_zone_iecc(epw)
         headers = CSV.open(epw, 'r', &:first)
         wmo = headers[5]
-        zones_csv = Pathname(__FILE__).dirname.parent / 'resources' / 'residential-measures' / 'resources' / 'hpxml-measures' / 'HPXMLtoOpenStudio' / 'resources' / 'data' / 'climate_zones.csv'
+        zones_csv = Pathname(__FILE__).dirname.parent / 'resources' / 'residential-measures' / 'resources' / 'hpxml-measures' / 'HPXMLtoOpenStudio' / 'resources' / 'data' / 'zipcode_weather_stations.csv'
 
         # Check if the CSV file is empty
         if File.empty?(epw)
@@ -272,7 +272,7 @@ module URBANopt
         end
 
         CSV.foreach(zones_csv) do |row|
-          if row[0].to_s == wmo.to_s
+          if row[7].to_s == wmo.to_s
             return row[6].to_s
           end
         end
@@ -343,7 +343,7 @@ module URBANopt
         region = future_emissions_mapping_hash[state.to_sym]
 
         @@logger.warn("emissions_future_subregion for #{state} is assigned to: #{region}. Note: Not all states have a 1 to 1 mapping with a subregion. Some states('ND','IN', 'MN', 'SD', 'IA', 'WV', 'OH', 'NE' ) include 2 subregions.
-        The default mapper maps to the subregion that includes the most zipcodes in the corresponding state. You can overwrite this assigned input by specifiying the emissions_future_subregion input in the FeatureFile.")
+        The default mapper maps to the subregion that includes the most zipcodes in the corresponding state. You can overwrite this assigned input by specifying the emissions_future_subregion input in the FeatureFile.")
 
         return region
       end
@@ -410,7 +410,7 @@ module URBANopt
         # find region input based on the state
         region = hourly_historical_mapping_hash[state.to_sym]
         @@logger.warn("emissions_hourly_historical_subregion for #{state} is assigned to: #{region}. Note: Not all states have a 1 to 1 mapping with a subregion. Some states('ND','IN', 'MN', 'SD', 'IA', 'WV', 'OH', 'NE' ) include 2 subregions.
-        The default mapper maps to the subregion that includes the most zipcodes in the corresponding state. You can overwrite this assigned input by specifiying the emissions_hourly_historical_subregion input in the FeatureFile.")
+        The default mapper maps to the subregion that includes the most zipcodes in the corresponding state. You can overwrite this assigned input by specifying the emissions_hourly_historical_subregion input in the FeatureFile.")
 
         return region
       end
@@ -471,11 +471,11 @@ module URBANopt
         # get the state from weather file
         state = feature.weather_filename.split('_', -1)[1]
 
-        # finf region input based on the state
+        # find region input based on the state
         region = annual_historical_mapping_hash[state.to_sym]
 
         @@logger.warn("electricity_emissions_annual_historical_subregion for #{state} is assigned to: #{region}. Note: Not all states have a 1 to 1 mapping with a subregion. Some states('ND','IN', 'MN', 'SD', 'IA', 'WV', 'OH', 'NE' ) include 2 subregions.
-        The default mapper maps to the subregion that includes the most zipcodes in the corresponding state. You can overwrite this assigned input by specifiying the electricity_emissions_annual_historical_subregion input in the FeatureFile.")
+        The default mapper maps to the subregion that includes the most zipcodes in the corresponding state. You can overwrite this assigned input by specifying the electricity_emissions_annual_historical_subregion input in the FeatureFile.")
 
         return region
       end
@@ -1008,7 +1008,7 @@ module URBANopt
 
         end
 
-        ######## Emissions Adition from add_ems_emissions_reporting
+        ######## Emissions Addition from add_ems_emissions_reporting
         if feature_type == 'Building'
 
           # emissions options

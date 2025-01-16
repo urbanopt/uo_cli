@@ -26,9 +26,9 @@ module URBANopt
         # Percentage Reduction of Electric Equipment Power (%). Enter a value between 0 and 100
         OpenStudio::Extension.set_measure_argument(osw, 'reduce_epd_by_percentage_for_peak_hours', 'epd_reduce_percent', 50.0)
         # Starting Time for the Reduction in HH:MM:SS format
-        OpenStudio::Extension.set_measure_argument(osw, 'reduce_epd_by_percentage_for_peak_hours', 'start_time', '17:00:00')
+        OpenStudio::Extension.set_measure_argument(osw, 'reduce_epd_by_percentage_for_peak_hours', 'start_time1', '17:00:00')
         # End Time for the Reduction in HH:MM:SS format
-        OpenStudio::Extension.set_measure_argument(osw, 'reduce_epd_by_percentage_for_peak_hours', 'end_time', '21:00:00')
+        OpenStudio::Extension.set_measure_argument(osw, 'reduce_epd_by_percentage_for_peak_hours', 'end_time1', '21:00:00')
 
         # First Starting Date for the Reduction in MM-DD format
         OpenStudio::Extension.set_measure_argument(osw, 'reduce_epd_by_percentage_for_peak_hours', 'start_date1', '07-01')

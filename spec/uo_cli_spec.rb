@@ -21,9 +21,7 @@ RSpec.describe URBANopt::CLI do
   test_scenario_res = test_directory_res / 'two_building_res'
   test_scenario_res_hpxml = test_directory_res_hpxml / 'two_building_res_hpxml.csv'
   test_scenario_reopt = test_directory_pv / 'REopt_scenario.csv'
-  test_scenario_pv = test_directory_pv / 'two_building_scenario.csv'
   test_scenario_elec = test_directory_elec / 'electrical_scenario.csv'
-  test_scenario_disco = test_directory_disco / 'electrical_scenario.csv'
   test_scenario_ev = test_directory / 'two_building_ev_scenario.csv'
   test_scenario_chilled = test_directory_res / 'two_building_chilled.csv'
   test_scenario_mels_reduction = test_directory_res / 'two_building_mels_reduction.csv'
@@ -40,7 +38,6 @@ RSpec.describe URBANopt::CLI do
   test_feature_ghe = test_directory_ghe / 'example_project_with_ghe.json'
   test_validate_bounds = test_directory_res / 'out_of_bounds_validation.yaml'
   test_reopt_scenario_assumptions_file = test_directory_pv / 'reopt' / 'multiPV_assumptions.json'
-  system_parameters_file = test_directory / 'run' / 'two_building_scenario' / 'system_parameter.json'
   ghe_system_parameters_file = test_directory_ghe / 'run' / 'baseline_scenario_ghe' / 'ghe_system_parameter.json'
   test_weather_file = test_directory_res / 'weather' / 'USA_NY_Buffalo-Greater.Buffalo.Intl.AP.725280_TMY3.epw'
   call_cli = 'bundle exec uo'
@@ -478,7 +475,7 @@ RSpec.describe URBANopt::CLI do
       # This test requires the 'run ghe project' be run first
       test_scenario_report = test_directory_ghe / 'run' / 'baseline_scenario_ghe' / 'default_scenario_report.csv'
       system("#{call_cli} process --default --scenario #{test_scenario_ghe} --feature #{test_feature_ghe}")
-      # expect(`wc -l < #{test_scenario_report}`.to_i).to be > 2
+      expect(`wc -l < #{test_scenario_report}`.to_i).to be > 2
       expect((test_directory_ghe / 'run' / 'baseline_scenario_ghe' / 'process_status.json').exist?).to be true
     end
 
